@@ -1,0 +1,223 @@
++--------+----------+----------------------------+------------------------+---------------------------------------------------------------------+------------+
+| Domain | Method   | URI                        | Name                   | Action                                                              | Middleware |
++--------+----------+----------------------------+------------------------+---------------------------------------------------------------------+------------+
+|        | GET|HEAD | /                          |                        | Closure                                                             | web        |
+|        | GET|HEAD | api/user                   |                        | Closure                                                             | api        |
+|        |          |                            |                        |                                                                     | auth:api   |
+|        | GET|HEAD | fireprotection             | index-fireprotection   | App\Http\Controllers\FireprotectionController@index                 | web        |
+|        |          |                            |                        |                                                                     | auth       |
+|        | GET|HEAD | fireprotection/create      | create-fireprotection  | App\Http\Controllers\FireprotectionController@create                | web        |
+|        |          |                            |                        |                                                                     | auth       |
+|        |          |                            |                        |                                                                     | can:admin  |
+|        | POST     | fireprotection/create      | store-fireprotection   | App\Http\Controllers\FireprotectionController@store                 | web        |
+|        |          |                            |                        |                                                                     | auth       |
+|        |          |                            |                        |                                                                     | can:admin  |
+|        | DELETE   | fireprotection/{id}        | destroy-fireprotection | App\Http\Controllers\FireprotectionController@destroy               | web        |
+|        |          |                            |                        |                                                                     | auth       |
+|        |          |                            |                        |                                                                     | can:admin  |
+|        | GET|HEAD | fireprotection/{id}        | show-fireprotection    | App\Http\Controllers\FireprotectionController@show                  | web        |
+|        |          |                            |                        |                                                                     | auth       |
+|        | PUT      | fireprotection/{id}/update | update-fireprotection  | App\Http\Controllers\FireprotectionController@update                | web        |
+|        |          |                            |                        |                                                                     | auth       |
+|        |          |                            |                        |                                                                     | can:admin  |
+|        | GET|HEAD | fireprotection/{id}/update | edit-fireprotection    | App\Http\Controllers\FireprotectionController@edit                  | web        |
+|        |          |                            |                        |                                                                     | auth       |
+|        |          |                            |                        |                                                                     | can:admin  |
+|        | GET|HEAD | home                       | home                   | App\Http\Controllers\HomeController@index                           | web        |
+|        |          |                            |                        |                                                                     | auth       |
+|        | POST     | login                      |                        | App\Http\Controllers\Auth\LoginController@login                     | web        |
+|        |          |                            |                        |                                                                     | guest      |
+|        | GET|HEAD | login                      | login                  | App\Http\Controllers\Auth\LoginController@showLoginForm             | web        |
+|        |          |                            |                        |                                                                     | guest      |
+|        | POST     | logout                     | logout                 | App\Http\Controllers\Auth\LoginController@logout                    | web        |
+|        | GET|HEAD | meanused                   | index-meanused         | App\Http\Controllers\MeanusedController@index                       | web        |
+|        |          |                            |                        |                                                                     | auth       |
+|        | POST     | meanused/create            | store-meanused         | App\Http\Controllers\MeanusedController@store                       | web        |
+|        |          |                            |                        |                                                                     | auth       |
+|        |          |                            |                        |                                                                     | can:admin  |
+|        | GET|HEAD | meanused/create            | create-meanused        | App\Http\Controllers\MeanusedController@create                      | web        |
+|        |          |                            |                        |                                                                     | auth       |
+|        |          |                            |                        |                                                                     | can:admin  |
+|        | GET|HEAD | meanused/{id}              | show-meanused          | App\Http\Controllers\MeanusedController@show                        | web        |
+|        |          |                            |                        |                                                                     | auth       |
+|        | DELETE   | meanused/{id}              | destroy-meanused       | App\Http\Controllers\MeanusedController@destroy                     | web        |
+|        |          |                            |                        |                                                                     | auth       |
+|        |          |                            |                        |                                                                     | can:admin  |
+|        | GET|HEAD | meanused/{id}/update       | edit-meanused          | App\Http\Controllers\MeanusedController@edit                        | web        |
+|        |          |                            |                        |                                                                     | auth       |
+|        |          |                            |                        |                                                                     | can:admin  |
+|        | PUT      | meanused/{id}/update       | update-meanused        | App\Http\Controllers\MeanusedController@update                      | web        |
+|        |          |                            |                        |                                                                     | auth       |
+|        |          |                            |                        |                                                                     | can:admin  |
+|        | GET|HEAD | nature                     | index-nature           | App\Http\Controllers\NatureController@index                         | web        |
+|        |          |                            |                        |                                                                     | auth       |
+|        | GET|HEAD | nature/create              | create-nature          | App\Http\Controllers\NatureController@create                        | web        |
+|        |          |                            |                        |                                                                     | auth       |
+|        |          |                            |                        |                                                                     | can:admin  |
+|        | POST     | nature/create              | store-nature           | App\Http\Controllers\NatureController@store                         | web        |
+|        |          |                            |                        |                                                                     | auth       |
+|        |          |                            |                        |                                                                     | can:admin  |
+|        | GET|HEAD | nature/{id}                | show-nature            | App\Http\Controllers\NatureController@show                          | web        |
+|        |          |                            |                        |                                                                     | auth       |
+|        | DELETE   | nature/{id}                | destroy-nature         | App\Http\Controllers\NatureController@destroy                       | web        |
+|        |          |                            |                        |                                                                     | auth       |
+|        |          |                            |                        |                                                                     | can:admin  |
+|        | PUT      | nature/{id}/update         | update-nature          | App\Http\Controllers\NatureController@update                        | web        |
+|        |          |                            |                        |                                                                     | auth       |
+|        |          |                            |                        |                                                                     | can:admin  |
+|        | GET|HEAD | nature/{id}/update         | edit-nature            | App\Http\Controllers\NatureController@edit                          | web        |
+|        |          |                            |                        |                                                                     | auth       |
+|        |          |                            |                        |                                                                     | can:admin  |
+|        | GET|HEAD | occurrence                 | index-occurrence       | App\Http\Controllers\OccurrenceController@index                     | web        |
+|        |          |                            |                        |                                                                     | auth       |
+|        | POST     | occurrence/create          | store-occurrence       | App\Http\Controllers\OccurrenceController@store                     | web        |
+|        |          |                            |                        |                                                                     | auth       |
+|        | GET|HEAD | occurrence/create          | create-occurrence      | App\Http\Controllers\OccurrenceController@create                    | web        |
+|        |          |                            |                        |                                                                     | auth       |
+|        | DELETE   | occurrence/{id}            | destroy-occurrence     | App\Http\Controllers\OccurrenceController@destroy                   | web        |
+|        |          |                            |                        |                                                                     | auth       |
+|        | GET|HEAD | occurrence/{id}            | show-occurrence        | App\Http\Controllers\OccurrenceController@show                      | web        |
+|        |          |                            |                        |                                                                     | auth       |
+|        | PUT      | occurrence/{id}/update     | update-occurrence      | App\Http\Controllers\OccurrenceController@update                    | web        |
+|        |          |                            |                        |                                                                     | auth       |
+|        | GET|HEAD | occurrence/{id}/update     | edit-occurrence        | App\Http\Controllers\OccurrenceController@edit                      | web        |
+|        |          |                            |                        |                                                                     | auth       |
+|        | POST     | password/confirm           |                        | App\Http\Controllers\Auth\ConfirmPasswordController@confirm         | web        |
+|        |          |                            |                        |                                                                     | auth       |
+|        | GET|HEAD | password/confirm           | password.confirm       | App\Http\Controllers\Auth\ConfirmPasswordController@showConfirmForm | web        |
+|        |          |                            |                        |                                                                     | auth       |
+|        | GET|HEAD | placefreature              | index-placefreature    | App\Http\Controllers\PlacefreatureController@index                  | web        |
+|        |          |                            |                        |                                                                     | auth       |
+|        | POST     | placefreature/create       | store-placefreature    | App\Http\Controllers\PlacefreatureController@store                  | web        |
+|        |          |                            |                        |                                                                     | auth       |
+|        |          |                            |                        |                                                                     | can:admin  |
+|        | GET|HEAD | placefreature/create       | create-placefreature   | App\Http\Controllers\PlacefreatureController@create                 | web        |
+|        |          |                            |                        |                                                                     | auth       |
+|        |          |                            |                        |                                                                     | can:admin  |
+|        | DELETE   | placefreature/{id}         | destroy-placefreature  | App\Http\Controllers\PlacefreatureController@destroy                | web        |
+|        |          |                            |                        |                                                                     | auth       |
+|        |          |                            |                        |                                                                     | can:admin  |
+|        | GET|HEAD | placefreature/{id}         | show-placefreature     | App\Http\Controllers\PlacefreatureController@show                   | web        |
+|        |          |                            |                        |                                                                     | auth       |
+|        | PUT      | placefreature/{id}/update  | update-placefreature   | App\Http\Controllers\PlacefreatureController@update                 | web        |
+|        |          |                            |                        |                                                                     | auth       |
+|        |          |                            |                        |                                                                     | can:admin  |
+|        | GET|HEAD | placefreature/{id}/update  | edit-placefreature     | App\Http\Controllers\PlacefreatureController@edit                   | web        |
+|        |          |                            |                        |                                                                     | auth       |
+|        |          |                            |                        |                                                                     | can:admin  |
+|        | GET|HEAD | placeuse                   | index-placeuse         | App\Http\Controllers\PlaceuseController@index                       | web        |
+|        |          |                            |                        |                                                                     | auth       |
+|        | GET|HEAD | placeuse/create            | create-placeuse        | App\Http\Controllers\PlaceuseController@create                      | web        |
+|        |          |                            |                        |                                                                     | auth       |
+|        |          |                            |                        |                                                                     | can:admin  |
+|        | POST     | placeuse/create            | store-placeuse         | App\Http\Controllers\PlaceuseController@store                       | web        |
+|        |          |                            |                        |                                                                     | auth       |
+|        |          |                            |                        |                                                                     | can:admin  |
+|        | DELETE   | placeuse/{id}              | destroy-placeuse       | App\Http\Controllers\PlaceuseController@destroy                     | web        |
+|        |          |                            |                        |                                                                     | auth       |
+|        |          |                            |                        |                                                                     | can:admin  |
+|        | GET|HEAD | placeuse/{id}              | show-placeuse          | App\Http\Controllers\PlaceuseController@show                        | web        |
+|        |          |                            |                        |                                                                     | auth       |
+|        | GET|HEAD | placeuse/{id}/update       | edit-placeuse          | App\Http\Controllers\PlaceuseController@edit                        | web        |
+|        |          |                            |                        |                                                                     | auth       |
+|        |          |                            |                        |                                                                     | can:admin  |
+|        | PUT      | placeuse/{id}/update       | update-placeuse        | App\Http\Controllers\PlaceuseController@update                      | web        |
+|        |          |                            |                        |                                                                     | auth       |
+|        |          |                            |                        |                                                                     | can:admin  |
+|        | GET|HEAD | problem                    | index-problem          | App\Http\Controllers\ProblemController@index                        | web        |
+|        |          |                            |                        |                                                                     | auth       |
+|        | GET|HEAD | problem/create             | create-problem         | App\Http\Controllers\ProblemController@create                       | web        |
+|        |          |                            |                        |                                                                     | auth       |
+|        |          |                            |                        |                                                                     | can:admin  |
+|        | POST     | problem/create             | store-problem          | App\Http\Controllers\ProblemController@store                        | web        |
+|        |          |                            |                        |                                                                     | auth       |
+|        |          |                            |                        |                                                                     | can:admin  |
+|        | DELETE   | problem/{id}               | destroy-problem        | App\Http\Controllers\ProblemController@destroy                      | web        |
+|        |          |                            |                        |                                                                     | auth       |
+|        |          |                            |                        |                                                                     | can:admin  |
+|        | GET|HEAD | problem/{id}               | show-problem           | App\Http\Controllers\ProblemController@show                         | web        |
+|        |          |                            |                        |                                                                     | auth       |
+|        | PUT      | problem/{id}/update        | update-problem         | App\Http\Controllers\ProblemController@update                       | web        |
+|        |          |                            |                        |                                                                     | auth       |
+|        |          |                            |                        |                                                                     | can:admin  |
+|        | GET|HEAD | problem/{id}/update        | edit-problem           | App\Http\Controllers\ProblemController@edit                         | web        |
+|        |          |                            |                        |                                                                     | auth       |
+|        |          |                            |                        |                                                                     | can:admin  |
+|        | GET|HEAD | profile                    | profile                | App\Http\Controllers\UserController@profile                         | web        |
+|        |          |                            |                        |                                                                     | auth       |
+|        | GET|HEAD | profile/password           | password               | App\Http\Controllers\UserController@changePassword                  | web        |
+|        |          |                            |                        |                                                                     | auth       |
+|        | PUT      | profile/password/{id}      | password-store         | App\Http\Controllers\UserController@storePassword                   | web        |
+|        |          |                            |                        |                                                                     | auth       |
+|        | GET|HEAD | profile/password/{id}      | passwordId             | App\Http\Controllers\UserController@changePasswordID                | web        |
+|        |          |                            |                        |                                                                     | auth       |
+|        |          |                            |                        |                                                                     | can:admin  |
+|        | GET|HEAD | register                   | register               | App\Http\Controllers\Auth\RegisterController@showRegistrationForm   | web        |
+|        |          |                            |                        |                                                                     | auth       |
+|        | POST     | register                   |                        | App\Http\Controllers\Auth\RegisterController@register               | web        |
+|        |          |                            |                        |                                                                     | auth       |
+|        | GET|HEAD | rescuer                    | index-rescuer          | App\Http\Controllers\RescuerController@index                        | web        |
+|        |          |                            |                        |                                                                     | auth       |
+|        | GET|HEAD | rescuer/create             | create-rescuer         | App\Http\Controllers\RescuerController@create                       | web        |
+|        |          |                            |                        |                                                                     | auth       |
+|        |          |                            |                        |                                                                     | can:admin  |
+|        | POST     | rescuer/create             | store-rescuer          | App\Http\Controllers\RescuerController@store                        | web        |
+|        |          |                            |                        |                                                                     | auth       |
+|        |          |                            |                        |                                                                     | can:admin  |
+|        | GET|HEAD | rescuer/{id}               | show-rescuer           | App\Http\Controllers\RescuerController@show                         | web        |
+|        |          |                            |                        |                                                                     | auth       |
+|        | DELETE   | rescuer/{id}               | destroy-rescuer        | App\Http\Controllers\RescuerController@destroy                      | web        |
+|        |          |                            |                        |                                                                     | auth       |
+|        |          |                            |                        |                                                                     | can:admin  |
+|        | PUT      | rescuer/{id}/update        | update-rescuer         | App\Http\Controllers\RescuerController@update                       | web        |
+|        |          |                            |                        |                                                                     | auth       |
+|        |          |                            |                        |                                                                     | can:admin  |
+|        | GET|HEAD | rescuer/{id}/update        | edit-rescuer           | App\Http\Controllers\RescuerController@edit                         | web        |
+|        |          |                            |                        |                                                                     | auth       |
+|        |          |                            |                        |                                                                     | can:admin  |
+|        | GET|HEAD | type                       | index-type             | App\Http\Controllers\TypeController@index                           | web        |
+|        |          |                            |                        |                                                                     | auth       |
+|        | POST     | type/create                | store-type             | App\Http\Controllers\TypeController@store                           | web        |
+|        |          |                            |                        |                                                                     | auth       |
+|        |          |                            |                        |                                                                     | can:admin  |
+|        | GET|HEAD | type/create                | create-type            | App\Http\Controllers\TypeController@create                          | web        |
+|        |          |                            |                        |                                                                     | auth       |
+|        |          |                            |                        |                                                                     | can:admin  |
+|        | GET|HEAD | type/{id}                  | show-type              | App\Http\Controllers\TypeController@show                            | web        |
+|        |          |                            |                        |                                                                     | auth       |
+|        | DELETE   | type/{id}                  | destroy-type           | App\Http\Controllers\TypeController@destroy                         | web        |
+|        |          |                            |                        |                                                                     | auth       |
+|        |          |                            |                        |                                                                     | can:admin  |
+|        | PUT      | type/{id}/update           | update-type            | App\Http\Controllers\TypeController@update                          | web        |
+|        |          |                            |                        |                                                                     | auth       |
+|        |          |                            |                        |                                                                     | can:admin  |
+|        | GET|HEAD | type/{id}/update           | edit-type              | App\Http\Controllers\TypeController@edit                            | web        |
+|        |          |                            |                        |                                                                     | auth       |
+|        |          |                            |                        |                                                                     | can:admin  |
+|        | GET|HEAD | user                       | index-user             | App\Http\Controllers\UserController@index                           | web        |
+|        |          |                            |                        |                                                                     | auth       |
+|        |          |                            |                        |                                                                     | can:admin  |
+|        | DELETE   | user/{id}                  | destroy-user           | App\Http\Controllers\UserController@destroy                         | web        |
+|        |          |                            |                        |                                                                     | auth       |
+|        |          |                            |                        |                                                                     | can:admin  |
+|        | GET|HEAD | user/{id}                  | show-user              | App\Http\Controllers\UserController@show                            | web        |
+|        |          |                            |                        |                                                                     | auth       |
+|        | GET|HEAD | user/{id}/update           | edit-user              | App\Http\Controllers\UserController@edit                            | web        |
+|        |          |                            |                        |                                                                     | auth       |
+|        | PUT      | user/{id}/update           | update-user            | App\Http\Controllers\UserController@update                          | web        |
+|        |          |                            |                        |                                                                     | auth       |
+|        | GET|HEAD | victim                     | index-victim           | App\Http\Controllers\VictimController@index                         | web        |
+|        |          |                            |                        |                                                                     | auth       |
+|        | GET|HEAD | victim/create              | create-victim          | App\Http\Controllers\VictimController@create                        | web        |
+|        |          |                            |                        |                                                                     | auth       |
+|        | POST     | victim/create              | store-victim           | App\Http\Controllers\VictimController@store                         | web        |
+|        |          |                            |                        |                                                                     | auth       |
+|        | DELETE   | victim/{id}                | destroy-victim         | App\Http\Controllers\VictimController@destroy                       | web        |
+|        |          |                            |                        |                                                                     | auth       |
+|        | GET|HEAD | victim/{id}                | show-victim            | App\Http\Controllers\VictimController@show                          | web        |
+|        |          |                            |                        |                                                                     | auth       |
+|        | GET|HEAD | victim/{id}/update         | edit-victim            | App\Http\Controllers\VictimController@edit                          | web        |
+|        |          |                            |                        |                                                                     | auth       |
+|        | PUT      | victim/{id}/update         | update-victim          | App\Http\Controllers\VictimController@update                        | web        |
+|        |          |                            |                        |                                                                     | auth       |
++--------+----------+----------------------------+------------------------+---------------------------------------------------------------------+------------+

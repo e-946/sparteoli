@@ -16,4 +16,9 @@ class Rescuer extends Model
     {
         $this->attributes['name'] = ucfirst(mb_strtolower($value));
     }
+
+    public function victims()
+    {
+        return $this->hasMany(Victim::class);
+    }
 }

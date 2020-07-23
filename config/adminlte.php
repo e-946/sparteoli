@@ -249,7 +249,7 @@ return [
         ],
         [
             'text'        => 'Ocorrências',
-            'url'         => '#',
+            'url'         => '/occurrence',
             'icon'        => 'fas fa-fw fa-file',
             #'label'       => 4,
             'label_color' => 'success',
