@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Meanused;
+use App\Nature;
 use App\Occurrence;
+use App\Placefreature;
+use App\Placeuse;
 use Illuminate\Http\Request;
 
 class OccurrenceController extends Controller
@@ -14,7 +18,7 @@ class OccurrenceController extends Controller
      */
     public function index()
     {
-        $occurrences = Occurrence::query()->orderBy('name')->get();
+        $occurrences = Occurrence::query()->orderBy('created_at', 'DESC')->limit(10);
         return response(view('occurrence.index', compact('occurrences')), 200);
     }
 
@@ -25,7 +29,12 @@ class OccurrenceController extends Controller
      */
     public function create()
     {
-        return response(view('occurrence.create'), 200);
+        $means = Meanused::all();
+        $uses = Placeuse::all();
+        $freatures = Placefreature::all();
+        $natures = Nature::all();
+
+        return response(view('occurrence.create', compact('means', 'uses', 'freatures', 'natures')), 200);
     }
 
     /**
@@ -36,21 +45,22 @@ class OccurrenceController extends Controller
      */
     public function store(Request $request)
     {
-        if (empty($request)) {
-            return response('Formulário vazio');
-        }
-        Occurrence::create($request->all());
+        $data = $request->all();
+        $data['address'] = $data['street'] . ', Nº ' . $data['number'];
+        unset($data['street'], $data['number']);
+        $occurrence = Occurrence::create($data);
+        $data['occurrence_id'] = $occurrence->id;
 
-        return response(redirect()->route('index-occurrence'));
+        return response(redirect()->route('show-occurrence', $occurrence->id));
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(int $id)
     {
         $occurrence = Occurrence::find($id);
         return response(view('occurrence.one', compact('occurrence')));
@@ -59,41 +69,34 @@ class OccurrenceController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Occurrence  $occurrence
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Occurrence $occurrence)
     {
-        $occurrence = Occurrence::find($id);
-        return response(view('occurrence.update', compact('occurrence')));
+        //
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Occurrence  $occurrence
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Occurrence $occurrence)
     {
-        $occurrence = Occurrence::find($id);
-        $occurrence->update($request->all());
-
-        return response(redirect()->route('show-occurrence', $occurrence->id));
+        //
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Occurrence  $occurrence
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Occurrence $occurrence)
     {
-        $occurrence = Occurrence::find($id);
-        $occurrence->delete();
-
-        return response(redirect(route('index-occurrence')));
+        //
     }
 }

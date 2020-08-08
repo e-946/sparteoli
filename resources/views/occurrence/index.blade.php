@@ -3,7 +3,7 @@
 @section('title', 'Fireforce')
 
 @section('content_header')
-    <h1>Ocorrências</h1>
+    <h1>As ocorrências</h1>
 @stop
 
 @section('content')
@@ -15,20 +15,20 @@
         </div>
         <div class="d-flex justify-content-center">
             <div class="list-group col-md-8">
-                @foreach($occurences as $ocurrence)
+                @foreach($occurrences as $occurrence)
                     <div class="list-group-item d-flex justify-content-between align-content-center flex-wrap">
-                        <a class="link-muted" href="{{ route('show-ocurrence', $ocurrence->id) }}">
-                            <p class="mb-0">{{ $ocurrence->name }}</p>
+                        <a class="link-muted" href="{{ route('show-occurrence', $occurrence->id) }}">
+                            <p class="mb-0">{{ $occurrence->requester }}</p>
                         </a>
                         <div class="d-flex justify-content-around">
-                            <a class="btn btn-primary mr-2" href="{{route('edit-ocurrence', $ocurrence->id)}}">
+                            <a class="btn btn-primary mr-2" href="{{route('edit-occurrence', $occurrence->id)}}">
                                 <p class="mb-0">
                                     <i class="fas fa-edit"></i>
                                     Atualizar
                                 </p>
                             </a>
-                            <form method="post" action="{{ route('destroy-ocurrence', $ocurrence->id) }}"
-                                  onsubmit="return confirm('Tem certeza que deseja remover {{addslashes( $ocurrence->name )}}?')">
+                            <form method="post" action="{{ route('destroy-occurrence', $occurrence->id) }}"
+                                  onsubmit="return confirm('Tem certeza que deseja remover {{addslashes( $occurrence->id )}}?')">
                                 @method('DELETE')
                                 @csrf
                                 <button class="btn btn-danger">

@@ -4,6 +4,10 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @method static create()
+ * @method static find(int $id)
+ */
 class Victim extends Model
 {
     protected $guarded = [];
@@ -26,5 +30,10 @@ class Victim extends Model
     public function problems()
     {
         return $this->belongsToMany(Problem::class, 'victims-problems', 'victim_id', 'problem_id');
+    }
+
+    public function occurrence()
+    {
+        return $this->belongsTo(Occurrence::class);
     }
 }

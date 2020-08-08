@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\VictimCreator;
+use App\Helpers\VictimDestroyer;
 use App\Problem;
 use App\Rescuer;
 use App\Victim;
@@ -39,14 +41,26 @@ class VictimController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store(Request $request, int $occurrence_id)
     {
         if (empty($request)) {
             return response('Formulário vazio');
         }
-        Victim::create($request->all());
 
-        return response(redirect()->route('index-victim'));
+        if (!empty($request->problemForSave)){
+            new VictimCreator(
+                $request->name,
+                $request->age,
+                $request->sex,
+                $request->fatal,
+                $request->conscious,
+                $request->rescuer_id,
+                $request->problemForSave,
+                $occurrence_id
+            );
+        }
+
+        return response(redirect()->route('show-occurrence', $occurrence_id));
     }
 
     /**
@@ -70,7 +84,9 @@ class VictimController extends Controller
     public function edit($id)
     {
         $victim = Victim::find($id);
-        return response(view('victim.update', compact('victim')));
+        $rescuers = Rescuer::all();
+        $problems = Problem::all();
+        return response(view('victim.update', compact('victim', 'rescuers', 'problems')));
     }
 
     /**
@@ -83,7 +99,16 @@ class VictimController extends Controller
     public function update(Request $request, $id)
     {
         $victim = Victim::find($id);
-        $victim->update($request->all());
+        $victim->update([
+            'name' => $request->name,
+            'age' => $request->age,
+            'sex' => $request->sex,
+            'rescuer_id' => $request->rescuer_id,
+            'fatal' => $request->fatal,
+            'conscious' => $request->conscious,
+        ]);
+
+        $victim->problems()->sync($request->problemForSave);
 
         return response(redirect()->route('show-victim', $victim->id));
     }
@@ -96,8 +121,7 @@ class VictimController extends Controller
      */
     public function destroy($id)
     {
-        $victim = Victim::find($id);
-        $victim->delete();
+        new VictimDestroyer($id);
 
         return response(redirect(route('index-victim')));
     }

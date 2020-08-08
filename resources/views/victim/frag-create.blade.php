@@ -1,18 +1,4 @@
-@extends('adminlte::page')
-
-@section('title', 'Fireforce')
-
-@section('content_header')
-    <h1>Adicionar Vítimas</h1>
-@stop
-
-@section('content')
-    <a class="btn btn-info mb-5" href="{{ url()->previous() }}">
-        <i class="fas fa-arrow-left"></i>
-        Voltar
-    </a>
-    <form method="post">
-        @csrf
+@section('victim')
         <div class="mb-2 mx-sm-3">
             <div class="form-row mb-3">
                 <div class="col">
@@ -74,8 +60,6 @@
                 </div>
             </div>
         </div>
-        <button type="submit" class="btn btn-success mb-2">Salvar</button>
-    </form>
 
     <script>
         function ckChange(){
@@ -89,4 +73,4 @@
             }
         }
     </script>
-@stop
+@endsection

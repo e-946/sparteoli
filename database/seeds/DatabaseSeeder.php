@@ -21,7 +21,6 @@ class DatabaseSeeder extends Seeder
             PlaceUsesSeeder::class,
             ProblemsSeeder::class,
             RescuersSeeder::class,
-            RescuersSeeder::class,
         ]);
 
     }

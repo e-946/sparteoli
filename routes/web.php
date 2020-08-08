@@ -132,19 +132,19 @@ Route::group(['middleware' => ['auth']], function (){
 
     Route::prefix('occurrence')->group(function () {
         Route::get('/', 'OccurrenceController@index')->name('index-occurrence');
-        Route::get('/create', 'OccurrenceController@create')->name('create-occurrence');
         Route::get('/{id}', 'OccurrenceController@show')->name('show-occurrence')->where('id', '[0-9]+');
+        Route::get('/create', 'OccurrenceController@create')->name('create-occurrence');
         Route::post('/create', 'OccurrenceController@store')->name('store-occurrence');
         Route::delete('/{id}', 'OccurrenceController@destroy')->name('destroy-occurrence')->where('id', '[0-9]+');
         Route::get('/{id}/update', 'OccurrenceController@edit')->name('edit-occurrence')->where('id', '[0-9]+');
         Route::put('/{id}/update', 'OccurrenceController@update')->name('update-occurrence')->where('id', '[0-9]+');
     });
 
-    Route::prefix('victim')->group(function () {
+    Route::prefix('/victim')->group(function () {
         Route::get('/', 'VictimController@index')->name('index-victim');
         Route::get('/{id}', 'VictimController@show')->name('show-victim')->where('id', '[0-9]+');
-        Route::get('/create', 'VictimController@create')->name('create-victim');
-        Route::post('/create', 'VictimController@store')->name('store-victim');
+        Route::get('/create/{occurrence_id}', 'VictimController@create')->name('create-victim')->where('occurrence_id', '[0-9]+');
+        Route::post('/create/{occurrence_id}', 'VictimController@store')->name('store-victim')->where('occurrence_id', '[0-9]+');
         Route::delete('/{id}', 'VictimController@destroy')->name('destroy-victim')->where('id', '[0-9]+');
         Route::get('/{id}/update', 'VictimController@edit')->name('edit-victim')->where('id', '[0-9]+');
         Route::put('/{id}/update', 'VictimController@update')->name('update-victim')->where('id', '[0-9]+');

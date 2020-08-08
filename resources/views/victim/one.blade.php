@@ -37,15 +37,30 @@
                     <h5 class="mb-1 font-weight-bold">Informações:</h5>
                     <small>Última alteração: {{ date( 'd\/m\/Y - H:i', mktime($victim->update_at)) }}</small>
                 </div>
-                <p class="mb-1 font-weight-normal">Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Ut mattis sed dui quis tincidunt. Morbi ligula justo, luctus at nunc a, tincidunt ultrices nisi.
-                    Duis ac tellus eleifend velit aliquam egestas. Donec ut rutrum tortor, in fermentum nisl.
-                    Morbi et nisl sit amet justo viverra malesuada. Maecenas posuere bibendum tortor ac congue.
-                    Aenean venenatis, dui sit amet molestie efficitur, sem dolor iaculis neque, a congue lacus metus eget purus.
-                    Suspendisse ut consequat nulla. Duis metus erat, bibendum ac tincidunt ac, aliquet eu ipsum.
-                    Aenean lobortis nunc et tellus condimentum, vel lacinia tortor blandit.
-                    Ut vitae porttitor justo.</p>
-                <small>Donec id elit non mi porta.</small>
+                <div class="mb-1 font-weight-normal">
+                    <ul>
+                        <li>
+                            Idade: {{ $victim->age }}
+                        </li>
+                        <li>
+                            Sexo: {{ $victim->sex == 'M' ? 'Masculino' : 'Feminino' }}
+                        </li>
+                        <li>
+                            Socorrista: {{ $victim->rescuer->name }}
+                        </li>
+                        <li>
+                            Problemas:
+                        @foreach($victim->problems as $problem)
+                        <ul>
+                            <li>
+                                {{ $problem->name }}
+                            </li>
+                        </ul>
+                        @endforeach
+                        </li>
+                    </ul>
+                </div>
+                <p>{{ $victim->fatal ? 'Vítima fatal' : ($victim->conscious ? 'Vítima não fatal e consciente' : 'Vítima não fatal e não consciente') }}</p>
             </div>
         </div>
     </div>
