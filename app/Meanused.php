@@ -12,6 +12,11 @@ class Meanused extends Model
 {
     protected $guarded = [];
 
+    public function occurrences()
+    {
+        return $this->hasMany(Occurrence::class);
+    }
+
     public function setNameAttribute($value)
     {
         $this->attributes['name'] = ucfirst(mb_strtolower($value));

@@ -6,6 +6,7 @@
     <h1>As ocorrências</h1>
 @stop
 
+
 @section('content')
     <div class="container">
         <div class="d-flex justify-content-end mb-5">
@@ -18,7 +19,7 @@
                 @foreach($occurrences as $occurrence)
                     <div class="list-group-item d-flex justify-content-between align-content-center flex-wrap">
                         <a class="link-muted" href="{{ route('show-occurrence', $occurrence->id) }}">
-                            <p class="mb-0">{{ $occurrence->requester }}</p>
+                            <p class="mb-0">{{ $occurrence->id }}</p>
                         </a>
                         <div class="d-flex justify-content-around">
                             <a class="btn btn-primary mr-2" href="{{route('edit-occurrence', $occurrence->id)}}">

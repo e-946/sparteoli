@@ -3,126 +3,229 @@
 @section('title', 'Fireforce')
 
 @section('content_header')
-    <h1>Alterar vítima:</h1>
+    <h1>Alterar ocorrência {{ $occurrence->id }}:</h1>
 @stop
 
 @section('content')
-    <a class="btn btn-info mb-5" href="{{ url()->previous() }}">
+    <a class="btn btn-info mb-5" href="{{ url()->previous() == route('show-occurrence', ['id' => $occurrence->id]) ? route('show-occurrence', ['id' => $occurrence->id]) : route('index-occurrence') }}">
         <i class="fas fa-arrow-left"></i>
         Voltar
     </a>
-    <form method="post" class="" onsubmit="return confirm('Tem certeza que deseja atualizar {{addslashes( $victim->name )}}?')">
+    <form method="post" class="" onsubmit="return confirm('Tem certeza que deseja atualizar {{addslashes( $occurrence->id )}}?')">
         @method('PUT')
         @csrf
         <div class="mb-2 mx-sm-3">
-            <div class="form-row mb-3">
+            <fieldset class="form-row mb-5">
+                <legend>Data e chamado</legend>
+                <div class="col-auto">
+                    <label for="date" class="">Data:</label>
+                    <input id="date" type="date" name="date" class="form-control" autofocus required value="{{ $occurrence->date }}">
+                </div>
+                <div class="col-auto">
+                    <label for="call_time" class="">Horário do chamado:</label>
+                    <input id="call_time" type="time" name="call_time" class="form-control" required value="{{ $occurrence->call_time }}">
+                </div>
+                <div class="col-auto">
+                    <label for="arrival_time" class="">Horário da chegada:</label>
+                    <input id="arrival_time" type="time" name="arrival_time" class="form-control" required value="{{ $occurrence->arrival_time }}">
+                </div>
+                <div class="col-auto">
+                    <label for="end_time" class="">Horário do encerramento:</label>
+                    <input id="end_time" type="time" name="end_time" class="form-control" required value="{{ $occurrence->end_time }}">
+                </div>
+                <div class="col-auto">
+                    <label for="meanused" class="">Meio de chamado utilizado:</label>
+                    <select id="meanused" type="number" name="meanused_id" class="form-control" required>
+                        <option selected class="text-bold" disabled>Selecione</option>
+                        @foreach($means as $mean)
+                            <option value="{{ $mean->id }}" {{ $occurrence->meanused->id === $mean->id ? 'selected' : '' }}>{{ $mean->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </fieldset>
+            <fieldset class="form-row mb-5">
+                <legend>Endereço</legend>
+                <div class="col-auto">
+                    <label for="zip_code" class="">Cep:</label>
+                    <input id="zip_code" type="text" name="zip_code" class="form-control" placeholder="CEP" pattern="[0-9]{8}" onblur="pesquisacep(this.value);" required value="{{ $occurrence->zip_code }}">
+                </div>
+                <div class="col-auto">
+                    <label for="street" class="">Rua:</label>
+                    <input id="street" type="text" name="street" class="form-control" placeholder="Rua" required value="{{ explode(', ',$occurrence->address)[0] }}">
+                </div>
+                <div class="col-auto">
+                    <label for="number" class="">Número:</label>
+                    <input id="number" type="number" name="number" class="form-control" required value="{{ str_replace('Nº ','',explode(', ',$occurrence->address)[1]) }}">
+                </div>
+                <div class="col-auto">
+                    <label for="neighborhood" class="">Bairro:</label>
+                    <input id="neighborhood" type="text" name="neighborhood" class="form-control" placeholder="Bairro" required value="{{ $occurrence->neighborhood }}">
+                </div>
+                <div class="col-auto">
+                    <label for="city" class="">Cidade:</label>
+                    <input id="city" type="text" name="city" class="form-control" placeholder="Cidade" required value="{{ $occurrence->city }}">
+                </div>
+                <div class="col-auto">
+                    <label for="state" class="">Estado:</label>
+                    <input id="state" type="text" name="state" class="form-control" placeholder="Estado" required value="{{ $occurrence->state }}">
+                </div>
+            </fieldset>
+            <fieldset class="form-row mb-5">
+                <legend>Solicitante</legend>
                 <div class="col">
-                    <label for="name" class="">Nome:</label>
-                    <input id="name" type="text" name="name" class="form-control" placeholder="Nome" value="{{ $victim->name }}" autofocus required>
+                    <label for="requester" class="">Nome:</label>
+                    <input id="requester" type="text" name="requester" class="form-control" placeholder="Nome" required value="{{ $occurrence->requester }}">
                 </div>
-            </div>
-            <div class="form-row mb-3">
-                <div class="col-4">
-                    <label for="age" class="">Idade:</label>
-                    <input id="age" type="number" name="age" class="form-control" placeholder="Idade" value="{{ $victim->age }}" required>
+                <div class="col">
+                    <label for="requester_phone" class="">Telefone:</label>
+                    <input id="requester_phone" type="tel" pattern="\([0-9]{2}\)[0-9]{5}\-[0-9]{4}" name="requester_phone" class="form-control" placeholder="Telefone" required value="{{ $occurrence->requester_phone }}">
                 </div>
-                <div class="col-4">
-                    <label for="sex" class="">Sexo:</label>
-                    @if($victim->sex == 'M')
-                        <select id="sex" type="number" name="sex" class="form-control" required>
-                            <option class="text-bold" disabled>Selecione</option>
-                            <option selected value="M">Masculino</option>
-                            <option value="F">Feminino</option>
-                        </select>
-                    @else
-                        <select id="sex" type="number" name="sex" class="form-control" required>
-                            <option class="text-bold" disabled>Selecione</option>
-                            <option value="M">Masculino</option>
-                            <option selected value="F">Feminino</option>
-                        </select>
-                    @endif
+            </fieldset>
+            <fieldset class="form-row mb-5">
+                <legend>Resumo</legend>
+                <div class="col">
+                    <label for="resume" class="">Detalhes da ocorrência: </label>
+                    <textarea id="resume" name="resume" class="form-control" form="form">{{ $occurrence->resume }}</textarea>
                 </div>
-            </div>
-            <div class="form-row mb-3">
-                <div class="col mr-3">
-                    <label for="rescuer" class="">Socorrista:</label>
-                    <select id="rescuer" type="number" name="rescuer_id" class="form-control" required>
+            </fieldset>
+            <fieldset class="form-row mb-5">
+                <legend>Local</legend>
+                <div class="col">
+                    <label for="placefreature" class="">Caracteristica do local:</label>
+                    <select id="placefreature" type="number" name="placefreature_id" class="form-control" required>
                         <option class="text-bold" disabled>Selecione</option>
-                        @foreach($rescuers as $rescuer)
-                            <option {{ $victim->rescuer->id == $rescuer->id ? 'selected' : '' }} value="{{ $rescuer->id }}">{{ $rescuer->name }}</option>
+                        @foreach($freatures as $freature)
+                            <option value="{{ $freature->id }}" {{ $occurrence->placefreature->id === $freature->id ? 'selected' : '' }}>{{ $freature->name }}</option>
                         @endforeach
                     </select>
                 </div>
-                <div class="col text-left">
-                    Problemas encontrados
-                    <div class="form-check">
-                        @foreach($problems as $problem)
-                            <input id="{{ $problem->id }}" type="checkbox" name="problemForSave[]" class="form-check-input" value="{{ $problem->id }}"
-                                @foreach($victim->problems as $checkedProblem)
-                                    {{ $checkedProblem->id == $problem->id ? 'checked' : '' }}
-                                @endforeach
-                                >
-                            <label for="{{ $problem->id }}" class="form-check-label">{{ $problem->name }}</label>
-                            <br>
+                <div class="col">
+                    <label for="placeuse" class="">Uso do local:</label>
+                    <select id="placeuse" type="number" name="placeuse_id" class="form-control" required>
+                        <option selected class="text-bold" disabled>Selecione</option>
+                        @foreach($uses as $use)
+                            <option value="{{ $use->id }}" {{ $occurrence->placeuse->id === $use->id ? 'selected' : '' }}>{{ $use->name }}</option>
                         @endforeach
-                    </div>
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="col-4">
-                    <label for="fatal" class="">Sobre a fatalidade: </label>
-                    <select id="fatal" type="number" name="fatal" class="form-control" required onChange="ckChange()">
-                        <option class="text-bold" disabled>Selecione</option>
-                        @if( $victim->fatal == 1 )
-                            <option selected value="1">Vítima fatal</option>
-                            <option value="0">Vítima não fatal</option>
-                        @else
-                            <option value="1">Vítima fatal</option>
-                            <option selected value="0">Vítima não fatal</option>
-                        @endif
                     </select>
                 </div>
-                <div class="col-4">
-                    <label for="conscious" class="">Sobre a consciência: </label>
-                    @if( $victim->fatal == 1 )
-                    <select id="conscious" type="number" name="conscious" class="form-control" required disabled>
+                <div class="col">
+                    <label for="place_preservation" class="">É local de presevação:</label>
+                    <select id="place_preservation" type="number" name="place_preservation" class="form-control" required>
                         <option class="text-bold" disabled>Selecione</option>
-                        @if($victim->consious == 1)
-                            <option selected value="1">Vítima consciente</option>
-                            <option value="0">Vítima não consciente</option>
-                        @else
-                            <option value="1">Vítima consciente</option>
-                            <option selected value="0">Vítima não consciente</option>
-                        @endif
+                        <option value="1" {{ $occurrence->place_preservation === 1 ? 'selected' : '' }}>Sim</option>
+                        <option value="2" {{ $occurrence->place_preservation === 2 ? 'selected' : '' }}>Não</option>
                     </select>
-                    @else
-                        <select id="conscious" type="number" name="conscious" class="form-control" required>
-                            <option class="text-bold" disabled>Selecione</option>
-                            @if($victim->consious == 1)
-                                <option selected value="1">Vítima consciente</option>
-                                <option value="0">Vítima não consciente</option>
-                            @else
-                                <option value="1">Vítima consciente</option>
-                                <option selected value="0">Vítima não consciente</option>
-                            @endif
-                        </select>
-                    @endif
                 </div>
+            </fieldset>
+            <fieldset class="form-row mb-5">
+                <legend>Preenchedor</legend>
+                <div class="col">
+                    <label for="filler_name" class="">Nome: </label>
+                    <input id="filler_name" type="text" name="filler_name" class="form-control" placeholder="Nome" required value="{{ $occurrence->filler_name }}">
+                </div>
+                <div class="col">
+                    <label for="filler_register" class="">Registro: </label>
+                    <input id="filler_register" type="text" max="10" name="filler_register" class="form-control" placeholder="Registro" required value="{{ $occurrence->filler_register }}">
+                </div>
+                <div class="col">
+                    <label for="filler_patent" class="">Patente: </label>
+                    <input id="filler_patent" type="text" name="filler_patent" class="form-control" placeholder="Patente" required value="{{ $occurrence->filler_patent }}">
+                </div>
+            </fieldset>
+            <fieldset class="form-row mb-5">
+                <legend>Operação</legend>
+                <div class="col">
+                    <label for="type_id" class="">O tipo da operação</label>
+                    <select id="type_id" type="number" name="type_id" class="form-control" required>
+                        <option class="text-weight-bold" disabled>Selecione</option>
+                        @foreach($natures as $nature)
+                            <option class="text-bold" disabled>{{ $nature->name }}</option>
+                            @foreach($nature->types as $type)
+                                <option class="text-weight-normal" value="{{ $type->id }}" {{ $occurrence->type->id === $type->id ? 'selected' : '' }}>{{ $type->name }}</option>
+                            @endforeach
+                        @endforeach
+                    </select>
+                </div>
+            </fieldset>
+            <div class="m-5">
+                <label for="user_id" class="">Usuário: </label>
+                <p class="font-weight-normal">{{ $occurrence->user->name }}</p>
+                <input id="user_id" type="text" name="user_id" class="form-control" value="{{ $occurrence->user->id }}" hidden readonly>
             </div>
         </div>
         <button type="submit" class="btn btn-success mb-2">Salvar</button>
     </form>
 
     <script>
-        function ckChange(){
-            let fatal = document.getElementById('fatal');
-            let forDisable = document.getElementById('conscious');
-            if (fatal.options[fatal.selectedIndex].text === 'Vítima fatal') {
-                forDisable.disabled = true;
-                forDisable.value = null;
-            } else {
-                forDisable.disabled = false;
+
+        function limpa_formulario_cep() {
+            //Limpa valores do formulário de cep.
+            document.getElementById('street').value=("");
+            document.getElementById('neighborhood').value=("");
+            document.getElementById('city').value=("");
+            document.getElementById('state').value=("");
+        }
+
+        function meu_callback(conteudo) {
+            if (!("erro" in conteudo)) {
+                //Atualiza os campos com os valores.
+                this.limpa_formulario_cep();
+                document.getElementById('street').value=(conteudo.logradouro);
+                document.getElementById('neighborhood').value=(conteudo.bairro);
+                document.getElementById('city').value=(conteudo.localidade);
+                document.getElementById('city').readOnly=true;
+                document.getElementById('state').value=(conteudo.uf);
+                document.getElementById('state').readOnly=true;
+
+            } //end if.
+            else {
+                //CEP não Encontrado.
+                limpa_formulario_cep();
+                alert("CEP não encontrado.");
             }
         }
+
+        function pesquisacep(valor) {
+
+            //Nova variável "cep" somente com dígitos.
+            var cep = valor.replace(/\D/g, '');
+
+            //Verifica se campo cep possui valor informado.
+            if (cep !== "") {
+
+                //Expressão regular para validar o CEP.
+                var validacep = /^[0-9]{8}$/;
+
+                //Valida o formato do CEP.
+                if(validacep.test(cep)) {
+
+                    //Preenche os campos com "..." enquanto consulta webservice.
+                    document.getElementById('street').value="...";
+                    document.getElementById('neighborhood').value="...";
+                    document.getElementById('city').value="...";
+                    document.getElementById('state').value="...";
+
+                    //Cria um elemento javascript.
+                    var script = document.createElement('script');
+
+                    //Sincroniza com o callback.
+                    script.src = 'https://viacep.com.br/ws/'+ cep + '/json/?callback=meu_callback';
+
+                    //Insere script no documento e carrega o conteúdo.
+                    document.body.appendChild(script);
+
+                } //end if.
+                else {
+                    //cep é inválido.
+                    limpa_formulario_cep();
+                    alert("Formato de CEP inválido.");
+                }
+            } //end if.
+            else {
+                //cep sem valor, limpa formulário.
+                limpa_formulario_cep();
+            }
+        }
+
     </script>
 @stop

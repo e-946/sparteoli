@@ -16,6 +16,7 @@ class CreateNaturesTable extends Migration
         Schema::create('natures', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
+            $table->longText('desc')->nullable();
             $table->timestamps();
         });
     }

@@ -8,7 +8,7 @@
 
 @section('content')
     <div class="d-flex justify-content-between mb-5 flex-wrap">
-        <a class="btn btn-info" href="{{ url()->previous() }}">
+        <a class="btn btn-info" href="{{ route('index-occurrence') }}">
             <i class="fas fa-arrow-left"></i>
             Voltar
         </a>
@@ -19,12 +19,21 @@
                     Atualizar
                 </p>
             </a>
-            <a class="btn btn-success mr-2" href="{{route('create-victim', $occurrence->id)}}">
-                <p class="mb-0">
-                    <i class="fas fa-plus"></i>
-                    Adicionar Vítima
-                </p>
-            </a>
+            @if ( isset($occurrence->toArray()['victims']) )
+                <a class="btn btn-success mr-2" href="{{route('create-victim', ['occurrence_id' => $occurrence->id])}}">
+                    <p class="mb-0">
+                        <i class="fas fa-plus"></i>
+                        Adicionar Vítima
+                    </p>
+                </a>
+            @else
+                <a class="btn btn-success mr-2" href="{{route('index-victim', ['occurrence_id' => $occurrence->id])}}">
+                    <p class="mb-0">
+                        <i class="fas fa-list"></i>
+                        Listar Vítimas
+                    </p>
+                </a>
+            @endif
             <form method="post" action="{{ route('destroy-occurrence', $occurrence->id) }}"
                   onsubmit="return confirm('Tem certeza que deseja remover {{addslashes( $occurrence->name )}}?')">
                 @method('DELETE')

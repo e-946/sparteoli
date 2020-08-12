@@ -8,7 +8,7 @@
 
 @section('content')
     <div class="d-flex justify-content-between mb-5 flex-wrap">
-        <a class="btn btn-info" href="{{ url()->previous() }}">
+        <a class="btn btn-info" href="{{ url()->previous() == route('index-user') ? route('index-user') : url()->previous() }}">
             <i class="fas fa-arrow-left"></i>
             Voltar
         </a>
@@ -46,16 +46,10 @@
                 <div class="d-flex w-100 justify-content-between flex-wrap">
                     <h5 class="mb-1 font-weight-bold">Informações:</h5>
                     <small>{{ $user->admin ? 'Administrador' : '' }}</small>
-                    <small>Última alteração: {{ date( 'd\/m\/Y - H:i', mktime($user->update_at)) }}</small>
+                    <small>Última alteração: {{ date( 'd\/m\/Y - H:i', mktime($user->updated_at)) }}</small>
                 </div>
-                <p class="mb-1 font-weight-normal">Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Ut mattis sed dui quis tincidunt. Morbi ligula justo, luctus at nunc a, tincidunt ultrices nisi.
-                    Duis ac tellus eleifend velit aliquam egestas. Donec ut rutrum tortor, in fermentum nisl.
-                    Morbi et nisl sit amet justo viverra malesuada. Maecenas posuere bibendum tortor ac congue.
-                    Aenean venenatis, dui sit amet molestie efficitur, sem dolor iaculis neque, a congue lacus metus eget purus.
-                    Suspendisse ut consequat nulla. Duis metus erat, bibendum ac tincidunt ac, aliquet eu ipsum.
-                    Aenean lobortis nunc et tellus condimentum, vel lacinia tortor blandit.
-                    Ut vitae porttitor justo.</p>
+                <p class="mb-1 font-weight-normal">Usuário cadastrou {{ $user->occurrences->count() }} ocorrências</p>
+                <small>Data de criação: {{ date( 'd\/m\/Y - H:i', mktime($user->updated_at)) }}</small>
             </div>
         </div>
     </div>

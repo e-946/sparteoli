@@ -7,7 +7,7 @@
 @stop
 
 @section('content')
-    <a class="btn btn-info mb-5" href="{{ url()->previous() }}">
+    <a class="btn btn-info mb-5" href="{{ url()->previous() == route('show-nature', ['id' => $nature->id]) ? route('show-nature', ['id' => $nature->id]) : route('index-nature') }}">
         <i class="fas fa-arrow-left"></i>
         Voltar
     </a>

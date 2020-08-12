@@ -17,6 +17,11 @@ class Problem extends Model
         $this->attributes['name'] = ucfirst(mb_strtolower($value));
     }
 
+    public function setDescAttribute($value)
+    {
+        $this->attributes['desc'] = ucfirst(mb_strtolower($value));
+    }
+
     public function victims()
     {
         return $this->belongsToMany(Victim::class,'victims-problems','problem_id','victim_id');

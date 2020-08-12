@@ -22,6 +22,8 @@ class CreateVictimsTable extends Migration
             $table->boolean('fatal');
             $table->unsignedBigInteger('rescuer_id');
             $table->foreign('rescuer_id')->references('id')->on('rescuers');
+            $table->unsignedBigInteger('occurrence_id');
+            $table->foreign('occurrence_id')->references('id')->on('occurrences')->cascadeOnDelete();
             $table->timestamps();
         });
     }

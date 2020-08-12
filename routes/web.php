@@ -94,7 +94,6 @@ Route::group(['middleware' => ['auth']], function (){
     Route::prefix('type')->group(function () {
         Route::get('/', 'TypeController@index')->name('index-type');
         Route::get('/{id}', 'TypeController@show')->name('show-type')->where('id', '[0-9]+');
-
     });
 
     Route::prefix('fireprotection')->group(function () {
@@ -104,7 +103,6 @@ Route::group(['middleware' => ['auth']], function (){
 
     Route::prefix('rescuer')->group(function () {
         Route::get('/', 'RescuerController@index')->name('index-rescuer');
-        Route::get('/{id}', 'RescuerController@show')->name('show-rescuer')->where('id', '[0-9]+');
     });
 
     Route::prefix('problem')->group(function () {
@@ -113,15 +111,12 @@ Route::group(['middleware' => ['auth']], function (){
     });
     Route::prefix('placefreature')->group(function () {
         Route::get('/', 'PlacefreatureController@index')->name('index-placefreature');
-        Route::get('/{id}', 'PlacefreatureController@show')->name('show-placefreature')->where('id', '[0-9]+');
     });
     Route::prefix('meanused')->group(function () {
         Route::get('/', 'MeanusedController@index')->name('index-meanused');
-        Route::get('/{id}', 'MeanusedController@show')->name('show-meanused')->where('id', '[0-9]+');
     });
     Route::prefix('placeuse')->group(function () {
         Route::get('/', 'PlaceuseController@index')->name('index-placeuse');
-        Route::get('/{id}', 'PlaceuseController@show')->name('show-placeuse')->where('id', '[0-9]+');
     });
 
     Route::prefix('user')->group(function () {
@@ -133,21 +128,23 @@ Route::group(['middleware' => ['auth']], function (){
     Route::prefix('occurrence')->group(function () {
         Route::get('/', 'OccurrenceController@index')->name('index-occurrence');
         Route::get('/{id}', 'OccurrenceController@show')->name('show-occurrence')->where('id', '[0-9]+');
+
+
+        Route::prefix('{occurrence_id}/victim')->where(['occurrence_id' => '[0-9]+'])->group(function () {
+            Route::get('/', 'VictimController@index')->name('index-victim');
+            Route::get('/{id}', 'VictimController@show')->name('show-victim')->where('id', '[0-9]+');
+            Route::get('/create', 'VictimController@create')->name('create-victim');
+            Route::post('/create', 'VictimController@store')->name('store-victim');
+            Route::delete('/{id}', 'VictimController@destroy')->name('destroy-victim')->where('id', '[0-9]+');
+            Route::get('/{id}/update', 'VictimController@edit')->name('edit-victim')->where('id', '[0-9]+');
+            Route::put('/{id}/update', 'VictimController@update')->name('update-victim')->where('id', '[0-9]+');
+        });
+
         Route::get('/create', 'OccurrenceController@create')->name('create-occurrence');
         Route::post('/create', 'OccurrenceController@store')->name('store-occurrence');
         Route::delete('/{id}', 'OccurrenceController@destroy')->name('destroy-occurrence')->where('id', '[0-9]+');
         Route::get('/{id}/update', 'OccurrenceController@edit')->name('edit-occurrence')->where('id', '[0-9]+');
         Route::put('/{id}/update', 'OccurrenceController@update')->name('update-occurrence')->where('id', '[0-9]+');
-    });
-
-    Route::prefix('/victim')->group(function () {
-        Route::get('/', 'VictimController@index')->name('index-victim');
-        Route::get('/{id}', 'VictimController@show')->name('show-victim')->where('id', '[0-9]+');
-        Route::get('/create/{occurrence_id}', 'VictimController@create')->name('create-victim')->where('occurrence_id', '[0-9]+');
-        Route::post('/create/{occurrence_id}', 'VictimController@store')->name('store-victim')->where('occurrence_id', '[0-9]+');
-        Route::delete('/{id}', 'VictimController@destroy')->name('destroy-victim')->where('id', '[0-9]+');
-        Route::get('/{id}/update', 'VictimController@edit')->name('edit-victim')->where('id', '[0-9]+');
-        Route::put('/{id}/update', 'VictimController@update')->name('update-victim')->where('id', '[0-9]+');
     });
 
     Route::get('profile', 'UserController@profile')->name('profile');

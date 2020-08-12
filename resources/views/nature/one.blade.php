@@ -8,7 +8,7 @@
 
 @section('content')
     <div class="d-flex justify-content-between mb-5 flex-wrap">
-        <a class="btn btn-info" href="{{ url()->previous() }}">
+        <a class="btn btn-info" href="{{ route('index-nature') }}">
             <i class="fas fa-arrow-left"></i>
             Voltar
         </a>
@@ -38,14 +38,15 @@
                 <div class="d-flex w-100 justify-content-between flex-wrap">
                     <h5 class="mb-1 font-weight-bold">Informações:</h5>
                     <small>Tipos de ocorrência com essa natureza: {{ $nature->types->count() }}</small>
-                    <small>Última alteração: {{ date( 'd\/m\/Y - H:i', mktime($nature->update_at)) }}</small>
+                    <small>Última alteração: {{ date( 'd\/m\/Y - H:i', mktime($nature->updated_at)) }}</small>
                 </div>
-                <p class="mb-1 font-weight-normal">
-                    @foreach($nature->types as $type)
-                        <div  class="list-group-item">
-                            <a class="list-group-item-heading link-muted" href="{{route('show-type', $type->id)}}">{{ $type->name }}</a>
-                        </div>
-                    @endforeach
+                <p class="mb-1 font-weight-normal">{{ $protection->desc }}</p>
+                @foreach($nature->types as $type)
+                    <div  class="list-group-item">
+                        <a class="list-group-item-heading link-muted" href="{{route('show-type', $type->id)}}">{{ $type->name }}</a>
+                    </div>
+                @endforeach
+                <small>Criado em: {{ date( 'd\/m\/Y - H:i', mktime($nature->created_at)) }}</small>
             </div>
         </div>
     </div>

@@ -16,6 +16,7 @@ class CreateTypesTable extends Migration
         Schema::create('types', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
+            $table->longText('desc')->nullable();
             $table->unsignedBigInteger('nature_id');
             $table->foreign('nature_id')->references('id')->on('natures');
             $table->timestamps();

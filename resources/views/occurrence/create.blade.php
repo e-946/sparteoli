@@ -7,7 +7,7 @@
 @stop
 
 @section('content')
-    <a class="btn btn-info mb-5" href="{{ url()->previous() }}">
+    <a class="btn btn-info mb-5" href="{{ url()->previous() == route('index-occurrence') ? route('index-occurrence') : url()->previous() }}">
         <i class="fas fa-arrow-left"></i>
         Voltar
     </a>
@@ -22,15 +22,15 @@
                 </div>
                 <div class="col-auto">
                     <label for="call_time" class="">Horário do chamado:</label>
-                    <input id="call_time" type="time" name="call_time" class="form-control" autofocus required>
+                    <input id="call_time" type="time" name="call_time" class="form-control"  required>
                 </div>
                 <div class="col-auto">
                     <label for="arrival_time" class="">Horário da chegada:</label>
-                    <input id="arrival_time" type="time" name="arrival_time" class="form-control" autofocus required>
+                    <input id="arrival_time" type="time" name="arrival_time" class="form-control"  required>
                 </div>
                 <div class="col-auto">
                     <label for="end_time" class="">Horário do encerramento:</label>
-                    <input id="end_time" type="time" name="end_time" class="form-control" autofocus required>
+                    <input id="end_time" type="time" name="end_time" class="form-control"  required>
                 </div>
                 <div class="col-auto">
                     <label for="meanused" class="">Meio de chamado utilizado:</label>
@@ -190,7 +190,7 @@
             var cep = valor.replace(/\D/g, '');
 
             //Verifica se campo cep possui valor informado.
-            if (cep != "") {
+            if (cep !== "") {
 
                 //Expressão regular para validar o CEP.
                 var validacep = /^[0-9]{8}$/;
@@ -224,7 +224,7 @@
                 //cep sem valor, limpa formulário.
                 limpa_formulario_cep();
             }
-        };
+        }
 
     </script>
 @stop

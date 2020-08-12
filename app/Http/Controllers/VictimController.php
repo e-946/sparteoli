@@ -15,37 +15,37 @@ class VictimController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param int $occurrence_id
      * @return Response
      */
-    public function index()
+    public function index(int $occurrence_id)
     {
         $victims = Victim::query()->orderBy('name')->get();
-        return response(view('victim.index', compact('victims')), 200);
+        return response(view('victim.index', compact('victims', 'occurrence_id')), 200);
     }
 
     /**
      * Show the form for creating a new resource.
      *
+     * @param int $occurrence_id
      * @return Response
      */
-    public function create()
+    public function create(int $occurrence_id)
     {
         $rescuers = Rescuer::all();
         $problems = Problem::all();
-        return response(view('victim.create', compact('rescuers', 'problems')), 200);
+        return response(view('victim.create', compact('rescuers', 'problems', 'occurrence_id')), 200);
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param Request $request
+     * @param int $occurrence_id
      * @return Response
      */
     public function store(Request $request, int $occurrence_id)
     {
-        if (empty($request)) {
-            return response('Formulário vazio');
-        }
 
         if (!empty($request->problemForSave)){
             new VictimCreator(
@@ -60,43 +60,46 @@ class VictimController extends Controller
             );
         }
 
-        return response(redirect()->route('show-occurrence', $occurrence_id));
+        return response(redirect()->route('index-victim', $occurrence_id));
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $occurrence_id
+     * @param int $id
      * @return Response
      */
-    public function show($id)
+    public function show(int $occurrence_id, int $id)
     {
         $victim = Victim::find($id);
-        return response(view('victim.one', compact('victim')));
+        return response(view('victim.one', compact('victim', 'occurrence_id')));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $occurrence_id
+     * @param int $id
      * @return Response
      */
-    public function edit($id)
+    public function edit(int $occurrence_id, int $id)
     {
         $victim = Victim::find($id);
         $rescuers = Rescuer::all();
         $problems = Problem::all();
-        return response(view('victim.update', compact('victim', 'rescuers', 'problems')));
+        return response(view('victim.update', compact('victim', 'rescuers', 'problems', 'occurrence_id')));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param Request $request
-     * @param  int  $id
+     * @param int $occurrence_id
+     * @param int $id
      * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, int $occurrence_id, int $id)
     {
         $victim = Victim::find($id);
         $victim->update([
@@ -110,19 +113,20 @@ class VictimController extends Controller
 
         $victim->problems()->sync($request->problemForSave);
 
-        return response(redirect()->route('show-victim', $victim->id));
+        return response(redirect()->route('show-victim', ['occurrence_id' => $occurrence_id, 'id' => $victim->id]));
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $occurrence_id
+     * @param int $id
      * @return Response
      */
-    public function destroy($id)
+    public function destroy(int $occurrence_id, int $id)
     {
         new VictimDestroyer($id);
 
-        return response(redirect(route('index-victim')));
+        return response(redirect(route('index-victim', $occurrence_id)));
     }
 }

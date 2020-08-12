@@ -28,7 +28,7 @@
             @endif
         </div>
 
-        {{-- Email field --}}
+        {{-- Register field --}}
         <div class="input-group mb-3">
             <input type="text" name="register" class="form-control {{ $errors->has('register') ? 'is-invalid' : '' }}"
                    value="{{ old('register') }}" placeholder="{{ __('Registro') }}">

@@ -22,4 +22,9 @@ class Nature extends Model
     {
         $this->attributes['name'] = ucfirst(mb_strtolower($value));
     }
+
+    public function setDescAttribute($value)
+    {
+        $this->attributes['desc'] = ucfirst(mb_strtolower($value));
+    }
 }

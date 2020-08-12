@@ -16,6 +16,7 @@ class CreateProblemsTable extends Migration
         Schema::create('problems', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
+            $table->longText('desc')->nullable();
             $table->timestamps();
         });
     }

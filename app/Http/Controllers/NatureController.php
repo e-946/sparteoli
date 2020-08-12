@@ -50,7 +50,7 @@ class NatureController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(int $id)
     {
         $nature = Nature::find($id);
         return response(view('nature.one', compact('nature')));
@@ -62,7 +62,7 @@ class NatureController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(int $id)
     {
         $nature = Nature::find($id);
         return response(view('nature.update', compact('nature')));
@@ -89,7 +89,7 @@ class NatureController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $id)
     {
         $nature = Nature::find($id);
         foreach ($nature->types as $type) {

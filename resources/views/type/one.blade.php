@@ -8,7 +8,7 @@
 
 @section('content')
     <div class="d-flex justify-content-between mb-5 flex-wrap">
-        <a class="btn btn-info" href="{{ url()->previous() }}">
+        <a class="btn btn-info" href="{{ route('index-type') }}">
             <i class="fas fa-arrow-left"></i>
             Voltar
         </a>
