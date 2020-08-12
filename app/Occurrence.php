@@ -32,14 +32,19 @@ class Occurrence extends Model
         return $this->belongsTo(Type::class);
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public function victims()
     {
         return $this->hasMany(Victim::class);
     }
 
-    public function user()
+    public function resources()
     {
-        return $this->belongsTo(User::class);
+        return $this->hasMany(Resource::class);
     }
 
     public function setAddressAttribute($value)

@@ -19,21 +19,18 @@
                     Atualizar
                 </p>
             </a>
-            @if ( isset($occurrence->toArray()['victims']) )
-                <a class="btn btn-success mr-2" href="{{route('create-victim', ['occurrence_id' => $occurrence->id])}}">
-                    <p class="mb-0">
-                        <i class="fas fa-plus"></i>
-                        Adicionar Vítima
-                    </p>
-                </a>
-            @else
-                <a class="btn btn-success mr-2" href="{{route('index-victim', ['occurrence_id' => $occurrence->id])}}">
-                    <p class="mb-0">
-                        <i class="fas fa-list"></i>
-                        Listar Vítimas
-                    </p>
-                </a>
-            @endif
+            <a class="btn btn-success mr-2" href="{{route('index-victim', ['occurrence_id' => $occurrence->id])}}">
+                <p class="mb-0">
+                    <i class="fas fa-medkit"></i>
+                    Vítimas
+                </p>
+            </a>
+            <a class="btn btn-success mr-2" href="{{route('index-resource', ['occurrence_id' => $occurrence->id])}}">
+                <p class="mb-0">
+                    <i class="fas fa-hands-helping"></i>
+                    Recursos
+                </p>
+            </a>
             <form method="post" action="{{ route('destroy-occurrence', $occurrence->id) }}"
                   onsubmit="return confirm('Tem certeza que deseja remover {{addslashes( $occurrence->name )}}?')">
                 @method('DELETE')

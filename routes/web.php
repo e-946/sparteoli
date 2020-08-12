@@ -140,6 +140,16 @@ Route::group(['middleware' => ['auth']], function (){
             Route::put('/{id}/update', 'VictimController@update')->name('update-victim')->where('id', '[0-9]+');
         });
 
+        Route::prefix('{occurrence_id}/resource')->where(['occurrence_id' => '[0-9]+'])->group(function () {
+            Route::get('/', 'ResourceController@index')->name('index-resource');
+            Route::get('/{id}', 'ResourceController@show')->name('show-resource')->where('id', '[0-9]+');
+            Route::get('/create', 'ResourceController@create')->name('create-resource');
+            Route::post('/create', 'ResourceController@store')->name('store-resource');
+            Route::delete('/{id}', 'ResourceController@destroy')->name('destroy-resource')->where('id', '[0-9]+');
+            Route::get('/{id}/update', 'ResourceController@edit')->name('edit-resource')->where('id', '[0-9]+');
+            Route::put('/{id}/update', 'ResourceController@update')->name('update-resource')->where('id', '[0-9]+');
+        });
+
         Route::get('/create', 'OccurrenceController@create')->name('create-occurrence');
         Route::post('/create', 'OccurrenceController@store')->name('store-occurrence');
         Route::delete('/{id}', 'OccurrenceController@destroy')->name('destroy-occurrence')->where('id', '[0-9]+');
