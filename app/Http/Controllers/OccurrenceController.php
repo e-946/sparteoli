@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Fireprotection;
 use App\Helpers\VictimDestroyer;
 use App\Meanused;
 use App\Nature;
@@ -20,7 +21,7 @@ class OccurrenceController extends Controller
      */
     public function index()
     {
-        $occurrences = Occurrence::query()->orderBy('created_at', 'DESC')->limit(10)->get();
+        $occurrences = Occurrence::query()->orderBy('created_at', 'DESC')->paginate(10);
         return response(view('occurrence.index', compact('occurrences')), 200);
     }
 
@@ -35,8 +36,9 @@ class OccurrenceController extends Controller
         $uses = Placeuse::all();
         $freatures = Placefreature::all();
         $natures = Nature::all();
+        $protections = Fireprotection::all();
 
-        return response(view('occurrence.create', compact('means', 'uses', 'freatures', 'natures')), 200);
+        return response(view('occurrence.create', compact('means', 'uses', 'freatures', 'natures', 'protections')), 200);
     }
 
     /**
@@ -47,10 +49,11 @@ class OccurrenceController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->all();
+        $data = $request->except('protectionsForSave');
         $data['address'] = $data['street'] . ', Nº ' . $data['number'];
         unset($data['street'], $data['number']);
         $occurrence = Occurrence::create($data);
+        $occurrence->fireprotections()->attach($request->protectionsForSave);
         $data['occurrence_id'] = $occurrence->id;
 
         return response(redirect()->route('show-occurrence', $occurrence->id));
@@ -80,8 +83,9 @@ class OccurrenceController extends Controller
         $uses = Placeuse::all();
         $freatures = Placefreature::all();
         $natures = Nature::all();
+        $protections = Fireprotection::all();
         $occurrence = Occurrence::find($id);
-        return response(view('occurrence.update', compact('occurrence','means', 'uses', 'freatures', 'natures')));
+        return response(view('occurrence.update', compact('occurrence','means', 'uses', 'freatures', 'natures', 'protections')));
     }
 
     /**
@@ -94,9 +98,10 @@ class OccurrenceController extends Controller
     public function update(Request $request, int $id)
     {
         $occurrence = Occurrence::find($id);
-        $data = $request->all();
+        $data = $request->except('protectionsForSave');
         $data['address'] = $data['street'] . ', Nº ' . $data['number'];
         unset($data['street'], $data['number']);
+        $occurrence->fireprotections()->sync($request->protectionsForSave);
         $occurrence->update($data);
 
         return response(redirect()->route('show-occurrence', $occurrence->id));

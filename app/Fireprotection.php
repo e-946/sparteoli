@@ -12,4 +12,9 @@ class Fireprotection extends Model
     {
         $this->attributes['name'] = ucfirst(mb_strtolower($value));
     }
+
+    public function occurrences()
+    {
+        return $this->belongsToMany(Occurrence::class, 'occurrence-fireprotection', 'fireprotection_id', 'occurrence_id');
+    }
 }

@@ -16,7 +16,7 @@ class ResourceController extends Controller
      */
     public function index(int $occurrence_id)
     {
-        $resources = Resource::query()->orderBy('name')->get();
+        $resources = Resource::query()->orderBy('created_at', 'DESC')->get();
         return response(view('resource.index', compact('resources', 'occurrence_id')), 200);
     }
 
@@ -43,7 +43,13 @@ class ResourceController extends Controller
         if (empty($request)) {
             return response('Formulário vazio');
         }
-        Resource::create($request->all());
+        Resource::create([
+            'who' => $request->who,
+            'where' => $request->where,
+            'how' => $request->how,
+            'what' => $request->what,
+            'occurrence_id' => $occurrence_id,
+        ]);
 
         return response(redirect()->route('index-resource', $occurrence_id));
     }
@@ -57,8 +63,8 @@ class ResourceController extends Controller
      */
     public function show(int $occurrence_id, int $id)
     {
-        $victim = Resource::find($id);
-        return response(view('victim.one', compact('victim', 'occurrence_id')));
+        $resource = Resource::find($id);
+        return response(view('resource.one', compact('resource', 'occurrence_id')));
     }
 
     /**
@@ -71,7 +77,7 @@ class ResourceController extends Controller
     public function edit(int $occurrence_id, int $id)
     {
         $resource = Resource::find($id);
-        return response(view('resource.update', compact('resource')));
+        return response(view('resource.update', compact('resource', 'occurrence_id')));
     }
 
     /**
@@ -90,6 +96,7 @@ class ResourceController extends Controller
             'where' => $request->where,
             'how' => $request->how,
             'what' => $request->what,
+            'occurrence_id' => $occurrence_id,
         ]);
 
         return response(redirect()->route('show-resource', ['occurrence_id' => $occurrence_id, 'id' => $resource->id]));

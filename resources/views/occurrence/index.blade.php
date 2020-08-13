@@ -42,5 +42,6 @@
                 @endforeach
             </div>
         </div>
+        {{ $occurrences->links() }}
     </div>
 @stop

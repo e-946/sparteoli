@@ -19,18 +19,38 @@
                     Atualizar
                 </p>
             </a>
-            <a class="btn btn-success mr-2" href="{{route('index-victim', ['occurrence_id' => $occurrence->id])}}">
-                <p class="mb-0">
-                    <i class="fas fa-medkit"></i>
-                    Vítimas
-                </p>
-            </a>
-            <a class="btn btn-success mr-2" href="{{route('index-resource', ['occurrence_id' => $occurrence->id])}}">
-                <p class="mb-0">
-                    <i class="fas fa-hands-helping"></i>
-                    Recursos
-                </p>
-            </a>
+            @if ($occurrence->victims->count() > 0)
+                <a class="btn btn-success mr-2" href="{{route('index-victim', ['occurrence_id' => $occurrence->id])}}">
+                    <p class="mb-0">
+                        <i class="fas fa-medkit"></i>
+                        Listar Vítimas
+                    </p>
+                </a>
+            @else
+                <a class="btn btn-success mr-2" href="{{route('create-victim', ['occurrence_id' => $occurrence->id])}}">
+                    <p class="mb-0">
+                        <i class="fas fa-plus"></i>
+                        Adicionar Vítimas
+                    </p>
+                </a>
+            @endif
+
+            @if ($occurrence->resources->count() > 0)
+                <a class="btn btn-success mr-2" href="{{route('index-resource', ['occurrence_id' => $occurrence->id])}}">
+                    <p class="mb-0">
+                        <i class="fas fa-hands-helping"></i>
+                        Listar Recursos
+                    </p>
+                </a>
+            @else
+                <a class="btn btn-success mr-2" href="{{route('create-resource', ['occurrence_id' => $occurrence->id])}}">
+                    <p class="mb-0">
+                        <i class="fas fa-plus"></i>
+                        Adicionar Recursos
+                    </p>
+                </a>
+            @endif
+
             <form method="post" action="{{ route('destroy-occurrence', $occurrence->id) }}"
                   onsubmit="return confirm('Tem certeza que deseja remover {{addslashes( $occurrence->name )}}?')">
                 @method('DELETE')
@@ -44,6 +64,9 @@
     </div>
     <div class="d-flex justify-content-center">
         <div class="list-group col-md-8">
+            <pre>
+                {{ var_dump($occurrence->fireprotections) }}
+            </pre>
             <div class="list-group-item">
                 <div class="d-flex w-100 justify-content-between flex-wrap">
                     <h5 class="mb-1 font-weight-bold">Informações:</h5>
@@ -61,8 +84,10 @@
                             <tbody class="font-weight-normal">
                             @foreach($occurrence->toArray() as $key => $value)
                                 <tr>
-                                    <td>{{ $key }}</td>
-                                    <td>{{ $value }}</td>
+                                    @if (!is_array($value))
+                                        <td>{{ $key }}</td>
+                                        <td>{{ $value }}</td>
+                                    @endif
                                 </tr>
                             @endforeach
                             </tbody>

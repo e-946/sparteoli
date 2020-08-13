@@ -32,6 +32,11 @@ class Occurrence extends Model
         return $this->belongsTo(Type::class);
     }
 
+    public function fireprotections()
+    {
+        return $this->belongsToMany(Fireprotection::class, 'occurrence-fireprotection', 'occurrence_id', 'fireprotection_id');
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -46,6 +51,7 @@ class Occurrence extends Model
     {
         return $this->hasMany(Resource::class);
     }
+
 
     public function setAddressAttribute($value)
     {

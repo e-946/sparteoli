@@ -146,6 +146,16 @@
                     </select>
                 </div>
             </fieldset>
+            <fieldset class="form-row mb-5">
+                <legend>Proteção contra incêndios</legend>
+                <div class="col">
+                    @foreach($protections as $protection)
+                        <input id="{{ $protection->id }}" type="checkbox" name="protectionsForSave[]" class="form-check-input" value="{{ $protection->id }}">
+                        <label for="{{ $protection->id }}" class="form-check-label">{{ $protection->name }}</label>
+                        <br>
+                    @endforeach
+                </div>
+            </fieldset>
             <div class="m-5">
                 <label for="user_id" class="">Usuário: </label>
                 <p class="font-weight-normal">{{ \Illuminate\Support\Facades\Auth::user()->name }}</p>

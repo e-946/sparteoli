@@ -17,7 +17,7 @@ class MeanUsedsSeeder extends Seeder
                 'name' => 'Linha Direta',
             ],
             [
-                'name' => 'CECOM',
+                'name' => 'CICOM',
             ],
         ]);
     }

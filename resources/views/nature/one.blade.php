@@ -40,7 +40,7 @@
                     <small>Tipos de ocorrência com essa natureza: {{ $nature->types->count() }}</small>
                     <small>Última alteração: {{ date( 'd\/m\/Y - H:i', mktime($nature->updated_at)) }}</small>
                 </div>
-                <p class="mb-1 font-weight-normal">{{ $protection->desc }}</p>
+                <p class="mb-1 font-weight-normal">{{ $nature->desc }}</p>
                 @foreach($nature->types as $type)
                     <div  class="list-group-item">
                         <a class="list-group-item-heading link-muted" href="{{route('show-type', $type->id)}}">{{ $type->name }}</a>

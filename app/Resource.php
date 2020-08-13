@@ -14,7 +14,7 @@ class Resource extends Model
 
     public function setWhoAttribute($value)
     {
-        $this->attributes['who'] = ucfirst(mb_strtolower($value));
+        $this->attributes['who'] = strtoupper(mb_strtolower($value));
     }
 
     public function setWhereAttribute($value)

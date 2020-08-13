@@ -3,24 +3,24 @@
 @section('title', 'Fireforce')
 
 @section('content_header')
-    <h1>Vítima {{ $victim->name }}</h1>
+    <h1>Recurso empregado por {{ $resource->who }}</h1>
 @stop
 
 @section('content')
     <div class="d-flex justify-content-between mb-5 flex-wrap">
-        <a class="btn btn-info" href="{{ route('index-victim', ['occurrence_id' => $occurrence_id]) }}">
+        <a class="btn btn-info" href="{{ route('index-resource', ['occurrence_id' => $occurrence_id]) }}">
             <i class="fas fa-arrow-left"></i>
             Voltar
         </a>
         <div class="d-flex">
-            <a class="btn btn-primary mr-2" href="{{route('edit-victim', ['occurrence_id' => $occurrence_id, 'id' => $victim->id])}}">
+            <a class="btn btn-primary mr-2" href="{{route('edit-resource', ['occurrence_id' => $occurrence_id, 'id' => $resource->id])}}">
                 <p class="mb-0">
                     <i class="fas fa-edit"></i>
                     Atualizar
                 </p>
             </a>
-            <form method="post" action="{{ route('destroy-victim', ['occurrence_id' => $occurrence_id, 'id' => $victim->id]) }}"
-                  onsubmit="return confirm('Tem certeza que deseja remover {{addslashes( $victim->name )}}?')">
+            <form method="post" action="{{ route('destroy-resource', ['occurrence_id' => $occurrence_id, 'id' => $resource->id]) }}"
+                  onsubmit="return confirm('Tem certeza que deseja remover {{addslashes( $resource->name )}}?')">
                 @method('DELETE')
                 @csrf
                 <button class="btn btn-danger">
@@ -35,32 +35,24 @@
             <div class="list-group-item">
                 <div class="d-flex w-100 justify-content-between flex-wrap">
                     <h5 class="mb-1 font-weight-bold">Informações:</h5>
-                    <small>Última alteração: {{ date( 'd\/m\/Y - H:i', mktime($victim->update_at)) }}</small>
+                    <small>Última alteração: {{ date( 'd\/m\/Y - H:i', mktime($resource->update_at)) }}</small>
                 </div>
                 <div class="mb-1 font-weight-normal">
                     <ul>
                         <li>
-                            Idade: {{ $victim->age }}
+                            Quem empregou: {{ $resource->who }}
                         </li>
                         <li>
-                            Sexo: {{ $victim->sex == 'M' ? 'Masculino' : 'Feminino' }}
+                            O que foi empregado: {{ $resource->what}}
                         </li>
                         <li>
-                            Socorrista: {{ $victim->rescuer->name }}
+                            Onde foi empregado: {{ $resource->where }}
                         </li>
                         <li>
-                            Problemas:
-                        @foreach($victim->problems as $problem)
-                        <ul>
-                            <li>
-                                {{ $problem->name }}
-                            </li>
-                        </ul>
-                        @endforeach
+                            Como foi empregado: {{ $resource->how }}
                         </li>
                     </ul>
                 </div>
-                <p>{{ $victim->fatal ? 'Vítima fatal' : ($victim->conscious ? 'Vítima não fatal e consciente' : 'Vítima não fatal e não consciente') }}</p>
             </div>
         </div>
     </div>
