@@ -17,6 +17,7 @@
     </div>
     <div class="d-flex justify-content-center">
         <div class="list-group col-md-8">
+            @include('errors', ['errors' => $errors])
             @foreach($protections as $protection)
                 <div class="list-group-item d-flex justify-content-between align-content-center flex-wrap">
                     <a class="link-muted" href="{{ route('show-fireprotection', $protection->id) }}">

@@ -17,11 +17,10 @@
         </div>
         <div class="d-flex justify-content-center">
             <div class="list-group col-md-8">
+                @include('errors', ['errors' => $errors])
                 @foreach($means as $mean)
                     <div class="list-group-item d-flex justify-content-between align-content-center flex-wrap">
-                        <a class="link-muted" href="{{ route('show-meanused', $mean->id) }}">
-                            <p class="mb-0">{{ $mean->name }}</p>
-                        </a>
+                        <p class="mb-0">{{ $mean->name }}</p>
                         @can('admin')
                             <div class="d-flex justify-content-around">
                                 <a class="btn btn-primary mr-2" href="{{route('edit-meanused', $mean->id)}}">

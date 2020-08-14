@@ -19,7 +19,7 @@ class OccurrenceController extends Controller
      *
      * @return Response
      */
-    public function index()
+    public function index(): Response
     {
         $occurrences = Occurrence::query()->orderBy('created_at', 'DESC')->paginate(10);
         return response(view('occurrence.index', compact('occurrences')), 200);
@@ -30,7 +30,7 @@ class OccurrenceController extends Controller
      *
      * @return Response
      */
-    public function create()
+    public function create(): Response
     {
         $means = Meanused::all();
         $uses = Placeuse::all();
@@ -47,7 +47,7 @@ class OccurrenceController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store(Request $request): Response
     {
         $data = $request->except('protectionsForSave');
         $data['address'] = $data['street'] . ', Nº ' . $data['number'];
@@ -65,7 +65,7 @@ class OccurrenceController extends Controller
      * @param int $id
      * @return Response
      */
-    public function show(int $id)
+    public function show(int $id): Response
     {
         $occurrence = Occurrence::find($id);
         return response(view('occurrence.one', compact('occurrence')));
@@ -77,7 +77,7 @@ class OccurrenceController extends Controller
      * @param int $id
      * @return Response
      */
-    public function edit(int $id)
+    public function edit(int $id): Response
     {
         $means = Meanused::all();
         $uses = Placeuse::all();
@@ -95,7 +95,7 @@ class OccurrenceController extends Controller
      * @param int $id
      * @return Response
      */
-    public function update(Request $request, int $id)
+    public function update(Request $request, int $id): Response
     {
         $occurrence = Occurrence::find($id);
         $data = $request->except('protectionsForSave');
@@ -113,13 +113,18 @@ class OccurrenceController extends Controller
      * @param int $id
      * @return Response
      */
-    public function destroy(int $id)
+    public function destroy(int $id): Response
     {
         $occurrence = Occurrence::find($id);
 
         foreach($occurrence->victims as $victim) {
             new VictimDestroyer($victim->id);
         }
+        foreach($occurrence->resources as $resource) {
+            $resource->delete();
+        }
+
+        $occurrence->fireprotections->detach();
 
         $occurrence->delete();
 

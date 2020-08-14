@@ -4,16 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Nature;
 use App\Type;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class TypeController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
-    public function index()
+    public function index(): Response
     {
         $types = Type::query()->orderBy('nature_id')->get();
         return response(view('type.index', compact('types')), 200);
@@ -22,9 +24,9 @@ class TypeController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
-    public function create()
+    public function create(): Response
     {
         $natures = Nature::all();
         return response(view('type.create', compact('natures')), 200);
@@ -33,10 +35,10 @@ class TypeController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return Response
      */
-    public function store(Request $request)
+    public function store(Request $request): Response
     {
         if (empty($request)) {
             return response('Formulário vazio');
@@ -50,9 +52,9 @@ class TypeController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
-    public function show($id)
+    public function show(int $id): Response
     {
         $type = Type::find($id);
 
@@ -63,9 +65,9 @@ class TypeController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
-    public function edit($id)
+    public function edit(int $id): Response
     {
         $type = Type::find($id);
         $natures = Nature::all();
@@ -75,11 +77,11 @@ class TypeController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param Request $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, int $id): Response
     {
         $type = Type::find($id);
         $type->update($request->all());
@@ -91,11 +93,16 @@ class TypeController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return RedirectResponse|Response
      */
-    public function destroy($id)
+    public function destroy(int $id): Response
     {
         $type = Type::find($id);
+
+        if ($type->occurrences()->exists()) {
+            return back()->withErrors(['error' => 'Há ocorrências utilizando esse elemento']);
+        }
+
         $type->delete();
 
         return response(redirect(route('index-type')));

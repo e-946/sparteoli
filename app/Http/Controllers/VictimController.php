@@ -18,7 +18,7 @@ class VictimController extends Controller
      * @param int $occurrence_id
      * @return Response
      */
-    public function index(int $occurrence_id)
+    public function index(int $occurrence_id): Response
     {
         $victims = Victim::query()->orderBy('name')->get();
         return response(view('victim.index', compact('victims', 'occurrence_id')), 200);
@@ -30,7 +30,7 @@ class VictimController extends Controller
      * @param int $occurrence_id
      * @return Response
      */
-    public function create(int $occurrence_id)
+    public function create(int $occurrence_id): Response
     {
         $rescuers = Rescuer::all();
         $problems = Problem::all();
@@ -44,7 +44,7 @@ class VictimController extends Controller
      * @param int $occurrence_id
      * @return Response
      */
-    public function store(Request $request, int $occurrence_id)
+    public function store(Request $request, int $occurrence_id): Response
     {
 
         if (!empty($request->problemForSave)){
@@ -70,7 +70,7 @@ class VictimController extends Controller
      * @param int $id
      * @return Response
      */
-    public function show(int $occurrence_id, int $id)
+    public function show(int $occurrence_id, int $id): Response
     {
         $victim = Victim::find($id);
         return response(view('victim.one', compact('victim', 'occurrence_id')));
@@ -83,7 +83,7 @@ class VictimController extends Controller
      * @param int $id
      * @return Response
      */
-    public function edit(int $occurrence_id, int $id)
+    public function edit(int $occurrence_id, int $id): Response
     {
         $victim = Victim::find($id);
         $rescuers = Rescuer::all();
@@ -99,7 +99,7 @@ class VictimController extends Controller
      * @param int $id
      * @return Response
      */
-    public function update(Request $request, int $occurrence_id, int $id)
+    public function update(Request $request, int $occurrence_id, int $id): Response
     {
         $victim = Victim::find($id);
         $victim->update([
@@ -123,7 +123,7 @@ class VictimController extends Controller
      * @param int $id
      * @return Response
      */
-    public function destroy(int $occurrence_id, int $id)
+    public function destroy(int $occurrence_id, int $id): Response
     {
         new VictimDestroyer($id);
 

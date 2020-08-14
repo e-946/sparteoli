@@ -64,9 +64,6 @@
     </div>
     <div class="d-flex justify-content-center">
         <div class="list-group col-md-8">
-            <pre>
-                {{ var_dump($occurrence->fireprotections) }}
-            </pre>
             <div class="list-group-item">
                 <div class="d-flex w-100 justify-content-between flex-wrap">
                     <h5 class="mb-1 font-weight-bold">Informações:</h5>
@@ -124,6 +121,29 @@
                                         </ul>
                                     </td>
                                 </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    @endforeach
+                    @foreach($occurrence->fireprotections as $protection)
+                        <h5 class="mb-1 font-weight-bold">Proteção:</h5>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <td>Campo</td>
+                                    <td>Dado Preenchido</td>
+                                </tr>
+                                </thead>
+                                <tbody class="font-weight-normal">
+                                @foreach($protection->toArray() as $key => $value)
+                                    <tr>
+                                        @if (!is_array($value))
+                                            <td>{{ $key }}</td>
+                                            <td>{{ $value }}</td>
+                                        @endif
+                                    </tr>
+                                @endforeach
                                 </tbody>
                             </table>
                         </div>

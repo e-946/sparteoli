@@ -22,6 +22,7 @@
     <div class="container">
         <div class="d-flex justify-content-center">
             <div class="list-group col-md-8">
+                @include('errors', ['errors' => $errors])
                 @foreach($victims as $victim)
                     <div class="list-group-item d-flex justify-content-between align-content-center flex-wrap">
                         <a class="link-muted" href="{{ route('show-victim', ['occurrence_id' => $occurrence_id, 'id' => $victim->id]) }}">

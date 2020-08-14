@@ -34,10 +34,12 @@
     </div>
     <div class="d-flex justify-content-center">
         <div class="list-group col-md-8">
+            @include('errors', ['errors' => $errors])
             <div class="list-group-item">
                 <div class="d-flex w-100 justify-content-between flex-wrap">
                     <h5 class="mb-1 font-weight-bold">Informações:</h5>
                     <small>Tipos de ocorrência com essa natureza: {{ $nature->types->count() }}</small>
+                    <small>Ocorrência com essa natureza: {{ $nature->occurrences->count() }}</small>
                     <small>Última alteração: {{ date( 'd\/m\/Y - H:i', mktime($nature->updated_at)) }}</small>
                 </div>
                 <p class="mb-1 font-weight-normal">{{ $nature->desc }}</p>

@@ -14,7 +14,7 @@ class ResourceController extends Controller
      * @param int $occurrence_id
      * @return Response
      */
-    public function index(int $occurrence_id)
+    public function index(int $occurrence_id): Response
     {
         $resources = Resource::query()->orderBy('created_at', 'DESC')->get();
         return response(view('resource.index', compact('resources', 'occurrence_id')), 200);
@@ -26,7 +26,7 @@ class ResourceController extends Controller
      * @param int $occurrence_id
      * @return Response
      */
-    public function create(int $occurrence_id)
+    public function create(int $occurrence_id): Response
     {
         return response(view('resource.create', compact('occurrence_id')), 200);
     }
@@ -38,7 +38,7 @@ class ResourceController extends Controller
      * @param int $occurrence_id
      * @return Response
      */
-    public function store(Request $request, int $occurrence_id)
+    public function store(Request $request, int $occurrence_id): Response
     {
         if (empty($request)) {
             return response('Formulário vazio');
@@ -61,7 +61,7 @@ class ResourceController extends Controller
      * @param int $id
      * @return Response
      */
-    public function show(int $occurrence_id, int $id)
+    public function show(int $occurrence_id, int $id): Response
     {
         $resource = Resource::find($id);
         return response(view('resource.one', compact('resource', 'occurrence_id')));
@@ -74,7 +74,7 @@ class ResourceController extends Controller
      * @param int $id
      * @return Response
      */
-    public function edit(int $occurrence_id, int $id)
+    public function edit(int $occurrence_id, int $id): Response
     {
         $resource = Resource::find($id);
         return response(view('resource.update', compact('resource', 'occurrence_id')));
@@ -88,7 +88,7 @@ class ResourceController extends Controller
      * @param int $id
      * @return Response
      */
-    public function update(Request $request, int $occurrence_id, int $id)
+    public function update(Request $request, int $occurrence_id, int $id): Response
     {
         $resource = Resource::find($id);
         $resource->update([
@@ -109,7 +109,7 @@ class ResourceController extends Controller
      * @param int $id
      * @return Response
      */
-    public function destroy(int $occurrence_id, int $id)
+    public function destroy(int $occurrence_id, int $id): Response
     {
         $resource = Resource::find($id);
         $resource->delete();

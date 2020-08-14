@@ -18,6 +18,11 @@ class Nature extends Model
         return $this->hasMany(Type::class);
     }
 
+    public function occurrences()
+    {
+        return $this->hasManyThrough(Occurrence::class, Type::class);
+    }
+
     public function setNameAttribute($value)
     {
         $this->attributes['name'] = ucfirst(mb_strtolower($value));

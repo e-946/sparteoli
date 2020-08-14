@@ -17,11 +17,10 @@
         </div>
         <div class="d-flex justify-content-center">
             <div class="list-group col-md-8">
+                @include('errors', ['errors' => $errors])
                 @foreach($uses as $use)
                     <div class="list-group-item d-flex justify-content-between align-content-center flex-wrap">
-                        <a class="link-muted" href="{{ route('show-placeuse', $use->id) }}">
-                            <p class="mb-0">{{ $use->name }}</p>
-                        </a>
+                        <p class="mb-0">{{ $use->name }}</p>
                         @can('admin')
                             <div class="d-flex justify-content-around">
                                 <a class="btn btn-primary mr-2" href="{{route('edit-placeuse', $use->id)}}">

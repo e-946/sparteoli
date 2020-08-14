@@ -39,6 +39,7 @@ class NatureController extends Controller
         if (empty($request)) {
             return response('Formulário vazio');
         }
+
         Nature::create($request->all());
 
         return response(redirect()->route('index-nature'));
@@ -87,14 +88,16 @@ class NatureController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
      */
     public function destroy(int $id)
     {
         $nature = Nature::find($id);
-        foreach ($nature->types as $type) {
-            $type->delete();
+
+        if ($nature->types()->exists()) {
+            return back()->withErrors(['error' => 'Há tipos utilizando esse elemento']);
         }
+
         $nature->delete();
 
         return response(redirect(route('index-nature')));

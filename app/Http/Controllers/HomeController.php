@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Nature;
+use App\Occurrence;
 use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -23,6 +26,14 @@ class HomeController extends Controller
      */
     public function index(): Renderable
     {
-        return view('home');
+        $natures = Nature::all();
+        $occurrences = Occurrence::all();
+        $months = DB::table('occurrences')
+            ->select(DB::raw('MONTHNAME(date) name'), DB::raw('count(*) as total'))
+            ->groupBy('name')
+            ->orderBy('name', 'DESC')
+            ->get();
+
+        return view('home', compact('occurrences', 'natures', 'months'));
     }
 }
