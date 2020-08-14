@@ -79,7 +79,7 @@
 <div class="flex-center position-ref full-height">
     <div class="content flex-around">
         <div class="m-b-md">
-            <img src="/img/logo-brasao.png" height="400vh" alt="Insignia do 9º corpo de bombeiros">
+            <img src="\img\logo-brasao.png" height="400vh" alt="Insignia do 9º corpo de bombeiros">
         </div>
         <div class="">
         @if (Route::has('login'))
