@@ -69,81 +69,243 @@
                     <h5 class="mb-1 font-weight-bold">Informações:</h5>
                     <small>Última alteração: {{ date( 'd\/m\/Y - H:i', mktime($occurrence->update_at)) }}</small>
                 </div>
-                <div class="mb-1 font-weight-normal">
+                <div class="mt-3 mb-1 font-weight-normal">
+                    <h5>Detalhes do chamado</h5>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Campo</th>
+                                    <th>Dado Preenchido</th>
+                                </tr>
+                            </thead>
+                            <tbody class="font-weight-normal">
+                                <tr>
+                                    <td>Data do chamado</td>
+                                    <td>{{ date( 'd\/m\/Y', strtotime($occurrence->date)) }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Horário do chamado</td>
+                                    <td>{{ $occurrence->call_time }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Horário de chegada</td>
+                                    <td>{{ $occurrence->arrival_time }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Horário de encerramento</td>
+                                    <td>{{ $occurrence->end_time }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Meio utilizado no chamado</td>
+                                    <td>{{ $occurrence->meanused->name }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <h5>Endereço</h5>
                     <div class="table-responsive">
                         <table class="table">
                             <thead>
                             <tr>
-                                <td>Campo</td>
-                                <td>Dado Preenchido</td>
+                                <th>Campo</th>
+                                <th>Dado Preenchido</th>
                             </tr>
                             </thead>
                             <tbody class="font-weight-normal">
-                            @foreach($occurrence->toArray() as $key => $value)
-                                <tr>
-                                    @if (!is_array($value))
-                                        <td>{{ $key }}</td>
-                                        <td>{{ $value }}</td>
-                                    @endif
-                                </tr>
-                            @endforeach
+                            <tr>
+                                <td>Endereço</td>
+                                <td>{{ $occurrence->address }}</td>
+                            </tr>
+                            <tr>
+                                <td>Bairro</td>
+                                <td>{{ $occurrence->neighborhood }}</td>
+                            </tr>
+                            <tr>
+                                <td>CEP</td>
+                                <td>{{ preg_replace('/(\d{2})(\d{3})(\d{3})/', '$1.$2-$3', $occurrence->zip_code) }}</td>
+                            </tr>
+                            <tr>
+                                <td>Cidade</td>
+                                <td>{{ $occurrence->city }}</td>
+                            </tr>
+                            <tr>
+                                <td>Estado</td>
+                                <td>{{ $occurrence->state }}</td>
+                            </tr>
                             </tbody>
                         </table>
                     </div>
+                    <h5>Solicitante</h5>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>Campo</th>
+                                <th>Dado Preenchido</th>
+                            </tr>
+                            </thead>
+                            <tbody class="font-weight-normal">
+                            <tr>
+                                <td>Nome</td>
+                                <td>{{ $occurrence->requester }}</td>
+                            </tr>
+                            <tr>
+                                <td>Telefone</td>
+                                <td>{{ preg_replace('/(\d{2})(\d{1})(\d{4})(\d{4})/', '($1) $2 $3-$4', $occurrence->requester_phone) }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <h5>Detalhes da ocorrência</h5>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>Campo</th>
+                                <th>Dado Preenchido</th>
+                            </tr>
+                            </thead>
+                            <tbody class="font-weight-normal">
+                            <tr>
+                                <td>Tipo de Ocorrência</td>
+                                <td>{{ $occurrence->type->name }}</td>
+                            </tr>
+                            <tr>
+                                <td>Natureza da ocorrência</td>
+                                <td>{{ $occurrence->type->nature->name }}</td>
+                            </tr>
+                            <tr>
+                                <td>Resumo</td>
+                                <td>{{ $occurrence->resume }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <h5>Detalhes do local</h5>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>Campo</th>
+                                <th>Dado Preenchido</th>
+                            </tr>
+                            </thead>
+                            <tbody class="font-weight-normal">
+                            <tr>
+                                <td>Característica do local</td>
+                                <td>{{ $occurrence->placefreature->name }}</td>
+                            </tr>
+                            <tr>
+                                <td>Uso do local</td>
+                                <td>{{ $occurrence->placeuse->name }}</td>
+                            </tr>
+                            <tr>
+                                <td>Local de preservação</td>
+                                <td>{{ $occurrence->place_preservation == 1 ? 'Sim' : 'Não' }}</td>
+                            </tr><tr>
+                                <td>Proteção contra incêndio</td>
+                                <td>
+                                    <ul>
+                                        @foreach($occurrence->fireprotections as $protection)
+                                            <li>
+                                                <p>{{ $protection->name }}</p>
+                                                <small>{{ $protection->desc }}</small>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <h5>Detalhes do preenchedor</h5>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>Campo</th>
+                                <th>Dado Preenchido</th>
+                            </tr>
+                            </thead>
+                            <tbody class="font-weight-normal">
+                            <tr>
+                                <td>Nome</td>
+                                <td>{{ $occurrence->filler_name }}</td>
+                            </tr>
+                            <tr>
+                                <td>Registro</td>
+                                <td>{{ $occurrence->filler_register }}</td>
+                            </tr>
+                            <tr>
+                                <td>Patente</td>
+                                <td>{{ $occurrence->filler_patent }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="mt-5 mb-1 font-weight-normal">
                     @foreach($occurrence->victims as $victim)
                         <h5 class="mb-1 font-weight-bold">Vítima:</h5>
                         <div class="table-responsive">
                             <table class="table">
                                 <thead>
-                                <tr>
-                                    <td>Campo</td>
-                                    <td>Dado Preenchido</td>
-                                </tr>
+                                    <tr>
+                                        <th>Campo</th>
+                                        <th>Dado Preenchido</th>
+                                    </tr>
                                 </thead>
                                 <tbody class="font-weight-normal">
-                                @foreach($victim->toArray() as $key => $value)
                                     <tr>
-                                        <td>{{ $key }}</td>
-                                        <td>{{ $value }}</td>
+                                        <td>Nome</td>
+                                        <td>{{ $victim->name }}</td>
                                     </tr>
-                                @endforeach
-                                <tr>
-                                    <td>
-                                        Problemas
-                                    </td>
-                                    <td>
-                                        <ul>
-                                @foreach($victim->problems as $problem)
-                                            <li>
-                                                {{ $problem->name }}
-                                            </li>
-                                @endforeach
-                                        </ul>
-                                    </td>
-                                </tr>
+                                    <tr>
+                                        <td>Idade</td>
+                                        <td>{{ $victim->age }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Sexo</td>
+                                        <td>{{ $victim->sex == 'M' ? 'Masculino' : 'Feminino' }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Situação</td>
+                                        <td>{{ $victim->fatal ? 'Vítima fatal' : ($victim->conscious ? 'Vitima não fatal e consciente' : 'Vítima não fatal e não consciente') }}</td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
                     @endforeach
-                    @foreach($occurrence->fireprotections as $protection)
-                        <h5 class="mb-1 font-weight-bold">Proteção:</h5>
+                </div>
+                <div class="mt-5 mb-1 font-weight-normal">
+                    @foreach($occurrence->resources as $resource)
+                        <h5 class="mb-1 font-weight-bold">Recurso:</h5>
                         <div class="table-responsive">
                             <table class="table">
                                 <thead>
                                 <tr>
-                                    <td>Campo</td>
-                                    <td>Dado Preenchido</td>
+                                    <th>Campo</th>
+                                    <th>Dado Preenchido</th>
                                 </tr>
                                 </thead>
                                 <tbody class="font-weight-normal">
-                                @foreach($protection->toArray() as $key => $value)
-                                    <tr>
-                                        @if (!is_array($value))
-                                            <td>{{ $key }}</td>
-                                            <td>{{ $value }}</td>
-                                        @endif
-                                    </tr>
-                                @endforeach
+                                <tr>
+                                    <td>De quem</td>
+                                    <td>{{ $resource->who }}</td>
+                                </tr>
+                                <tr>
+                                    <td>O que</td>
+                                    <td>{{ $resource->what }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Onde</td>
+                                    <td>{{ $resource->where }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Como</td>
+                                    <td>{{ $resource->how }}</td>
+                                </tr>
                                 </tbody>
                             </table>
                         </div>

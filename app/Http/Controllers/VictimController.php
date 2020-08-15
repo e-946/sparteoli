@@ -20,7 +20,7 @@ class VictimController extends Controller
      */
     public function index(int $occurrence_id): Response
     {
-        $victims = Victim::query()->orderBy('name')->get();
+        $victims = Victim::query()->where('occurrence_id', '=', $occurrence_id)->orderBy('name')->get();
         return response(view('victim.index', compact('victims', 'occurrence_id')), 200);
     }
 

@@ -68,6 +68,7 @@ class OccurrenceController extends Controller
     public function show(int $id): Response
     {
         $occurrence = Occurrence::find($id);
+
         return response(view('occurrence.one', compact('occurrence')));
     }
 
