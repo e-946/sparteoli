@@ -112,7 +112,7 @@
                     <select id="place_preservation" type="number" name="place_preservation" class="form-control" required>
                         <option selected class="text-bold" disabled>Selecione</option>
                         <option value="1">Sim</option>
-                        <option value="2">Não</option>
+                        <option value="0">Não</option>
                     </select>
                 </div>
             </fieldset>

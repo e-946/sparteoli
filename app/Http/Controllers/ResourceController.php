@@ -16,7 +16,7 @@ class ResourceController extends Controller
      */
     public function index(int $occurrence_id): Response
     {
-        $resources = Resource::query()->orderBy('created_at', 'DESC')->get();
+        $resources = Resource::query()->where('occurrence_id', '=', $occurrence_id)->orderBy('created_at', 'DESC')->get();
         return response(view('resource.index', compact('resources', 'occurrence_id')), 200);
     }
 

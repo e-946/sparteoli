@@ -8,7 +8,7 @@
 
 @section('content')
     <div class="d-flex justify-content-between mb-5 flex-wrap">
-        <a class="btn btn-info" href="{{ url()->previous() == route('index-user') ? route('index-user') : url()->previous() }}">
+        <a class="btn btn-info" href="{{ url()->previous() == route('index-user') ? route('index-user') : url()->previous()}}">
             <i class="fas fa-arrow-left"></i>
             Voltar
         </a>
@@ -46,10 +46,10 @@
                 <div class="d-flex w-100 justify-content-between flex-wrap">
                     <h5 class="mb-1 font-weight-bold">Informações:</h5>
                     <small>{{ $user->admin ? 'Administrador' : '' }}</small>
-                    <small>Última alteração: {{ date( 'd\/m\/Y - H:i', mktime($user->updated_at)) }}</small>
+                    <small>Última alteração: {{ date( 'd\/m\/Y - H:i', strtotime($user->created_at)) }}</small>
                 </div>
                 <p class="mb-1 font-weight-normal">Usuário cadastrou {{ $user->occurrences->count() }} ocorrências</p>
-                <small>Data de criação: {{ date( 'd\/m\/Y - H:i', mktime($user->updated_at)) }}</small>
+                <small>Data de criação: {{ date( 'd\/m\/Y - H:i', strtotime($user->updated_at)) }}</small>
             </div>
         </div>
     </div>
