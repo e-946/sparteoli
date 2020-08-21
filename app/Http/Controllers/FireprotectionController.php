@@ -6,6 +6,7 @@ use App\Fireprotection;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Symfony\Component\HttpFoundation\Response as ResponseBase;
 
 class FireprotectionController extends Controller
 {
@@ -91,7 +92,7 @@ class FireprotectionController extends Controller
      * @param  int  $id
      * @return RedirectResponse|Response
      */
-    public function destroy(int $id): Response
+    public function destroy(int $id): ResponseBase
     {
         $protection = Fireprotection::find($id);
 

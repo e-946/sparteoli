@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Fireforce')
+@section('title', 'Sparteoli')
 
 @section('content_header')
     <h1>Criar usuários</h1>

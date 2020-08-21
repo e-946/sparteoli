@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Fireforce')
+@section('title', 'Sparteoli')
 
 @section('content_header')
     <h1>Ocorrência {{ $occurrence->id }}</h1>
@@ -17,6 +17,12 @@
                 <p class="mb-0">
                     <i class="fas fa-edit"></i>
                     Atualizar
+                </p>
+            </a>
+            <a class="btn btn-primary mr-2" target="_blank" href="{{route('toPdf-occurrence', $occurrence->id)}}">
+                <p class="mb-0">
+                    <i class="fas fa-download"></i>
+                    Baixar Pdf
                 </p>
             </a>
             @if ($occurrence->victims->count() > 0)

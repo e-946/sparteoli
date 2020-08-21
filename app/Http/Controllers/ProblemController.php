@@ -6,6 +6,7 @@ use App\Problem;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Symfony\Component\HttpFoundation\Response as ResponseBase;
 
 class ProblemController extends Controller
 {
@@ -91,7 +92,7 @@ class ProblemController extends Controller
      * @param  int  $id
      * @return RedirectResponse|Response
      */
-    public function destroy(int $id)
+    public function destroy(int $id): ResponseBase
     {
         $problem = Problem::find($id);
 

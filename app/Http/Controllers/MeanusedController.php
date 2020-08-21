@@ -6,6 +6,7 @@ use App\Meanused;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Symfony\Component\HttpFoundation\Response as ResponseBase;
 
 class MeanusedController extends Controller
 {
@@ -92,7 +93,7 @@ class MeanusedController extends Controller
      * @param  int  $id
      * @return RedirectResponse|Response
      */
-    public function destroy(int $id): Response
+    public function destroy(int $id): ResponseBase
     {
         $mean = Meanused::find($id);
 

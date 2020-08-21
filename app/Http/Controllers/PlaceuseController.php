@@ -6,6 +6,7 @@ use App\Placeuse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Symfony\Component\HttpFoundation\Response as ResponseBase;
 
 class PlaceuseController extends Controller
 {
@@ -92,7 +93,7 @@ class PlaceuseController extends Controller
      * @param  int  $id
      * @return RedirectResponse|Response
      */
-    public function destroy(int $id): Response
+    public function destroy(int $id): ResponseBase
     {
         $use = Placeuse::find($id);
 

@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Fireforce')
+@section('title', 'Sparteoli')
 
 @section('content_header')
     <h1>Natureza de operação {{ $nature->name }}</h1>
@@ -40,7 +40,7 @@
                     <h5 class="mb-1 font-weight-bold">Informações:</h5>
                     <small>Tipos de ocorrência com essa natureza: {{ $nature->types->count() }}</small>
                     <small>Ocorrência com essa natureza: {{ $nature->occurrences->count() }}</small>
-                    <small>Última alteração: {{ date( 'd\/m\/Y - H:i', mktime($nature->updated_at)) }}</small>
+                    <small>Última alteração: {{ date( 'd\/m\/Y - H:i', strtotime($nature->updated_at)) }}</small>
                 </div>
                 <p class="mb-1 font-weight-normal">{{ $nature->desc }}</p>
                 @foreach($nature->types as $type)
@@ -48,7 +48,7 @@
                         <a class="list-group-item-heading link-muted" href="{{route('show-type', $type->id)}}">{{ $type->name }}</a>
                     </div>
                 @endforeach
-                <small>Criado em: {{ date( 'd\/m\/Y - H:i', mktime($nature->created_at)) }}</small>
+                <small>Criado em: {{ date( 'd\/m\/Y - H:i', strtotime($nature->created_at)) }}</small>
             </div>
         </div>
     </div>

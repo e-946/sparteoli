@@ -22,7 +22,30 @@
         <div class="col">
             <div class="card">
                 <div class="card-header">Gráficos</div>
-                <div class="d-flex justify-content-between">
+                <div class="d-flex justify-content-around">
+                    @php( $pattern[] = [
+                        '#66CDAA',
+                        '#00FF00',
+                        '#006400',
+                        '#EE82EE',
+                        '#8B0000',
+                        '#800000',
+                        '#4682B4',
+                        '#663399',
+                        '#800080',
+                        '#FFA500',
+                        '#BA55D3',
+                        '#BDB76B',
+                        '#2E8B57',
+                        '#FFFF00',
+                        '#4169E1',
+                        '#008B8B',
+                        '#FF69B4',
+                        '#00FFFF',
+                        '#191970',
+                        '#FF0000',
+                        '#DB7093',
+                    ] )
                     <div class="card-body">
                         <canvas id="bar" width="200" height="200"></canvas>
                         <script>
@@ -36,44 +59,18 @@
                                 type: 'bar',
                                 resposive: true,
                                 data: {
-                                    labels: months,
-                                    datasets: [{
-                                        label: 'Nº de ocorrências',
-                                        data: [
-                                            @foreach ($months as $month)
-                                                '{{ $month->total }}',
-                                            @endforeach
-                                        ],
-                                        backgroundColor: [
-                                            'rgba(255, 99, 132, 0.2)',
-                                            'rgba(54, 162, 235, 0.2)',
-                                            'rgba(255, 206, 86, 0.2)',
-                                            'rgba(75, 192, 192, 0.2)',
-                                            'rgba(153, 102, 255, 0.2)',
-                                            'rgba(255, 159, 64, 0.2)',
-                                            'rgba(255, 99, 132, 0.2)',
-                                            'rgba(54, 162, 235, 0.2)',
-                                            'rgba(255, 206, 86, 0.2)',
-                                            'rgba(75, 192, 192, 0.2)',
-                                            'rgba(153, 102, 255, 0.2)',
-                                            'rgba(255, 159, 64, 0.2)'
-                                        ],
-                                        borderColor: [
-                                            'rgba(255, 99, 132, 1)',
-                                            'rgba(54, 162, 235, 1)',
-                                            'rgba(255, 206, 86, 1)',
-                                            'rgba(75, 192, 192, 1)',
-                                            'rgba(153, 102, 255, 1)',
-                                            'rgba(255, 159, 64, 1)',
-                                            'rgba(255, 99, 132, 1)',
-                                            'rgba(54, 162, 235, 1)',
-                                            'rgba(255, 206, 86, 1)',
-                                            'rgba(75, 192, 192, 1)',
-                                            'rgba(153, 102, 255, 1)',
-                                            'rgba(255, 159, 64, 1)',
-                                        ],
-                                        borderWidth: 1
-                                    }]
+                                    datasets:
+                                        [
+                                        @php( $i = 0 )
+                                        @foreach ($months as $month)
+                                            {
+                                            data: ['{{ $month->total }}'],
+                                            label: ['{{ $month->name }}'],
+                                            backgroundColor: '{{ $pattern[0][$i] }}',
+                                            },
+                                            @php( $i++ )
+                                        @endforeach
+                                    ],
                                 },
                                 options: {
                                     scales: {
@@ -101,13 +98,12 @@
                                             '{{ $nature->occurrences->count() }}',
                                             @endforeach
                                         ],
+                                        @php( $i = 0 )
                                         backgroundColor: [
-                                            'rgba(255, 99, 132, 1)',
-                                            'rgba(54, 162, 235, 1)',
-                                            'rgba(255, 206, 86, 1)',
-                                            'rgba(75, 192, 192, 1)',
-                                            'rgba(153, 102, 255, 1)',
-                                            'rgba(255, 159, 64, 1)',
+                                            @foreach ($natures as $nature)
+                                                '{{ $pattern[0][$i] }}',
+                                                @php( $i++ )
+                                            @endforeach
                                         ]
                                     }],
                                     labels: [
@@ -125,3 +121,4 @@
     </div>
 </div>
 @endsection
+
