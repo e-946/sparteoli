@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Fireforce')
+@section('title', 'Sparteoli')
 
 @section('content_header')
     <h1>Tipo de operação {{ $type->name }}</h1>
@@ -38,7 +38,7 @@
             <div class="list-group-item">
                 <div class="d-flex w-100 justify-content-between flex-wrap">
                     <h5 class="mb-1 font-weight-bold">Informações:</h5>
-                    <small>Última alteração: {{ date( 'd\/m\/Y - H:i', mktime($type->update_at)) }}</small>
+                    <small>Última alteração: {{ date( 'd\/m\/Y - H:i', strtotime($type->update_at)) }}</small>
                 </div>
                 <p class="mb-1 font-weight-normal">{{$type->desc}}</p>
                 <div class="list-group-item">

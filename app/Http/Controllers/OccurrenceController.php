@@ -9,8 +9,11 @@ use App\Nature;
 use App\Occurrence;
 use App\Placefreature;
 use App\Placeuse;
+use Dompdf\Dompdf;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Storage;
+use Ilovepdf\Ilovepdf;
 
 class OccurrenceController extends Controller
 {
@@ -125,10 +128,24 @@ class OccurrenceController extends Controller
             $resource->delete();
         }
 
-        $occurrence->fireprotections->detach();
+        $occurrence->fireprotections()->detach();
 
         $occurrence->delete();
 
         return response(redirect(route('index-occurrence')));
+    }
+
+    /**
+     * Generate PDF for resource
+     * @param int $id
+     *
+     */
+    public function toPdf(int $id)
+    {
+        $occurrence = Occurrence::find($id);
+
+        Storage::put('occurrence.html', view('occurrence.pdf', compact('occurrence')));
+
+        return response()->file(storage_path('app/occurrence.html'))->deleteFileAfterSend();
     }
 }

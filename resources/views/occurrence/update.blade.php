@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Fireforce')
+@section('title', 'Sparteoli')
 
 @section('content_header')
     <h1>Alterar ocorrência {{ $occurrence->id }}:</h1>
@@ -49,6 +49,12 @@
                     <label for="zip_code" class="">Cep:</label>
                     <input id="zip_code" type="text" name="zip_code" class="form-control" placeholder="CEP" pattern="[0-9]{8}" onblur="pesquisacep(this.value);" required value="{{ $occurrence->zip_code }}">
                 </div>
+                <div class="col-auto mt-3 mb-3">
+                    <a target="_blank" href="http://www.buscacep.correios.com.br/sistemas/buscacep/" class="btn btn-info">
+                        <i class="fa fa-search"></i>
+                        Consultar CEP
+                    </a>
+                </div>
                 <div class="col-auto">
                     <label for="street" class="">Rua:</label>
                     <input id="street" type="text" name="street" class="form-control" placeholder="Rua" required value="{{ explode(', ',$occurrence->address)[0] }}">
@@ -85,7 +91,7 @@
                 <legend>Resumo</legend>
                 <div class="col">
                     <label for="resume" class="">Detalhes da ocorrência: </label>
-                    <textarea id="resume" name="resume" class="form-control" form="form">{{ $occurrence->resume }}</textarea>
+                    <textarea id="resume" name="resume" class="form-control" form="form" required>{{ $occurrence->resume }}</textarea>
                 </div>
             </fieldset>
             <fieldset class="form-row mb-5">

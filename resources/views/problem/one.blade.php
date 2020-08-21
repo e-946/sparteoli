@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Fireforce')
+@section('title', 'Sparteoli')
 
 @section('content_header')
     <h1>Tipo de problema {{ $problem->name }}</h1>
@@ -38,10 +38,10 @@
             <div class="list-group-item">
                 <div class="d-flex w-100 justify-content-between flex-wrap">
                     <h5 class="mb-1 font-weight-bold">Informações:</h5>
-                    <small>Última alteração: {{ date( 'd\/m\/Y - H:i', mktime($problem->updated_at)) }}</small>
+                    <small>Última alteração: {{ date( 'd\/m\/Y - H:i', strtotime($problem->updated_at)) }}</small>
                 </div>
                 <p class="mb-1 font-weight-normal">{{ $problem->desc }}</p>
-                <small>Data : {{ date( 'd\/m\/Y - H:i', mktime($problem->created_at)) }}</small>
+                <small>Data : {{ date( 'd\/m\/Y - H:i', strtotime($problem->created_at)) }}</small>
             </div>
         </div>
     </div>

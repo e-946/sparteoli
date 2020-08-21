@@ -18,7 +18,7 @@ class CreateVictimsTable extends Migration
             $table->string('name');
             $table->integer('age');
             $table->char('sex', 1);
-            $table->boolean('conscious')->nullable();
+            $table->boolean('conscious');
             $table->boolean('fatal');
             $table->unsignedBigInteger('rescuer_id');
             $table->foreign('rescuer_id')->references('id')->on('rescuers');

@@ -7,6 +7,7 @@ use App\Type;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Symfony\Component\HttpFoundation\Response as ResponseBase;
 
 class TypeController extends Controller
 {
@@ -95,7 +96,7 @@ class TypeController extends Controller
      * @param  int  $id
      * @return RedirectResponse|Response
      */
-    public function destroy(int $id): Response
+    public function destroy(int $id): ResponseBase
     {
         $type = Type::find($id);
 

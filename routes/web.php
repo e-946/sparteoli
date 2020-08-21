@@ -128,6 +128,7 @@ Route::group(['middleware' => ['auth']], function (){
     Route::prefix('occurrence')->group(function () {
         Route::get('/', 'OccurrenceController@index')->name('index-occurrence');
         Route::get('/{id}', 'OccurrenceController@show')->name('show-occurrence')->where('id', '[0-9]+');
+        Route::get('/{id}/pdf', 'OccurrenceController@toPdf')->name('toPdf-occurrence')->where('id', '[0-9]+');
 
 
         Route::prefix('{occurrence_id}/victim')->where(['occurrence_id' => '[0-9]+'])->group(function () {
