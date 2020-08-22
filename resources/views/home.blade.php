@@ -4,8 +4,8 @@
 @section('content')
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.bundle.min.js"></script>
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
+    <div class="row">
+        <div class="col">
             <div class="card">
                 <div class="card-header">Dashboard</div>
 
@@ -19,10 +19,16 @@
                 </div>
             </div>
         </div>
-        <div class="col">
+    </div>
+    <div class="row">
+        <div class="col-lg-6">
             <div class="card">
-                <div class="card-header">Gráficos</div>
-                <div class="d-flex justify-content-around">
+                <div class="card-header border-0">
+                    <div class="d-flex justify-content-center">
+                        <h3>Ocorrências por mês</h3>
+                    </div>
+                </div>
+                <div class="card-body">
                     @php( $pattern[] = [
                         '#66CDAA',
                         '#00FF00',
@@ -46,75 +52,171 @@
                         '#FF0000',
                         '#DB7093',
                     ] )
-                    <div class="card-body">
-                        <canvas id="bar" width="200" height="200"></canvas>
-                        <script>
-                            let months = [
-                                @foreach ($months as $month)
+                    <canvas id="bar" width="200" height="200"></canvas>
+                    <script>
+                        let months = [
+                            @foreach ($months as $month)
                                 '{{ $month->name }}',
-                                @endforeach
-                            ]
-                            let barCanvas = document.getElementById('bar').getContext('2d');
-                            let myChart = new Chart(barCanvas, {
-                                type: 'bar',
-                                resposive: true,
-                                data: {
-                                    datasets:
-                                        [
-                                        @php( $i = 0 )
-                                        @foreach ($months as $month)
-                                            {
+                            @endforeach
+                        ]
+                        let barCanvas = document.getElementById('bar').getContext('2d');
+                        let myChart = new Chart(barCanvas, {
+                            type: 'bar',
+                            resposive: true,
+                            data: {
+                                datasets:
+                                    [
+                                            @php( $i = 0 )
+                                            @foreach ($months as $month)
+                                        {
                                             data: ['{{ $month->total }}'],
                                             label: ['{{ $month->name }}'],
                                             backgroundColor: '{{ $pattern[0][$i] }}',
-                                            },
-                                            @php( $i++ )
+                                        },
+                                        @php( $i++ )
                                         @endforeach
                                     ],
-                                },
-                                options: {
-                                    scales: {
-                                        yAxes: [{
-                                            ticks: {
-                                                beginAtZero: true
-                                            }
-                                        }]
-                                    }
+                            },
+                            options: {
+                                scales: {
+                                    yAxes: [{
+                                        ticks: {
+                                            beginAtZero: true
+                                        }
+                                    }]
                                 }
-                            });
-                        </script>
+                            }
+                        });
+                    </script>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-header border-0">
+                    <div class="d-flex justify-content-center">
+                        <h3>Ocorrências por natureza</h3>
                     </div>
-                    <div class="card-body">
-                        <canvas id="doughnut" width="200" height="200"></canvas>
-                        <script>
-                            let doughnutCanvas = document.getElementById('doughnut').getContext('2d');
-                            let myDoughnutChart = new Chart(doughnutCanvas, {
-                                type: 'doughnut',
-                                resposive: true,
-                                data: {
-                                    datasets: [{
-                                        data: [
-                                            @foreach ($natures as $nature)
-                                            '{{ $nature->occurrences->count() }}',
-                                            @endforeach
-                                        ],
-                                        @php( $i = 0 )
-                                        backgroundColor: [
-                                            @foreach ($natures as $nature)
-                                                '{{ $pattern[0][$i] }}',
-                                                @php( $i++ )
-                                            @endforeach
-                                        ]
-                                    }],
-                                    labels: [
+                </div>
+                <div class="card-body">
+                    <canvas id="doughnut" width="200" height="200"></canvas>
+                    <script>
+                        let doughnutCanvas = document.getElementById('doughnut').getContext('2d');
+                        let myDoughnutChart = new Chart(doughnutCanvas, {
+                            type: 'doughnut',
+                            resposive: true,
+                            data: {
+                                datasets: [{
+                                    data: [
                                         @foreach ($natures as $nature)
-                                            '{{ $nature->name }}',
+                                            '{{ $nature->occurrences->count() }}',
+                                        @endforeach
+                                    ],
+                                    @php( $i = 0 )
+                                    backgroundColor: [
+                                        @foreach ($natures as $nature)
+                                            '{{ $pattern[0][$i] }}',
+                                        @php( $i++ )
                                         @endforeach
                                     ]
-                                }
-                            });
-                        </script>
+                                }],
+                                labels: [
+                                    @foreach ($natures as $nature)
+                                        '{{ $nature->name }}',
+                                    @endforeach
+                                ]
+                            }
+                        });
+                    </script>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-header border-0">
+                    <div class="d-flex justify-content-center">
+                        <h3>Ocorrências por mês</h3>
                     </div>
+                </div>
+                <div class="card-body">
+                    <canvas id="bar2" width="200" height="200"></canvas>
+                    <script>
+                        let bairros = [
+                            @foreach ($bairros as $bairro)
+                                '{{ $bairro->name }}',
+                            @endforeach
+                        ]
+                        let bar2Canvas = document.getElementById('bar2').getContext('2d');
+                        let myChart2 = new Chart(bar2Canvas, {
+                            type: 'bar',
+                            resposive: true,
+                            data: {
+                                datasets:
+                                    [
+                                            @php( $i = 0 )
+                                            @foreach ($bairros as $bairro)
+                                        {
+                                            data: ['{{ $bairro->total }}'],
+                                            label: ['{{ $bairro->name }}'],
+                                            backgroundColor: '{{ $pattern[0][$i] }}',
+                                        },
+                                        @php( $i++ )
+                                        @endforeach
+                                    ],
+                            },
+                            options: {
+                                scales: {
+                                    yAxes: [{
+                                        ticks: {
+                                            beginAtZero: true
+                                        }
+                                    }]
+                                }
+                            }
+                        });
+                    </script>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-header border-0">
+                    <div class="d-flex justify-content-center">
+                        <h3>Ocorrências por natureza</h3>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <canvas id="pie" width="200" height="200"></canvas>
+                    <script>
+                        let pieCanvas = document.getElementById('pie').getContext('2d');
+                        let myPieChart = new Chart(pieCanvas, {
+                            type: 'pie',
+                            resposive: true,
+                            data: {
+                                datasets: [{
+                                    data: [
+                                        @foreach ($types as $type)
+                                            '{{ $type->occurrences->count() }}',
+                                        @endforeach
+                                    ],
+                                    @php( $i = 0 )
+                                    backgroundColor: [
+                                        @foreach ($types as $type)
+                                            '{{ $pattern[0][$i] }}',
+                                        @php( $i++ )
+                                        @endforeach
+                                    ]
+                                }],
+                                labels: [
+                                    @foreach ($types as $type)
+                                        '{{ $type->name }}',
+                                    @endforeach
+                                ]
+                            }
+                        });
+                    </script>
                 </div>
             </div>
         </div>

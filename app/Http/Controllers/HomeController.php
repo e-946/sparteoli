@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Nature;
 use App\Occurrence;
+use App\Type;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Facades\DB;
 
@@ -27,13 +28,18 @@ class HomeController extends Controller
     public function index(): Renderable
     {
         $natures = Nature::all();
-        $occurrences = Occurrence::all();
+        $types = Type::all();
         $months = DB::table('occurrences')
             ->select(DB::raw('MONTHNAME(date) name'), DB::raw('count(*) as total'))
             ->groupBy('name')
             ->orderBy('name', 'DESC')
             ->get();
+        $bairros = DB::table('occurrences')
+            ->select(DB::raw('neighborhood name'), DB::raw('count(*) as total'))
+            ->groupBy('name')
+            ->orderBy('name', 'DESC')
+            ->get();
 
-        return view('home', compact('occurrences', 'natures', 'months'));
+        return view('home', compact('natures', 'months', 'types', 'bairros'));
     }
 }
