@@ -208,6 +208,7 @@
                 </tr>
             </table>
         </article>
+        @if ($occurrence->victims->count() > 0)
         <article
             @if ($occurrence->victims->count() > 2)
                 class="break"
@@ -279,6 +280,8 @@
                 @endforeach
             </table>
         </article>
+        @endif
+        @if ($occurrence->resources->count() > 0)
         <article
             @if ($occurrence->victims->count() <= 2)
                  class="break"
@@ -325,6 +328,7 @@
                 </tr>
             </table>
         </article>
+        @endif
         <table class="text-center align-middle">
             <tr>
                 <td class="align-middle">
