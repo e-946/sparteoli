@@ -28,6 +28,7 @@
             align-items: center;
             display: flex;
             justify-content: space-around;
+            flex-wrap: wrap;
         }
 
         .flex-center {
@@ -45,7 +46,7 @@
         }
 
         .title {
-            font-size: 84px;
+            font-size: 5em;
         }
 
         .links > a {
@@ -73,26 +74,55 @@
             margin-bottom: 30px;
             padding: 20px;
         }
+
+        .left img {
+            height: 50vh;
+        }
+
+        @media (max-width: 800px) {
+            .right {
+                flex-basis: 100%;
+                margin: 0;
+            }
+            .left {
+                flex-basis: 100%;
+                margin: 0;
+            }
+            .m-b-md {
+                margin-bottom: 30px;
+            }
+
+            .left img {
+                height: 25vh;
+            }
+            .links > a {
+                padding: 15px;
+            }
+            .title {
+                font-size: 3em;
+                margin: 0;
+            }
+        }
     </style>
 </head>
 <body>
 <div class="flex-center position-ref full-height">
     <div class="content flex-around">
-        <div class="m-b-md">
-            <img src="img/logo-brasao.png" height="400vh" alt="Insignia do 9º corpo de bombeiros">
+        <div class="m-b-md left">
+            <img src="img/logo-brasao.png" alt="Insignia do 9º corpo de bombeiros">
         </div>
-        <div class="">
+        <div class="right">
         @if (Route::has('login'))
-        <div class="title m-b-md">
-            Sparteoli
-        </div>
-        <div class="links">
+            <div class="title m-b-md">
+                Sparteoli
+            </div>
+            <div class="links">
             @auth
                 <a href="{{ url('/home') }}">Home</a>
             @else
                 <a href="{{ route('login') }}">Login</a>
             @endauth
-        </div>
+            </div>
         @endif
         </div>
     </div>
