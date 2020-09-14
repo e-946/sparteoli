@@ -137,7 +137,7 @@
             <div class="card">
                 <div class="card-header border-0">
                     <div class="d-flex justify-content-center">
-                        <h3>Ocorrências por mês</h3>
+                        <h3>Ocorrências por bairro</h3>
                     </div>
                 </div>
                 <div class="card-body">
@@ -184,7 +184,7 @@
             <div class="card">
                 <div class="card-header border-0">
                     <div class="d-flex justify-content-center">
-                        <h3>Ocorrências por natureza</h3>
+                        <h3>Ocorrências por tipo</h3>
                     </div>
                 </div>
                 <div class="card-body">
