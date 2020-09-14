@@ -83,7 +83,8 @@ class FireprotectionController extends Controller
         $protection = Fireprotection::find($id);
         $protection->update($request->all());
 
-        return response(redirect()->route('show-fireprotection', $protection->id));
+        return response(redirect()->route('show-fireprotection', $protection->id)->with('message',
+            "Proteção alterada com sucesso"));
     }
 
     /**
@@ -102,6 +103,7 @@ class FireprotectionController extends Controller
 
         $protection->delete();
 
-        return response(redirect(route('index-fireprotection')));
+        return response(redirect(route('index-fireprotection'))->with('message',
+            "Proteção excluída com sucesso"));
     }
 }

@@ -84,7 +84,8 @@ class NatureController extends Controller
         $nature = Nature::find($id);
         $nature->update($request->all());
 
-        return response(redirect()->route('show-nature', $nature->id));
+        return response(redirect()->route('show-nature', $nature->id)->with('message',
+            "Natureza alterada com sucesso"));
     }
 
     /**
@@ -103,6 +104,7 @@ class NatureController extends Controller
 
         $nature->delete();
 
-        return response(redirect(route('index-nature')));
+        return response(redirect(route('index-nature'))->with('message',
+            "Natureza excluída com sucesso"));
     }
 }

@@ -83,7 +83,8 @@ class ProblemController extends Controller
         $problem = Problem::find($id);
         $problem->update($request->all());
 
-        return response(redirect()->route('show-problem', $problem->id));
+        return response(redirect()->route('show-problem', $problem->id)->with('message',
+            "Problema alterado com sucesso"));
     }
 
     /**
@@ -102,6 +103,7 @@ class ProblemController extends Controller
 
         $problem->delete();
 
-        return response(redirect(route('index-problem')));
+        return response(redirect(route('index-problem'))->with('message',
+            "Problema excluído com sucesso"));
     }
 }

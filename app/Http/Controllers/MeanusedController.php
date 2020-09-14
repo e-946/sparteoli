@@ -44,7 +44,8 @@ class MeanusedController extends Controller
         }
         Meanused::create($request->all());
 
-        return response(redirect()->route('index-meanused'));
+        return response(redirect()->route('index-meanused')->with('message',
+            "Meio de chamado criado com sucesso"));
     }
 
     /**
@@ -84,7 +85,8 @@ class MeanusedController extends Controller
         $mean = Meanused::find($id);
         $mean->update($request->all());
 
-        return response(redirect()->route('index-meanused', $mean->id));
+        return response(redirect()->route('index-meanused', $mean->id)->with('message',
+            "Meio de chamado alterado com sucesso"));
     }
 
     /**
@@ -103,6 +105,7 @@ class MeanusedController extends Controller
 
         $mean->delete();
 
-        return response(redirect(route('index-meanused')));
+        return response(redirect(route('index-meanused'))->with('message',
+            "Meio de chamado excluído com sucesso"));
     }
 }

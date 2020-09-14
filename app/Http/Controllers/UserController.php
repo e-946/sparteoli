@@ -63,7 +63,8 @@ class UserController extends Controller
             'admin' => is_null($request->admin) ? false : $request->admin,
         ]);
 
-        return response(redirect()->route('show-user', $user->id));
+        return response(redirect()->route('show-user', $user->id)->with('message',
+            "Usuário alterado com sucesso"));
     }
 
     /**
@@ -77,7 +78,8 @@ class UserController extends Controller
         $user = User::find($id);
         $user->delete();
 
-        return response(redirect(route('index-user')));
+        return response(redirect(route('index-user'))->with('message',
+            "Usuário excluído com sucesso"));
     }
 
     public function profile()
@@ -105,17 +107,24 @@ class UserController extends Controller
     public function storePassword(Request $request, $id)
     {
         $this->validator($request->all())->validate();
+
         if (Auth::id() == $id){
             User::find($id)->update([
                 'password' => Hash::make($request->password),
             ]);
-            return response(view('user.one')->with('user', Auth::user()));
+            return response(redirect(route('profile'))->with('message',
+                "Senha alterada com sucesso"));
         }
+
         if (Auth::user()->admin) {
-            User::find($id)->update([
+            $user = User::find($id);
+            $user->update([
                 'password' => Hash::make($request->password),
             ]);
-            return response(view('user.one')->with('user', User::find($id)));
+            if ($request->url() === route('home')){
+                return response(view('home')->with('message', "Senha alterada com sucesso"));
+            }
+            return response(redirect()->route('user', $user->id)->with('message', 'Senha alterada com sucesso'));
         }
 
         return response(redirect(route('home')));

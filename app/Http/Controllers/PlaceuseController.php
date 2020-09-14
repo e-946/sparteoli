@@ -44,7 +44,8 @@ class PlaceuseController extends Controller
         }
         Placeuse::create($request->all());
 
-        return response(redirect()->route('index-placeuse'));
+        return response(redirect()->route('index-placeuse')->with('message',
+            "Uso do local criado com sucesso"));
     }
 
     /**
@@ -84,7 +85,8 @@ class PlaceuseController extends Controller
         $use = Placeuse::find($id);
         $use->update($request->all());
 
-        return response(redirect()->route('index-placeuse', $use->id));
+        return response(redirect()->route('index-placeuse', $use->id)->with('message',
+            "Uso do local alterado com sucesso"));
     }
 
     /**
@@ -103,6 +105,7 @@ class PlaceuseController extends Controller
 
         $use->delete();
 
-        return response(redirect(route('index-placeuse')));
+        return response(redirect(route('index-placeuse'))->with('message',
+            "Uso do local excluído com sucesso"));
     }
 }

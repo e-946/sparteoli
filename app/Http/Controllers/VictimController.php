@@ -113,7 +113,8 @@ class VictimController extends Controller
 
         $victim->problems()->sync($request->problemForSave);
 
-        return response(redirect()->route('show-victim', ['occurrence_id' => $occurrence_id, 'id' => $victim->id]));
+        return response(redirect()->route('show-victim', ['occurrence_id' => $occurrence_id, 'id' => $victim->id])->with('message',
+            "Vítima alterada com sucesso"));
     }
 
     /**
@@ -127,6 +128,7 @@ class VictimController extends Controller
     {
         new VictimDestroyer($id);
 
-        return response(redirect(route('index-victim', $occurrence_id)));
+        return response(redirect(route('index-victim', $occurrence_id))->with('message',
+            "Vítima excluída com sucesso"));
     }
 }

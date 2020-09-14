@@ -144,10 +144,11 @@
                     <select id="type_id" type="number" name="type_id" class="form-control" required>
                         <option selected class="text-weight-bold" disabled>Selecione</option>
                         @foreach($natures as $nature)
-                            <option class="text-bold" disabled>{{ $nature->name }}</option>
+                            <optgroup class="text-bold" label="{{ $nature->name }}">
                             @foreach($nature->types as $type)
                                 <option class="text-weight-normal" value="{{ $type->id }}">{{ $type->name }}</option>
                             @endforeach
+                            </optgroup>
                         @endforeach
                     </select>
                 </div>

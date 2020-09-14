@@ -17,6 +17,7 @@
         </div>
         <div class="d-flex justify-content-center">
             <div class="list-group col-md-8">
+                @include('message', ['message' => $message ?? ''])
                 @include('errors', ['errors' => $errors])
                 @foreach($natures as $nature)
                     <div class="list-group-item d-flex justify-content-between align-content-center flex-wrap">

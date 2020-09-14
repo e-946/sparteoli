@@ -15,7 +15,7 @@
                                 {{ session('status') }}
                             </div>
                         @endif
-                        Você está logado!
+                        @include('message', ['message' => $message ?? ''])
                     </div>
                 </div>
             </div>
