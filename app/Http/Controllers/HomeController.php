@@ -39,7 +39,14 @@ class HomeController extends Controller
             ->groupBy('name')
             ->orderBy('name', 'DESC')
             ->get();
+        $colors = [
+        '#03318C',
+        '#F2CB05',
+        '#D96704',
+        '#D91414',
+        '#0D0D0D'
+        ];
 
-        return view('home', compact('natures', 'months', 'types', 'bairros'));
+        return view('home', compact('natures', 'months', 'types', 'bairros', 'colors'));
     }
 }
