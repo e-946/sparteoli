@@ -51,7 +51,8 @@ class ResourceController extends Controller
             'occurrence_id' => $occurrence_id,
         ]);
 
-        return response(redirect()->route('index-resource', $occurrence_id));
+        return response(redirect()->route('index-resource', $occurrence_id)->with('message',
+            "Recurso criado com sucesso"));
     }
 
     /**
@@ -99,7 +100,8 @@ class ResourceController extends Controller
             'occurrence_id' => $occurrence_id,
         ]);
 
-        return response(redirect()->route('show-resource', ['occurrence_id' => $occurrence_id, 'id' => $resource->id]));
+        return response(redirect()->route('show-resource', ['occurrence_id' => $occurrence_id, 'id' => $resource->id])->with('message',
+            "Recurso alterado com sucesso"));
     }
 
     /**
@@ -114,6 +116,7 @@ class ResourceController extends Controller
         $resource = Resource::find($id);
         $resource->delete();
 
-        return response(redirect(route('index-resource', $occurrence_id)));
+        return response(redirect(route('index-resource', $occurrence_id))->with('message',
+            "Recurso excluído com sucesso"));
     }
 }

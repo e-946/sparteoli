@@ -108,7 +108,9 @@ class OccurrenceController extends Controller
         $occurrence->fireprotections()->sync($request->protectionsForSave);
         $occurrence->update($data);
 
-        return response(redirect()->route('show-occurrence', $occurrence->id));
+
+        return response(redirect()->route('show-occurrence', $occurrence->id)->with('message',
+            "Ocorrência alterada com sucesso"));
     }
 
     /**
@@ -132,7 +134,8 @@ class OccurrenceController extends Controller
 
         $occurrence->delete();
 
-        return response(redirect(route('index-occurrence')));
+        return response(redirect(route('index-occurrence'))->with('message',
+            "Ocorrência excluída com sucesso"));
     }
 
     /**

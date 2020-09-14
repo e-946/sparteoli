@@ -87,6 +87,6 @@ class RegisterController extends Controller
 
         event(new Registered($user = $this->create($request->all())));
 
-        return response(redirect(route('index-user')));
+        return response(redirect(route('index-user'))->with('message', 'Usuário criado com sucesso'));
     }
 }

@@ -70,6 +70,7 @@
     </div>
     <div class="d-flex justify-content-center">
         <div class="list-group col-md-8">
+            @include('message', ['message' => $message ?? ''])
             <div class="list-group-item">
                 <div class="d-flex w-100 justify-content-between flex-wrap">
                     <h5 class="mb-1 font-weight-bold">Informações:</h5>
