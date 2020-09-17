@@ -20,7 +20,7 @@
                 @include('errors', ['errors' => $errors])
                 @foreach($occurrences as $occurrence)
                     <div class="list-group-item d-flex justify-content-between align-content-center flex-wrap">
-                        <a class="link-muted d-flex justify-content-between" href="{{ route('show-occurrence', $occurrence->id) }}">
+                        <a class="link-black d-flex justify-content-between" href="{{ route('show-occurrence', $occurrence->id) }}">
                             <p>Nº: {{ $occurrence->id }} / Preenchido por: {{ $occurrence->filler_name }}</p>
                         </a>
                         <div class="d-flex justify-content-around">
