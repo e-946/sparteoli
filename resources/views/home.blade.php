@@ -55,6 +55,9 @@
                                                 @php($i = 0)
                                                 @else
                                                 @php($i++)
+                                                    @if($i > 4)
+                                                        @php($i = 0)
+                                                    @endif
                                                 @endif
                                             },
                                             @endforeach
@@ -148,6 +151,9 @@
                                                 @php($i = 0)
                                                 @else
                                                 @php($i++)
+                                                    @if($i > 4)
+                                                    @php($i = 0)
+                                                    @endif
                                                 @endif
                                             },
                                             @endforeach
