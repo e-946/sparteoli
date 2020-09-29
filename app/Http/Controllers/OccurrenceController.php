@@ -9,11 +9,10 @@ use App\Nature;
 use App\Occurrence;
 use App\Placefreature;
 use App\Placeuse;
-use Dompdf\Dompdf;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Storage;
-use Ilovepdf\Ilovepdf;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class OccurrenceController extends Controller
 {
@@ -41,7 +40,13 @@ class OccurrenceController extends Controller
         $natures = Nature::all();
         $protections = Fireprotection::all();
 
-        return response(view('occurrence.create', compact('means', 'uses', 'freatures', 'natures', 'protections')), 200);
+        return response(
+            view(
+                'occurrence.create',
+                compact('means', 'uses', 'freatures', 'natures', 'protections')
+            ),
+            200
+        );
     }
 
     /**
@@ -56,7 +61,9 @@ class OccurrenceController extends Controller
         $data['address'] = $data['street'] . ', Nº ' . $data['number'];
         unset($data['street'], $data['number']);
         $occurrence = Occurrence::create($data);
-        $occurrence->fireprotections()->attach($request->protectionsForSave);
+        if (isset($request->protectionsForSave)) {
+            $occurrence->fireprotections()->attach($request->protectionsForSave);
+        }
         $data['occurrence_id'] = $occurrence->id;
 
         return response(redirect()->route('show-occurrence', $occurrence->id));
@@ -89,7 +96,10 @@ class OccurrenceController extends Controller
         $natures = Nature::all();
         $protections = Fireprotection::all();
         $occurrence = Occurrence::find($id);
-        return response(view('occurrence.update', compact('occurrence','means', 'uses', 'freatures', 'natures', 'protections')));
+        return response(view(
+            'occurrence.update',
+            compact('occurrence', 'means', 'uses', 'freatures', 'natures', 'protections')
+        ));
     }
 
     /**
@@ -105,12 +115,16 @@ class OccurrenceController extends Controller
         $data = $request->except('protectionsForSave');
         $data['address'] = $data['street'] . ', Nº ' . $data['number'];
         unset($data['street'], $data['number']);
-        $occurrence->fireprotections()->sync($request->protectionsForSave);
+        if (isset($request->protectionsForSave)) {
+            $occurrence->fireprotections()->sync($request->protectionsForSave);
+        }
         $occurrence->update($data);
 
 
-        return response(redirect()->route('show-occurrence', $occurrence->id)->with('message',
-            "Ocorrência alterada com sucesso"));
+        return response(redirect()->route('show-occurrence', $occurrence->id)->with(
+            'message',
+            "Ocorrência alterada com sucesso"
+        ));
     }
 
     /**
@@ -123,10 +137,10 @@ class OccurrenceController extends Controller
     {
         $occurrence = Occurrence::find($id);
 
-        foreach($occurrence->victims as $victim) {
+        foreach ($occurrence->victims as $victim) {
             new VictimDestroyer($victim->id);
         }
-        foreach($occurrence->resources as $resource) {
+        foreach ($occurrence->resources as $resource) {
             $resource->delete();
         }
 
@@ -134,14 +148,17 @@ class OccurrenceController extends Controller
 
         $occurrence->delete();
 
-        return response(redirect(route('index-occurrence'))->with('message',
-            "Ocorrência excluída com sucesso"));
+        return response(redirect(route('index-occurrence'))->with(
+            'message',
+            "Ocorrência excluída com sucesso"
+        ));
     }
 
     /**
      * Generate PDF for resource
      * @param int $id
      *
+     * @return BinaryFileResponse
      */
     public function toPdf(int $id)
     {

@@ -20,10 +20,10 @@
                 @include('message', ['message' => $message ?? ''])
                 @include('errors', ['errors' => $errors])
                 @foreach($means as $mean)
-                    <div class="list-group-item d-flex justify-content-between align-content-center flex-wrap">
-                        <p class="mb-0">{{ $mean->name }}</p>
+                    <div class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                        <p class="m-2">{{ $mean->name }}</p>
                         @can('admin')
-                            <div class="d-flex justify-content-around">
+                            <div class="d-flex justify-content-around m-2">
                                 <a class="btn btn-primary mr-2" href="{{route('edit-meanused', $mean->id)}}">
                                     <p class="mb-0">
                                         <i class="fas fa-edit"></i>

@@ -20,8 +20,8 @@
                 @include('message', ['message' => $message ?? ''])
                 @include('errors', ['errors' => $errors])
                 @foreach($uses as $use)
-                    <div class="list-group-item d-flex justify-content-between align-content-center flex-wrap">
-                        <p class="mb-0">{{ $use->name }}</p>
+                    <div class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                        <p class="m-2">{{ $use->name }}</p>
                         @can('admin')
                             <div class="d-flex justify-content-around">
                                 <a class="btn btn-primary mr-2" href="{{route('edit-placeuse', $use->id)}}">

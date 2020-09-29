@@ -1,4 +1,4 @@
-<?php
+<?php /** @noinspection PhpMissingFieldTypeInspection */
 
 namespace App;
 
@@ -24,6 +24,6 @@ class Problem extends Model
 
     public function victims()
     {
-        return $this->belongsToMany(Victim::class,'victims-problems','problem_id','victim_id');
+        return $this->belongsToMany(Victim::class, 'victims-problems', 'problem_id', 'victim_id');
     }
 }

@@ -8,7 +8,7 @@
 
 @section('content')
     <div class="container">
-        <div class="d-flex justify-content-end mb-5">
+        <div class="d-flex justify-content-end align-items-center mb-5">
             @can('admin')
                 <a href="{{route('create-problem')}}" class="btn btn-success">
                     <i class="fas fa-plus"></i> Adicionar
@@ -20,9 +20,9 @@
                 @include('message', ['message' => $message ?? ''])
                 @include('errors', ['errors' => $errors])
                 @foreach($problems as $problem)
-                    <div class="list-group-item d-flex justify-content-between align-content-center flex-wrap">
-                        <a class="link-muted" href="{{ route('show-problem', $problem->id) }}">
-                            <p class="mb-0">{{ $problem->name }}</p>
+                    <div class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                        <a class="btn btn-outline-dark font-weight-bold m-2" href="{{ route('show-problem', $problem->id) }}">
+                            {{ $problem->name }}
                         </a>
                         @can('admin')
                             <div class="d-flex justify-content-around">

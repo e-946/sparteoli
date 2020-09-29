@@ -24,8 +24,7 @@ class VictimCreator
         int $rescuer_id,
         array $problemForSave,
         int $occurrence_id
-    )
-    {
+    ) {
         $this->name = $name;
         $this->age = $age;
         $this->sex = $sex;

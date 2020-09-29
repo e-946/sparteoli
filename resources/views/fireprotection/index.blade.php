@@ -20,12 +20,12 @@
             @include('message', ['message' => $message ?? ''])
             @include('errors', ['errors' => $errors])
             @foreach($protections as $protection)
-                <div class="list-group-item d-flex justify-content-between align-content-center flex-wrap">
-                    <a class="link-muted" href="{{ route('show-fireprotection', $protection->id) }}">
-                        <p class="mb-0">{{ $protection->name }}</p>
+                <div class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                    <a class="btn btn-outline-dark font-weight-bold m-2" href="{{ route('show-fireprotection', $protection->id) }}">
+                        {{ $protection->name }}
                     </a>
                     @can('admin')
-                    <div class="d-flex justify-content-around">
+                    <div class="d-flex justify-content-around m-2">
                         <a class="btn btn-primary mr-2" href="{{route('edit-fireprotection', $protection->id)}}">
                             <p class="mb-0">
                                 <i class="fas fa-edit"></i>

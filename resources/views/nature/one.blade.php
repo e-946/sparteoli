@@ -7,13 +7,13 @@
 @stop
 
 @section('content')
-    <div class="d-flex justify-content-between mb-5 flex-wrap">
-        <a class="btn btn-info" href="{{ route('index-nature') }}">
+    <div class="d-flex justify-content-between align-items-center mb-5 flex-wrap">
+        <a class="btn btn-info m-2" href="{{ route('index-nature') }}">
             <i class="fas fa-arrow-left"></i>
             Voltar
         </a>
         @can('admin')
-            <div class="d-flex">
+            <div class="d-flex justify-content-center align-items-center m-2">
                 <a class="btn btn-primary mr-2" href="{{route('edit-nature', $nature->id)}}">
                     <p class="mb-0">
                         <i class="fas fa-edit"></i>
@@ -44,11 +44,11 @@
                     <small>Última alteração: {{ date( 'd\/m\/Y - H:i', strtotime($nature->updated_at)) }}</small>
                 </div>
                 <p class="mb-1 font-weight-normal">{{ $nature->desc }}</p>
+                <div class="list-group">
                 @foreach($nature->types as $type)
-                    <div  class="list-group-item">
-                        <a class="list-group-item-heading link-muted" href="{{route('show-type', $type->id)}}">{{ $type->name }}</a>
-                    </div>
+                    <a class="btn btn-outline-dark list-group-item" href="{{route('show-type', $type->id)}}">{{ $type->name }}</a>
                 @endforeach
+                </div>
                 <small>Criado em: {{ date( 'd\/m\/Y - H:i', strtotime($nature->created_at)) }}</small>
             </div>
         </div>

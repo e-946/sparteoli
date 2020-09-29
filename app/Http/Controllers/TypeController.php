@@ -87,8 +87,10 @@ class TypeController extends Controller
         $type = Type::find($id);
         $type->update($request->all());
 
-        return response(redirect()->route('show-type', $type->id)->with('message',
-            "Tipo alterado com sucesso"));
+        return response(redirect()->route('show-type', $type->id)->with(
+            'message',
+            "Tipo alterado com sucesso"
+        ));
     }
 
     /**
@@ -107,7 +109,9 @@ class TypeController extends Controller
 
         $type->delete();
 
-        return response(redirect(route('index-type'))->with('message',
-            "Tipo excluído com sucesso"));
+        return response(redirect(route('index-type'))->with(
+            'message',
+            "Tipo excluído com sucesso"
+        ));
     }
 }

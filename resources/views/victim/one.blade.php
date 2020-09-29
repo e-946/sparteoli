@@ -7,8 +7,8 @@
 @stop
 
 @section('content')
-    <div class="d-flex justify-content-between mb-5 flex-wrap">
-        <a class="btn btn-info" href="{{ route('index-victim', ['occurrence_id' => $occurrence_id]) }}">
+    <div class="d-flex justify-content-between align-items-center mb-5 flex-wrap">
+        <a class="btn btn-info m-2" href="{{ route('index-victim', ['occurrence_id' => $occurrence_id]) }}">
             <i class="fas fa-arrow-left"></i>
             Voltar
         </a>

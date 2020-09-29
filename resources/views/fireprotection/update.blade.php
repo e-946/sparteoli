@@ -14,16 +14,16 @@
     <form method="post" class="" onsubmit="return confirm('Tem certeza que deseja atualizar {{addslashes( $protection->name )}}?')">
         @method('PUT')
         @csrf
-        <div class="form-group mb-2 form-row">
-            <div class="col">
+        <div class="form-group mb-3 form-row">
+            <div class="col-auto col-sm mb-3">
                 <label for="name" class="mr-2">Nome:</label>
                 <input id="name" type="text" name="name" class="form-control" value="{{ $protection->name }}" autofocus>
             </div>
-            <div class="col">
+            <div class="col-auto col-sm mb-3">
                 <label for="desc" class="mr-2">Descrição:</label>
                 <textarea id="desc" type="text" name="desc" class="form-control">{{ $protection->desc }}</textarea>
             </div>
         </div>
-        <button type="submit" class="btn btn-primary mb-2">Salvar</button>
+        <button type="submit" class="btn btn-primary">Salvar</button>
     </form>
 @stop

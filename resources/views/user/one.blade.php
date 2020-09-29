@@ -7,13 +7,13 @@
 @stop
 
 @section('content')
-    <div class="d-flex justify-content-between mb-5 flex-wrap">
-        <a class="btn btn-info" href="{{ url()->previous() == route('index-user') ? route('index-user') : (url()->previous() == route('home') ? route('home') : url()->previous())}}">
+    <div class="d-flex justify-content-between align-items-center mb-5 flex-wrap">
+        <a class="btn btn-info m-2" href="{{ url()->previous() == route('index-user') ? route('index-user') : (url()->previous() == route('home') ? route('home') : url()->previous())}}">
             <i class="fas fa-arrow-left"></i>
             Voltar
         </a>
         @can('admin')
-            <div class="d-flex">
+            <div class="d-flex justify-content-around align-items-center m-2">
                 <a class="btn btn-primary mr-2" href="{{route('edit-user', $user->id)}}">
                     <p class="mb-0">
                         <i class="fas fa-edit"></i>

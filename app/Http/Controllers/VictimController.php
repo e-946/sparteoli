@@ -43,11 +43,12 @@ class VictimController extends Controller
      * @param Request $request
      * @param int $occurrence_id
      * @return Response
+     * @noinspection PhpUndefinedFieldInspection
      */
     public function store(Request $request, int $occurrence_id): Response
     {
 
-        if (!empty($request->problemForSave)){
+        if (!empty($request->problemForSave)) {
             new VictimCreator(
                 $request->name,
                 $request->age,
@@ -98,6 +99,7 @@ class VictimController extends Controller
      * @param int $occurrence_id
      * @param int $id
      * @return Response
+     * @noinspection PhpUndefinedFieldInspection
      */
     public function update(Request $request, int $occurrence_id, int $id): Response
     {
@@ -113,8 +115,12 @@ class VictimController extends Controller
 
         $victim->problems()->sync($request->problemForSave);
 
-        return response(redirect()->route('show-victim', ['occurrence_id' => $occurrence_id, 'id' => $victim->id])->with('message',
-            "Vítima alterada com sucesso"));
+        return response(redirect()
+            ->route('show-victim', ['occurrence_id' => $occurrence_id, 'id' => $victim->id])
+            ->with(
+                'message',
+                "Vítima alterada com sucesso"
+            ));
     }
 
     /**
@@ -128,7 +134,9 @@ class VictimController extends Controller
     {
         new VictimDestroyer($id);
 
-        return response(redirect(route('index-victim', $occurrence_id))->with('message',
-            "Vítima excluída com sucesso"));
+        return response(redirect(route('index-victim', $occurrence_id))->with(
+            'message',
+            "Vítima excluída com sucesso"
+        ));
     }
 }

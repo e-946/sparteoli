@@ -20,8 +20,8 @@
                 @include('message', ['message' => $message ?? ''])
                 @include('errors', ['errors' => $errors])
                 @foreach($rescuers as $rescuer)
-                    <div class="list-group-item d-flex justify-content-between align-content-center flex-wrap">
-                        <p class="mb-0">{{ $rescuer->name }}</p>
+                    <div class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                        <p class="m-2">{{ $rescuer->name }}</p>
                         @can('admin')
                             <div class="d-flex justify-content-around">
                                 <a class="btn btn-primary mr-2" href="{{route('edit-rescuer', $rescuer->id)}}">

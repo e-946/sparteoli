@@ -44,8 +44,10 @@ class PlacefreatureController extends Controller
         }
         Placefreature::create($request->all());
 
-        return response(redirect()->route('index-placefreature')->with('message',
-            "Característica de local criada com sucesso"));
+        return response(redirect()->route('index-placefreature')->with(
+            'message',
+            "Característica de local criada com sucesso"
+        ));
     }
 
     /**
@@ -85,8 +87,10 @@ class PlacefreatureController extends Controller
         $freature = Placefreature::find($id);
         $freature->update($request->all());
 
-        return response(redirect()->route('index-placefreature', $freature->id)->with('message',
-            "Característica de local alterada com sucesso"));
+        return response(redirect()->route('index-placefreature', $freature->id)->with(
+            'message',
+            "Característica de local alterada com sucesso"
+        ));
     }
 
     /**
@@ -105,7 +109,9 @@ class PlacefreatureController extends Controller
 
         $freature->delete();
 
-        return response(redirect(route('index-placefreature'))->with('message',
-            "Característica de local excluída com sucesso"));
+        return response(redirect(route('index-placefreature'))->with(
+            'message',
+            "Característica de local excluída com sucesso"
+        ));
     }
 }

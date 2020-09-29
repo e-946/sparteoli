@@ -1,4 +1,4 @@
-<?php
+<?php /** @noinspection PhpMissingFieldTypeInspection */
 
 namespace App;
 
@@ -34,7 +34,12 @@ class Occurrence extends Model
 
     public function fireprotections()
     {
-        return $this->belongsToMany(Fireprotection::class, 'occurrence-fireprotection', 'occurrence_id', 'fireprotection_id');
+        return $this->belongsToMany(
+            Fireprotection::class,
+            'occurrence-fireprotection',
+            'occurrence_id',
+            'fireprotection_id'
+        );
     }
 
     public function user()
