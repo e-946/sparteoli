@@ -8,6 +8,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
 
 class UserController extends Controller
 {
@@ -53,6 +54,7 @@ class UserController extends Controller
      * @param Request $request
      * @param  int  $id
      * @return Response
+     * @noinspection PhpUndefinedFieldInspection
      */
     public function update(Request $request, int $id): Response
     {
@@ -63,8 +65,10 @@ class UserController extends Controller
             'admin' => is_null($request->admin) ? false : $request->admin,
         ]);
 
-        return response(redirect()->route('show-user', $user->id)->with('message',
-            "Usuário alterado com sucesso"));
+        return response(redirect()->route('show-user', $user->id)->with(
+            'message',
+            "Usuário alterado com sucesso"
+        ));
     }
 
     /**
@@ -78,8 +82,10 @@ class UserController extends Controller
         $user = User::find($id);
         $user->delete();
 
-        return response(redirect(route('index-user'))->with('message',
-            "Usuário excluído com sucesso"));
+        return response(redirect(route('index-user'))->with(
+            'message',
+            "Usuário excluído com sucesso"
+        ));
     }
 
     public function profile()
@@ -104,27 +110,36 @@ class UserController extends Controller
         ]);
     }
 
+    /** @noinspection PhpUndefinedFieldInspection */
     public function storePassword(Request $request, $id)
     {
-        $this->validator($request->all())->validate();
+        try {
+            $this->validator($request->all())->validate();
+        } catch (ValidationException $e) {
+            $e->getMessage();
+        }
 
-        if (Auth::id() == $id){
+        if (Auth::id() == $id) {
             User::find($id)->update([
                 'password' => Hash::make($request->password),
             ]);
-            return response(redirect(route('profile'))->with('message',
-                "Senha alterada com sucesso"));
+            return response(redirect(route('profile'))->with(
+                'message',
+                "Senha alterada com sucesso"
+            ));
         }
 
-        if (Auth::user()->admin) {
-            $user = User::find($id);
-            $user->update([
-                'password' => Hash::make($request->password),
-            ]);
-            if ($request->url() === route('home')){
-                return response(view('home')->with('message', "Senha alterada com sucesso"));
+        if (isset(Auth::user()->admin)) {
+            if (Auth::user()->admin) {
+                $user = User::find($id);
+                $user->update([
+                    'password' => Hash::make($request->password),
+                ]);
+                if ($request->url() === route('home')) {
+                    return response(view('home')->with('message', "Senha alterada com sucesso"));
+                }
+                return response(redirect()->route('user', $user->id)->with('message', 'Senha alterada com sucesso'));
             }
-            return response(redirect()->route('user', $user->id)->with('message', 'Senha alterada com sucesso'));
         }
 
         return response(redirect(route('home')));

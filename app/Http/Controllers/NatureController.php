@@ -43,7 +43,7 @@ class NatureController extends Controller
             return response('Formulário vazio');
         }
 
-        Nature::create($request->all());
+        (new Nature)->create($request->all());
 
         return response(redirect()->route('index-nature'));
     }
@@ -79,13 +79,15 @@ class NatureController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, int $id)
     {
         $nature = Nature::find($id);
         $nature->update($request->all());
 
-        return response(redirect()->route('show-nature', $nature->id)->with('message',
-            "Natureza alterada com sucesso"));
+        return response(redirect()->route('show-nature', $nature->id)->with(
+            'message',
+            "Natureza alterada com sucesso"
+        ));
     }
 
     /**
@@ -104,7 +106,9 @@ class NatureController extends Controller
 
         $nature->delete();
 
-        return response(redirect(route('index-nature'))->with('message',
-            "Natureza excluída com sucesso"));
+        return response(redirect(route('index-nature'))->with(
+            'message',
+            "Natureza excluída com sucesso"
+        ));
     }
 }

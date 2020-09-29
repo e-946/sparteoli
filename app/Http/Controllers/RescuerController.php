@@ -44,8 +44,10 @@ class RescuerController extends Controller
         }
         Rescuer::create($request->all());
 
-        return response(redirect()->route('index-rescuer')->with('message',
-            "Socorrista criado com sucesso"));
+        return response(redirect()->route('index-rescuer')->with(
+            'message',
+            "Socorrista criado com sucesso"
+        ));
     }
 
     /**
@@ -85,8 +87,10 @@ class RescuerController extends Controller
         $rescuer = Rescuer::find($id);
         $rescuer->update($request->all());
 
-        return response(redirect()->route('index-rescuer', $rescuer->id)->with('message',
-            "Socorrista alterado com sucesso"));
+        return response(redirect()->route('index-rescuer', $rescuer->id)->with(
+            'message',
+            "Socorrista alterado com sucesso"
+        ));
     }
 
     /**
@@ -95,7 +99,7 @@ class RescuerController extends Controller
      * @param  int  $id
      * @return RedirectResponse|Response
      */
-    public function destroy( int $id): ResponseBase
+    public function destroy(int $id): ResponseBase
     {
         $rescuer = Rescuer::find($id);
 
@@ -105,7 +109,9 @@ class RescuerController extends Controller
 
         $rescuer->delete();
 
-        return response(redirect(route('index-rescuer'))->with('message',
-            "Socorrista excluído com sucesso"));
+        return response(redirect(route('index-rescuer'))->with(
+            'message',
+            "Socorrista excluído com sucesso"
+        ));
     }
 }

@@ -16,7 +16,10 @@ class ResourceController extends Controller
      */
     public function index(int $occurrence_id): Response
     {
-        $resources = Resource::query()->where('occurrence_id', '=', $occurrence_id)->orderBy('created_at', 'DESC')->get();
+        $resources = Resource::query()
+            ->where('occurrence_id', '=', $occurrence_id)
+            ->orderBy('created_at', 'DESC')
+            ->get();
         return response(view('resource.index', compact('resources', 'occurrence_id')), 200);
     }
 
@@ -37,6 +40,7 @@ class ResourceController extends Controller
      * @param Request $request
      * @param int $occurrence_id
      * @return Response
+     * @noinspection PhpUndefinedFieldInspection
      */
     public function store(Request $request, int $occurrence_id): Response
     {
@@ -51,8 +55,10 @@ class ResourceController extends Controller
             'occurrence_id' => $occurrence_id,
         ]);
 
-        return response(redirect()->route('index-resource', $occurrence_id)->with('message',
-            "Recurso criado com sucesso"));
+        return response(redirect()->route('index-resource', $occurrence_id)->with(
+            'message',
+            "Recurso criado com sucesso"
+        ));
     }
 
     /**
@@ -88,6 +94,7 @@ class ResourceController extends Controller
      * @param int $occurrence_id
      * @param int $id
      * @return Response
+     * @noinspection PhpUndefinedFieldInspection
      */
     public function update(Request $request, int $occurrence_id, int $id): Response
     {
@@ -100,8 +107,12 @@ class ResourceController extends Controller
             'occurrence_id' => $occurrence_id,
         ]);
 
-        return response(redirect()->route('show-resource', ['occurrence_id' => $occurrence_id, 'id' => $resource->id])->with('message',
-            "Recurso alterado com sucesso"));
+        return response(redirect()
+            ->route('show-resource', ['occurrence_id' => $occurrence_id, 'id' => $resource->id])
+            ->with(
+                'message',
+                "Recurso alterado com sucesso"
+            ));
     }
 
     /**
@@ -116,7 +127,9 @@ class ResourceController extends Controller
         $resource = Resource::find($id);
         $resource->delete();
 
-        return response(redirect(route('index-resource', $occurrence_id))->with('message',
-            "Recurso excluído com sucesso"));
+        return response(redirect(route('index-resource', $occurrence_id))->with(
+            'message',
+            "Recurso excluído com sucesso"
+        ));
     }
 }
