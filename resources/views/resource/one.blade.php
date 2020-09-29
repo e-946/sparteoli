@@ -7,12 +7,12 @@
 @stop
 
 @section('content')
-    <div class="d-flex justify-content-between mb-5 flex-wrap">
-        <a class="btn btn-info" href="{{ route('index-resource', ['occurrence_id' => $occurrence_id]) }}">
+    <div class="d-flex justify-content-between align-items-center mb-5 flex-wrap">
+        <a class="btn btn-info m-2" href="{{ route('index-resource', ['occurrence_id' => $occurrence_id]) }}">
             <i class="fas fa-arrow-left"></i>
             Voltar
         </a>
-        <div class="d-flex">
+        <div class="d-flex justify-content-between align-items-center m-2">
             <a class="btn btn-primary mr-2" href="{{route('edit-resource', ['occurrence_id' => $occurrence_id, 'id' => $resource->id])}}">
                 <p class="mb-0">
                     <i class="fas fa-edit"></i>

@@ -20,9 +20,9 @@
                 @include('message', ['message' => $message ?? ''])
                 @include('errors', ['errors' => $errors])
                 @foreach($types as $type)
-                    <div class="list-group-item d-flex justify-content-between align-content-center flex-wrap">
-                        <a class="link-muted" href="{{ route('show-type', $type->id) }}">
-                            <p class="mb-0">{{ $type->name }}</p>
+                    <div class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                        <a class="btn btn-outline-dark font-weight-bold m-2 text-left" href="{{ route('show-type', $type->id) }}">
+                            <p class="m-0">{{ $type->name }}</p>
                             <small class="list-group-item-heading"><b>Natureza:</b></small>
                             <small class="list-group-item-text">{{ $type->nature->name }}</small>
                         </a>

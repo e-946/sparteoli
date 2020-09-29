@@ -8,7 +8,7 @@
 
 @section('content')
     <div class="container">
-        <div class="d-flex justify-content-end mb-5">
+        <div class="d-flex justify-content-end align-items-center mb-5">
             @can('admin')
                 <a href="{{route('register')}}" class="btn btn-success">
                     <i class="fas fa-plus"></i> Adicionar
@@ -19,10 +19,12 @@
             <div class="list-group col-md-8">
                 @include('message', ['message' => $message ?? ''])
                 @foreach($users as $user)
-                    <div class="list-group-item d-flex justify-content-between align-content-center flex-wrap">
-                        <a class="link-muted" href="{{ route('show-user', $user->id) }}">
+                    <div class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                        <a class="btn btn-outline-dark font-weight-bold m-2 text-left" href="{{ route('show-user', $user->id) }}">
                             <p class="mb-0">{{ $user->name }}</p>
-                            <small>{{ $user->admin ? 'Administrador' : '' }}</small>
+                            @if ($user->admin)
+                                <small>Administrador</small>
+                            @endif
                         </a>
                         @can('admin')
                             <div class="d-flex justify-content-around">

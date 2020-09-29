@@ -19,11 +19,11 @@
                 @include('message', ['message' => $message ?? ''])
                 @include('errors', ['errors' => $errors])
                 @foreach($occurrences as $occurrence)
-                    <div class="list-group-item d-flex justify-content-between align-content-center flex-wrap">
-                        <a class="link-black d-flex justify-content-between" href="{{ route('show-occurrence', $occurrence->id) }}">
-                            <p>Nº: {{ $occurrence->id }} / Preenchido por: {{ $occurrence->filler_name }}</p>
+                    <div class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                        <a class="btn btn-outline-dark font-weight-bold m-2 d-flex justify-content-between" href="{{ route('show-occurrence', $occurrence->id) }}">
+                            Nº: {{ $occurrence->id }} / Preenchido por: {{ $occurrence->filler_name }}
                         </a>
-                        <div class="d-flex justify-content-around">
+                        <div class="d-flex justify-content-around m-2">
                             <a class="btn btn-primary mr-2" href="{{route('edit-occurrence', $occurrence->id)}}">
                                 <p class="mb-0">
                                     <i class="fas fa-edit"></i>

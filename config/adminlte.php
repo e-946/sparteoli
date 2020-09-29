@@ -64,7 +64,7 @@ return [
     |
     */
 
-    'usermenu_enabled' => true,
+    'usermenu_enabled' => false,
     'usermenu_header' => false,
     'usermenu_header_class' => 'bg-danger',
     'usermenu_image' => false,
@@ -120,7 +120,7 @@ return [
     |
     */
 
-    'classes_body' => '',
+    'classes_body' => 'font-weight-normal',
     'classes_brand' => '',
     'classes_brand_text' => '',
     'classes_content_wrapper' => '',
@@ -128,7 +128,7 @@ return [
     'classes_content' => '',
     'classes_sidebar' => 'sidebar-dark-danger elevation-4',
     'classes_sidebar_nav' => '',
-    'classes_topnav' => 'navbar-danger navbar-light',
+    'classes_topnav' => 'navbar-danger navbar-dark text-bold',
     'classes_topnav_nav' => 'navbar-expand',
     'classes_topnav_container' => 'container',
 

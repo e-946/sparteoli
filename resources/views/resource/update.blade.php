@@ -14,23 +14,23 @@
     <form method="post" class="" onsubmit="return confirm('Tem certeza que deseja atualizar {{addslashes( $resource->who )}}?')">
         @method('PUT')
         @csrf
-        <div class="form-row mb-3">
-            <div class="col">
+        <div class="form-row">
+            <div class="col-auto col-sm m-2">
                 <label for="who" class="">De quem é o recurso:</label>
                 <input id="who" type="text" name="who" class="form-control" placeholder="Digite o responsável pelo recurso" value="{{ $resource->who }}" autofocus required>
             </div>
-            <div class="col">
+            <div class="col-auto col-sm m-2">
                 <label for="what" class="">O que foi empregado:</label>
                 <input id="what" type="text" name="what" class="form-control" placeholder="Digite qual recurso foi empregado" value="{{ $resource->what }}" required>
             </div>
         </div>
 
-        <div class="form-row mb-3">
-            <div class="col">
+        <div class="form-row">
+            <div class="col-auto col-sm m-2">
                 <label for="where" class="">Onde foi empregado:</label>
                 <input id="where" type="text" name="where" class="form-control" placeholder="Digite onde o recurso foi empregado" value="{{ $resource->where }}" required>
             </div>
-            <div class="col">
+            <div class="col-auto col-sm m-2">
                 <label for="how" class="">Como foi empregado:</label>
                 <input id="how" type="text" name="how" class="form-control" placeholder="Digite como o recurso foi empregado" value="{{ $resource->how }}" required>
             </div>

@@ -7,8 +7,8 @@
 @stop
 
 @section('content')
-    <div class="d-flex justify-content-between mb-5 flex-wrap">
-        <a class="btn btn-info" href="{{ route('show-occurrence', ['id' => $occurrence_id]) }}">
+    <div class="d-flex justify-content-between align-items-center mb-5 flex-wrap">
+        <a class="btn btn-info m-2" href="{{ route('show-occurrence', ['id' => $occurrence_id]) }}">
             <i class="fas fa-arrow-left"></i>
             Voltar
         </a>
@@ -25,9 +25,9 @@
                 @include('message', ['message' => $message ?? ''])
                 @include('errors', ['errors' => $errors])
                 @foreach($victims as $victim)
-                    <div class="list-group-item d-flex justify-content-between align-content-center flex-wrap">
-                        <a class="link-muted" href="{{ route('show-victim', ['occurrence_id' => $occurrence_id, 'id' => $victim->id]) }}">
-                            <p class="mb-0">{{ $victim->name }}</p>
+                    <div class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                        <a class="btn btn-outline-dark font-weight-bold m-2" href="{{ route('show-victim', ['occurrence_id' => $occurrence_id, 'id' => $victim->id]) }}">
+                            {{ $victim->name }}
                         </a>
                         <div class="d-flex justify-content-around">
                             <a class="btn btn-primary mr-2" href="{{route('edit-victim', ['occurrence_id' => $occurrence_id, 'id' => $victim->id])}}">

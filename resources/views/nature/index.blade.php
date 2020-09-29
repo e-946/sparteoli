@@ -20,12 +20,12 @@
                 @include('message', ['message' => $message ?? ''])
                 @include('errors', ['errors' => $errors])
                 @foreach($natures as $nature)
-                    <div class="list-group-item d-flex justify-content-between align-content-center flex-wrap">
-                        <a class="link-muted" href="{{ route('show-nature', $nature->id) }}">
-                            <p class="mb-0">{{ $nature->name }}</p>
+                    <div class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                        <a class="btn btn-outline-dark m-2 font-weight-bold" href="{{ route('show-nature', $nature->id) }}">
+                            {{ $nature->name }}
                         </a>
                         @can('admin')
-                            <div class="d-flex justify-content-around">
+                            <div class="d-flex justify-content-around m-2">
                                 <a class="btn btn-primary mr-2" href="{{route('edit-nature', $nature->id)}}">
                                     <p class="mb-0">
                                         <i class="fas fa-edit"></i>

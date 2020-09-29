@@ -21,11 +21,11 @@
                 </div>
             </div>
             <div class="form-row mb-3">
-                <div class="col-6">
+                <div class="col-sm-6 mb-3 mb-sm-0">
                     <label for="age" class="">Idade:</label>
                     <input id="age" type="number" name="age" class="form-control" placeholder="Idade" required>
                 </div>
-                <div class="col-6">
+                <div class="col-sm-6">
                     <label for="sex" class="">Sexo:</label>
                     <select id="sex" type="number" name="sex" class="form-control" required>
                         <option selected class="text-bold" disabled>Selecione</option>
@@ -35,7 +35,7 @@
                 </div>
             </div>
             <div class="form-row mb-3">
-                <div class="col mr-3">
+                <div class="col-sm mr-3 mb-3 mb-sm-0">
                     <label for="rescuer" class="">Socorrista:</label>
                     <select id="rescuer" type="number" name="rescuer_id" class="form-control" required>
                         <option selected class="text-bold" disabled>Selecione</option>
@@ -44,7 +44,7 @@
                         @endforeach
                     </select>
                 </div>
-                <div class="col text-left">
+                <div class="col-sm text-left">
                     Problemas encontrados
                     <div class="form-check">
                         @foreach($problems as $problem)
@@ -56,7 +56,7 @@
                 </div>
             </div>
             <div class="form-row">
-                <div class="col-6">
+                <div class="col-sm-6 mb-3 mb-sm-0">
                     <label for="fatal" class="">Sobre a fatalidade: </label>
                     <select id="fatal" type="number" name="fatal" class="form-control" required onChange="ckChange()">
                         <option selected class="text-bold" disabled>Selecione</option>
@@ -64,7 +64,7 @@
                         <option value="0">Vítima não fatal</option>
                     </select>
                 </div>
-                <div class="col-6">
+                <div class="col-sm-6 mb-3 mb-sm-0">
                     <label for="conscious" class="">Sobre a consciência: </label>
                     <select id="conscious" type="number" name="conscious" class="form-control" required>
                         <option selected class="text-bold" disabled>Selecione</option>

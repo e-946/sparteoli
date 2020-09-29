@@ -34,6 +34,6 @@
                 <br>
             @endif
         </div>
-        <button type="submit" class="btn btn-primary mb-2">Salvar</button>
+        <button type="submit" class="btn btn-primary">Salvar</button>
     </form>
 @stop
