@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>Spartteoli</title>
+    <link rel="shortcut icon" href="{{asset('img/insignia.png')}}" />
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
@@ -109,7 +110,7 @@
 <div class="flex-center position-ref full-height">
     <div class="content flex-around">
         <div class="m-b-md left">
-            <img src="img/logo-brasao.png" alt="Insignia do 9º corpo de bombeiros">
+            <img src="{{ asset('img/logo-brasao.png') }}" alt="Insignia do 9º corpo de bombeiros">
         </div>
         <div class="right">
         @if (Route::has('login'))

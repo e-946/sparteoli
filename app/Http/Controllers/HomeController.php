@@ -33,10 +33,14 @@ class HomeController extends Controller
         $types   = Type::all();
         $months  = DB::table('occurrences')
             ->select(DB::raw('MONTHNAME(date) name'), DB::raw('count(*) as total'))
-            ->groupBy('name')->orderBy('name', 'DESC')->get();
+            ->groupBy('name')
+            ->orderBy('name', 'DESC')
+            ->get();
         $bairros = DB::table('occurrences')
             ->select(DB::raw('neighborhood name'), DB::raw('count(*) as total'))
-            ->groupBy('name')->orderBy('name', 'DESC')->get();
+            ->groupBy('name')
+            ->orderBy('name', 'DESC')
+            ->get();
         $colors  = [
             '#03318C',
             '#F2CB05',
