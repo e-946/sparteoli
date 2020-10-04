@@ -27,7 +27,7 @@
                             <small class="list-group-item-text">{{ $type->nature->name }}</small>
                         </a>
                         @can('admin')
-                            <div class="d-flex justify-content-around">
+                            <div class="d-flex justify-content-around m-2">
                                 <div class="mr-2">
                                     <a class="btn btn-primary" href="{{route('edit-type', $type->id)}}">
                                         <i class="fas fa-edit"></i>
