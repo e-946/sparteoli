@@ -12,28 +12,28 @@
             <i class="fas fa-arrow-left"></i>
             Voltar
         </a>
-        <div class="d-flex justify-content-lg-around align-items-center m-2">
-            <a class="btn btn-primary mr-2" href="{{route('edit-occurrence', $occurrence->id)}}">
+        <div class="d-flex justify-content-lg-around align-items-center m-1 flex-wrap">
+            <a class="btn btn-primary m-1" href="{{route('edit-occurrence', $occurrence->id)}}">
                 <p class="mb-0">
                     <i class="fas fa-edit"></i>
                     Atualizar
                 </p>
             </a>
-            <a class="btn btn-primary mr-2" target="_blank" href="{{route('toPdf-occurrence', $occurrence->id)}}">
+            <a class="btn btn-primary m-1" target="_blank" href="{{route('toPdf-occurrence', $occurrence->id)}}">
                 <p class="mb-0">
                     <i class="fas fa-download"></i>
                     Baixar Pdf
                 </p>
             </a>
             @if ($occurrence->victims->count() > 0)
-                <a class="btn btn-success mr-2" href="{{route('index-victim', ['occurrence_id' => $occurrence->id])}}">
+                <a class="btn btn-success m-1" href="{{route('index-victim', ['occurrence_id' => $occurrence->id])}}">
                     <p class="mb-0">
                         <i class="fas fa-medkit"></i>
                         Listar Vítimas
                     </p>
                 </a>
             @else
-                <a class="btn btn-success mr-2" href="{{route('create-victim', ['occurrence_id' => $occurrence->id])}}">
+                <a class="btn btn-success m-1" href="{{route('create-victim', ['occurrence_id' => $occurrence->id])}}">
                     <p class="mb-0">
                         <i class="fas fa-plus"></i>
                         Adicionar Vítimas
@@ -42,14 +42,14 @@
             @endif
 
             @if ($occurrence->resources->count() > 0)
-                <a class="btn btn-success mr-2" href="{{route('index-resource', ['occurrence_id' => $occurrence->id])}}">
+                <a class="btn btn-success m-1" href="{{route('index-resource', ['occurrence_id' => $occurrence->id])}}">
                     <p class="mb-0">
                         <i class="fas fa-hands-helping"></i>
                         Listar Recursos
                     </p>
                 </a>
             @else
-                <a class="btn btn-success mr-2" href="{{route('create-resource', ['occurrence_id' => $occurrence->id])}}">
+                <a class="btn btn-success m-1" href="{{route('create-resource', ['occurrence_id' => $occurrence->id])}}">
                     <p class="mb-0">
                         <i class="fas fa-plus"></i>
                         Adicionar Recursos
@@ -57,7 +57,7 @@
                 </a>
             @endif
 
-            <form method="post" action="{{ route('destroy-occurrence', $occurrence->id) }}"
+            <form method="post" class="m-1" action="{{ route('destroy-occurrence', $occurrence->id) }}"
                   onsubmit="return confirm('Tem certeza que deseja remover {{addslashes( $occurrence->name )}}?')">
                 @method('DELETE')
                 @csrf
