@@ -231,13 +231,13 @@ return [
     */
 
     'menu' => [
-        #[
+        # [
         #    'text' => 'search',
         #    'search' => true,
         #    'topnav' => true,
         #],
         ['header' => 'main_navigation'],
-        #[
+        # [
         #    'text' => 'blog',
         #    'url'  => 'admin/blog',
         #    'can'  => 'manage-blog',
