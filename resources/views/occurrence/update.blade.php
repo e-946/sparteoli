@@ -17,23 +17,23 @@
         <div class="mb-2">
             <fieldset class="form-row mb-3">
                 <legend>Data e chamado</legend>
-                <div class="col-auto mb-3">
+                <div class="col-12 col-lg-6 mb-3">
                     <label for="date" class="">Data:</label>
                     <input id="date" type="date" name="date" class="form-control" autofocus required value="{{ $occurrence->date }}">
                 </div>
-                <div class="col-auto mb-3">
+                <div class="col-12 col-lg-6 mb-3">
                     <label for="call_time" class="">Horário do chamado:</label>
                     <input id="call_time" type="time" name="call_time" class="form-control" required value="{{ $occurrence->call_time }}">
                 </div>
-                <div class="col-auto mb-3">
+                <div class="col-12 col-lg-6 mb-3">
                     <label for="arrival_time" class="">Horário da chegada:</label>
                     <input id="arrival_time" type="time" name="arrival_time" class="form-control" required value="{{ $occurrence->arrival_time }}">
                 </div>
-                <div class="col-auto mb-3">
+                <div class="col-12 col-lg-6 mb-3">
                     <label for="end_time" class="">Horário do encerramento:</label>
                     <input id="end_time" type="time" name="end_time" class="form-control" required value="{{ $occurrence->end_time }}">
                 </div>
-                <div class="col-auto mb-3">
+                <div class="col-12 col-lg-6 mb-3">
                     <label for="meanused" class="">Meio de chamado utilizado:</label>
                     <select id="meanused" type="number" name="meanused_id" class="form-control" required>
                         <option selected class="text-bold" disabled>Selecione</option>
@@ -45,7 +45,7 @@
             </fieldset>
             <fieldset class="form-row mb-3">
                 <legend>Endereço</legend>
-                <div class="col-auto mb-3">
+                <div class="col-12 col-lg-6 mb-3">
                     <label for="zip_code" class="">Cep:</label>
                     <input id="zip_code" type="text" name="zip_code" class="form-control" placeholder="CEP" pattern="[0-9]{8}" onblur="pesquisacep(this.value);" required value="{{ $occurrence->zip_code }}">
                 </div>
@@ -55,48 +55,48 @@
                         Consultar CEP
                     </a>
                 </div>
-                <div class="col-auto mb-3">
+                <div class="col-12 col-lg-6 mb-3">
                     <label for="street" class="">Rua:</label>
                     <input id="street" type="text" name="street" class="form-control" placeholder="Rua" required value="{{ explode(', ',$occurrence->address)[0] }}">
                 </div>
-                <div class="col-auto mb-3">
+                <div class="col-12 col-lg-6 mb-3">
                     <label for="number" class="">Número:</label>
                     <input id="number" type="number" name="number" class="form-control" required value="{{ str_replace('Nº ','',explode(', ',$occurrence->address)[1]) }}">
                 </div>
-                <div class="col-auto mb-3">
+                <div class="col-12 col-lg-6 mb-3">
                     <label for="neighborhood" class="">Bairro:</label>
                     <input id="neighborhood" type="text" name="neighborhood" class="form-control" placeholder="Bairro" required value="{{ $occurrence->neighborhood }}">
                 </div>
-                <div class="col-auto mb-3">
+                <div class="col-12 col-lg-6 mb-3">
                     <label for="city" class="">Cidade:</label>
                     <input id="city" type="text" name="city" class="form-control" placeholder="Cidade" required value="{{ $occurrence->city }}">
                 </div>
-                <div class="col-auto mb-3">
+                <div class="col-12 col-lg-6 mb-3">
                     <label for="state" class="">Estado:</label>
                     <input id="state" type="text" name="state" class="form-control" placeholder="Estado" required value="{{ $occurrence->state }}">
                 </div>
             </fieldset>
             <fieldset class="form-row mb-3">
                 <legend>Solicitante</legend>
-                <div class="col-auto mb-3">
+                <div class="col-12 col-lg-6 mb-3">
                     <label for="requester" class="">Nome:</label>
                     <input id="requester" type="text" name="requester" class="form-control" placeholder="Nome" required value="{{ $occurrence->requester }}">
                 </div>
-                <div class="col-auto mb-3">
+                <div class="col-12 col-lg-6 mb-3">
                     <label for="requester_phone" class="">Telefone:</label>
                     <input id="requester_phone" type="tel" pattern="\([0-9]{2}\)[0-9]{5}\-[0-9]{4}" name="requester_phone" class="form-control" placeholder="Telefone" required value="{{ $occurrence->requester_phone }}">
                 </div>
             </fieldset>
             <fieldset class="form-row mb-3">
                 <legend>Resumo</legend>
-                <div class="col-auto mb-3">
+                <div class="col-12 mb-3">
                     <label for="resume" class="">Detalhes da ocorrência: </label>
                     <textarea id="resume" name="resume" class="form-control" form="form" required>{{ $occurrence->resume }}</textarea>
                 </div>
             </fieldset>
             <fieldset class="form-row mb-3">
                 <legend>Local</legend>
-                <div class="col-auto mb-3">
+                <div class="col-12 col-lg-6 mb-3">
                     <label for="placefreature" class="">Caracteristica do local:</label>
                     <select id="placefreature" type="number" name="placefreature_id" class="form-control" required>
                         <option class="text-bold" disabled>Selecione</option>
@@ -105,7 +105,7 @@
                         @endforeach
                     </select>
                 </div>
-                <div class="col-auto mb-3">
+                <div class="col-12 col-lg-6 mb-3">
                     <label for="placeuse" class="">Uso do local:</label>
                     <select id="placeuse" type="number" name="placeuse_id" class="form-control" required>
                         <option selected class="text-bold" disabled>Selecione</option>
@@ -114,7 +114,7 @@
                         @endforeach
                     </select>
                 </div>
-                <div class="col-auto mb-3">
+                <div class="col-12 col-lg-6 mb-3">
                     <label for="place_preservation" class="">É local de presevação:</label>
                     <select id="place_preservation" type="number" name="place_preservation" class="form-control" required>
                         <option class="text-bold" disabled>Selecione</option>
@@ -125,22 +125,22 @@
             </fieldset>
             <fieldset class="form-row mb-3">
                 <legend>Preenchedor</legend>
-                <div class="col-auto mb-3">
+                <div class="col-12 col-lg-6 mb-3">
+                    <label for="filler_register" class="">Registro: </label>
+                    <input id="filler_register" onblur="searchFiller(this.value)" type="text" max="10" name="filler_register" class="form-control" placeholder="Registro" required value="{{ $occurrence->filler_register }}">
+                </div>
+                <div class="col-12 col-lg-6 mb-3">
                     <label for="filler_name" class="">Nome: </label>
                     <input id="filler_name" type="text" name="filler_name" class="form-control" placeholder="Nome" required value="{{ $occurrence->filler_name }}">
                 </div>
-                <div class="col-auto mb-3">
-                    <label for="filler_register" class="">Registro: </label>
-                    <input id="filler_register" type="text" max="10" name="filler_register" class="form-control" placeholder="Registro" required value="{{ $occurrence->filler_register }}">
-                </div>
-                <div class="col-auto mb-3">
+                <div class="col-12 col-lg-6 mb-3">
                     <label for="filler_patent" class="">Patente: </label>
                     <input id="filler_patent" type="text" name="filler_patent" class="form-control" placeholder="Patente" required value="{{ $occurrence->filler_patent }}">
                 </div>
             </fieldset>
             <fieldset class="form-row mb-3">
                 <legend>Operação</legend>
-                <div class="col-auto mb-3">
+                <div class="col-12 col-lg-6 mb-3">
                     <label for="type_id" class="">O tipo da operação</label>
                     <select id="type_id" type="number" name="type_id" class="form-control" required>
                         <option class="text-weight-bold" disabled>Selecione</option>
@@ -244,6 +244,34 @@
                 //cep sem valor, limpa formulário.
                 limpa_formulario_cep();
             }
+        }
+
+        const fillers = @json($fillers);
+
+        function cleanFillerForm() {
+            document.getElementById('filler_name').value=("");
+            document.getElementById('filler_patent').value=("");
+        }
+
+        function searchFiller(value) {
+            if (value === '') {
+                return void(0)
+            }
+
+            let result = fillers.filter(function (item) {
+                return value === item.filler_register
+            })
+
+            if (!result && result.length === 0) {
+                return void(0)
+            }
+
+            cleanFillerForm();
+
+            let item = result[0];
+
+            document.getElementById('filler_name').value=(item.filler_name);
+            document.getElementById('filler_patent').value=(item.filler_patent);
         }
 
     </script>
