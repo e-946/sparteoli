@@ -123,12 +123,12 @@
             <fieldset class="form-row mb-3">
                 <legend>Preenchedor</legend>
                 <div class="col-12 col-lg-6 mb-3">
-                    <label for="filler_name" class="">Nome: </label>
-                    <input id="filler_name" type="text" name="filler_name" class="form-control" placeholder="Nome" required>
+                    <label for="filler_register" class="">Registro: </label>
+                    <input id="filler_register" onblur="searchFiller(this.value)" type="text" max="10" name="filler_register" class="form-control" placeholder="Registro" required>
                 </div>
                 <div class="col-12 col-lg-6 mb-3">
-                    <label for="filler_register" class="">Registro: </label>
-                    <input id="filler_register" type="text" max="10" name="filler_register" class="form-control" placeholder="Registro" required>
+                    <label for="filler_name" class="">Nome: </label>
+                    <input id="filler_name" type="text" name="filler_name" class="form-control" placeholder="Nome" required>
                 </div>
                 <div class="col-12 col-lg-6 mb-3">
                     <label for="filler_patent" class="">Patente: </label>
@@ -239,6 +239,34 @@
                 //cep sem valor, limpa formulário.
                 limpa_formulario_cep();
             }
+        }
+
+        const fillers = @json($fillers);
+
+        function cleanFillerForm() {
+            document.getElementById('filler_name').value=("");
+            document.getElementById('filler_patent').value=("");
+        }
+
+        function searchFiller(value) {
+            if (value === '') {
+                return void(0)
+            }
+
+            let result = fillers.filter(function (item) {
+                return value === item.filler_register
+            })
+
+            if (!result && result.length === 0) {
+                return void(0)
+            }
+
+            cleanFillerForm();
+
+            let item = result[0];
+
+            document.getElementById('filler_name').value=(item.filler_name);
+            document.getElementById('filler_patent').value=(item.filler_patent);
         }
 
     </script>

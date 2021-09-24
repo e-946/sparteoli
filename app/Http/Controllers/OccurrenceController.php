@@ -40,10 +40,12 @@ class OccurrenceController extends Controller
         $natures = Nature::all();
         $protections = Fireprotection::all();
 
+        $fillers = Occurrence::select(['filler_register', 'filler_name', 'filler_patent', 'created_at'])->distinct()->orderBy('created_at', 'desc')->get();
+
         return response(
             view(
                 'occurrence.create',
-                compact('means', 'uses', 'freatures', 'natures', 'protections')
+                compact('means', 'uses', 'freatures', 'natures', 'protections', 'fillers')
             ),
             200
         );
@@ -96,9 +98,12 @@ class OccurrenceController extends Controller
         $natures = Nature::all();
         $protections = Fireprotection::all();
         $occurrence = Occurrence::find($id);
+
+        $fillers = Occurrence::select(['filler_register', 'filler_name', 'filler_patent', 'created_at'])->distinct()->orderBy('created_at', 'desc')->get();
+
         return response(view(
             'occurrence.update',
-            compact('occurrence', 'means', 'uses', 'freatures', 'natures', 'protections')
+            compact('occurrence', 'means', 'uses', 'freatures', 'natures', 'protections', 'fillers')
         ));
     }
 
