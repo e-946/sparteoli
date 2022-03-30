@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Nature;
 use App\Models\Type;
+use Carbon\Carbon;
 use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
@@ -46,24 +48,67 @@ class HomeController extends Controller
         $natures = Nature::all();
         $types = Type::all();
 
-        $months = DB::table('occurrences')
-            ->select(DB::raw('MONTH(date) as month'), DB::raw('COUNT(*) as total'))
-            ->groupBy(DB::raw('MONTH(date)'))
+        $today = Carbon::today();
+        $today->subMonths(15);
+
+        $dates = DB::table('occurrences')
+            ->select('date')
+            ->whereYear('date', '>=', $today->format('Y-m-d'))
+            ->orderBy('date')
             ->get();
 
-        foreach ($months as $month) {
-            $month->name = self::MONTH_REFERENCE[$month->month - 1];
+        foreach ($dates as $date) {
+            $dateObject = Carbon::createFromFormat('Y-m-d', $date->date);
+            $date->date = $dateObject->format('m/Y');
         }
 
-        $months = $months->sortBy(function ($month) {
-            return $month->total;
-        });
+        $grouped = $dates->groupBy(
+            function ($item, $key) {
+                return $item->date;
+            }
+        );
 
-        $bairros = DB::table('occurrences')
-            ->select(['neighborhood as name', DB::raw('COUNT(*) as total')])
-            ->groupBy('neighborhood')
-            ->orderBy('total')
+        $groupCount = $grouped->map(
+            function ($item, $key) {
+                return $item->count();
+            }
+        );
+
+        $months = new Collection();
+
+        foreach ($groupCount as $key => $total) {
+            $months->push(['name' => $key, 'total' => $total]);
+        }
+
+        $neighborhoods = DB::table('occurrences')
+            ->select(['neighborhood', 'city', 'state'])
+            ->whereYear('date', '>=', $today->format('Y-m-d'))
+            ->orderBy('state')
+            ->orderBy('city')
+            ->orderBy('neighborhood')
             ->get();
+
+        foreach ($neighborhoods as $neighborhood) {
+            $neighborhood->name = sprintf('%s / %s-%s', $neighborhood->neighborhood, $neighborhood->city, $neighborhood->state);
+        }
+
+        $grouped = $neighborhoods->groupBy(
+            function ($item, $key) {
+                return $item->name;
+            }
+        );
+
+        $groupCount = $grouped->map(
+            function ($item, $key) {
+                return $item->count();
+            }
+        );
+
+        $bairros = new Collection();
+
+        foreach ($groupCount as $key => $total) {
+            $bairros->push(['name' => $key, 'total' => $total]);
+        }
 
         $colors  = [
             '#03318C',
