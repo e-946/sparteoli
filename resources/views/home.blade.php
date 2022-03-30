@@ -33,7 +33,7 @@
                         <script>
                             let months = [
                                 @foreach ($months as $month)
-                                    '{{ $month->name }}',
+                                    '{{ $month['name'] }}',
                                 @endforeach
                             ]
                             let barCanvas = document.getElementById('bar').getContext('2d');
@@ -46,8 +46,8 @@
                                                 @php($i = 0)
                                                 @foreach ($months as $month)
                                             {
-                                                data: ['{{ $month->total }}'],
-                                                label: ['{{ $month->name }}'],
+                                                data: ['{{ $month['total'] }}'],
+                                                label: ['{{ $month['name'] }}'],
                                                 backgroundColor: [
                                                     '{{ $colors[$i] }}',
                                                 ],
@@ -129,7 +129,7 @@
                         <script>
                             let bairros = [
                                 @foreach ($bairros as $bairro)
-                                    '{{ $bairro->name }}',
+                                    '{{ $bairro['name'] }}',
                                 @endforeach
                             ]
                             let bar2Canvas = document.getElementById('bar2').getContext('2d');
@@ -142,8 +142,8 @@
                                                 @php($i = 0)
                                                 @foreach ($bairros as $bairro)
                                             {
-                                                data: ['{{ $bairro->total }}'],
-                                                label: ['{{ $bairro->name }}'],
+                                                data: ['{{ $bairro['total'] }}'],
+                                                label: ['{{ $bairro['name'] }}'],
                                                 backgroundColor: [
                                                     '{{ $colors[$i] }}',
                                                 ],
