@@ -39,7 +39,9 @@
             <div class="list-group-item">
                 <div class="d-flex w-100 justify-content-between flex-wrap">
                     <h5 class="mb-1 font-weight-bold">Informações:</h5>
-                    <small>Última alteração: {{ date( 'd\/m\/Y - H:i', strtotime($type->update_at)) }}</small>
+                    @if($type->update_at)
+                        <small>Última alteração: {{ date( 'd\/m\/Y - H:i', strtotime($type->update_at->timezone('America/Bahia'))) }}</small>
+                    @endif
                 </div>
                 <p class="mb-1 font-weight-normal">{{$type->desc}}</p>
                 <div class="list-group-item">

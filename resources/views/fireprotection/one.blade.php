@@ -39,10 +39,14 @@
             <div class="list-group-item">
                 <div class="d-flex w-100 justify-content-between flex-wrap">
                     <h5 class="mb-1 font-weight-bold">Informações:</h5>
-                    <small>Última alteração: {{ date( 'd\/m\/Y - H:i', strtotime($protection->updated_at)) }}</small>
+                    @if($protection->updated_at)
+                        <small>Última alteração: {{ date( 'd\/m\/Y - H:i', strtotime($protection->updated_at->timezone('America/Bahia'))) }}</small>
+                    @endif
                 </div>
                 <p class="mb-1 font-weight-normal">{{ $protection->desc }}</p>
-                <small>Criado em: {{ date( 'd\/m\/Y - H:i', strtotime($protection->created_at)) }}</small>
+                @if($protection->created_at)
+                    <small>Criado em: {{ date( 'd\/m\/Y - H:i', strtotime($protection->created_at->timezone('America/Bahia'))) }}</small>
+                @endif
             </div>
         </div>
     </div>
