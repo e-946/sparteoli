@@ -26,8 +26,8 @@
 
         {{-- Email field --}}
         <div class="input-group mb-3">
-            <input type="string" name="register" class="form-control {{ $errors->has('register') ? 'is-invalid' : '' }}"
-                   value="{{ old('register') }}" placeholder="{{ __('Registro') }}" autofocus>
+            <input type="text" name="register" class="form-control {{ $errors->has('register') ? 'is-invalid' : '' }}"
+                   value="{{ old('register') }}" placeholder="{{ __('Matrícula') }}" autofocus>
             <div class="input-group-append">
                 <div class="input-group-text">
                     <span class="fas fa-id-card {{ config('adminlte.classes_auth_icon', '') }}"></span>

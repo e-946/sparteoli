@@ -126,7 +126,7 @@
             <fieldset class="form-row mb-3">
                 <legend>Preenchedor</legend>
                 <div class="col-12 col-lg-6 mb-3">
-                    <label for="filler_register" class="">Registro: </label>
+                    <label for="filler_register" class="">Matrícula: </label>
                     <input id="filler_register" onblur="searchFiller(this.value)" type="text" max="10" name="filler_register" class="form-control" placeholder="Registro" required value="{{ $occurrence->filler_register }}">
                 </div>
                 <div class="col-12 col-lg-6 mb-3">
@@ -134,7 +134,7 @@
                     <input id="filler_name" type="text" name="filler_name" class="form-control" placeholder="Nome" required value="{{ $occurrence->filler_name }}">
                 </div>
                 <div class="col-12 col-lg-6 mb-3">
-                    <label for="filler_patent" class="">Patente: </label>
+                    <label for="filler_patent" class="">Posto/Graduação: </label>
                     <input id="filler_patent" type="text" name="filler_patent" class="form-control" placeholder="Patente" required value="{{ $occurrence->filler_patent }}">
                 </div>
             </fieldset>
