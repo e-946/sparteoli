@@ -39,10 +39,14 @@
             <div class="list-group-item">
                 <div class="d-flex w-100 justify-content-between flex-wrap">
                     <h5 class="mb-1 font-weight-bold">Informações:</h5>
-                    <small>Última alteração: {{ date( 'd\/m\/Y - H:i', strtotime($problem->updated_at)) }}</small>
+                    @if($problem->updated_at)
+                        <small>Última alteração: {{ date( 'd\/m\/Y - H:i', strtotime($problem->updated_at->timezone('America/Bahia'))) }}</small>
+                    @endif
                 </div>
                 <p class="mb-1 font-weight-normal">{{ $problem->desc }}</p>
-                <small>Data : {{ date( 'd\/m\/Y - H:i', strtotime($problem->created_at)) }}</small>
+                @if($problem->created_at)
+                    <small>Data : {{ date( 'd\/m\/Y - H:i', strtotime($problem->created_at->timezone('America/Bahia'))) }}</small>
+                @endif
             </div>
         </div>
     </div>

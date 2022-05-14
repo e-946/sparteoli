@@ -41,7 +41,9 @@
                     <h5 class="mb-1 font-weight-bold">Informações:</h5>
                     <small>Tipos de ocorrência com essa natureza: {{ $nature->types->count() }}</small>
                     <small>Ocorrência com essa natureza: {{ $nature->occurrences->count() }}</small>
-                    <small>Última alteração: {{ date( 'd\/m\/Y - H:i', strtotime($nature->updated_at)) }}</small>
+                    @if($nature->updated_at)
+                        <small>Última alteração: {{ date( 'd\/m\/Y - H:i', strtotime($nature->updated_at->timezone('America/Bahia'))) }}</small>
+                    @endif
                 </div>
                 <p class="mb-1 font-weight-normal">{{ $nature->desc }}</p>
                 <div class="list-group">
@@ -49,7 +51,9 @@
                     <a class="btn btn-outline-dark list-group-item" href="{{route('show-type', $type->id)}}">{{ $type->name }}</a>
                 @endforeach
                 </div>
-                <small>Criado em: {{ date( 'd\/m\/Y - H:i', strtotime($nature->created_at)) }}</small>
+                @if($nature->created_at)
+                    <small>Criado em: {{ date( 'd\/m\/Y - H:i', strtotime($nature->created_at->timezone('America/Bahia'))) }}</small>
+                @endif
             </div>
         </div>
     </div>

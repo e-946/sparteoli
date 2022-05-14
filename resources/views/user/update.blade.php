@@ -30,7 +30,7 @@
                     <br>
                 @endif
             </div>
-            <label for="register" class="form-control-label mr-2">Registro:</label>
+            <label for="register" class="form-control-label mr-2">Matrícula:</label>
             <div class="input-group has-feedback mb-3 {{ $errors->has('register') ? 'has-error' : '' }}">
                 <br>
                 <input id="register" {{Auth::user()->admin ? '' : 'disabled'}} type="text" name="register" class="form-control" value="{{ $user->register }}">

@@ -31,7 +31,7 @@
         {{-- Register field --}}
         <div class="input-group mb-3">
             <input type="text" name="register" class="form-control {{ $errors->has('register') ? 'is-invalid' : '' }}"
-                   value="{{ old('register') }}" placeholder="{{ __('Registro') }}">
+                   value="{{ old('register') }}" placeholder="{{ __('Matrícula') }}">
             <div class="input-group-append">
                 <div class="input-group-text">
                     <span class="fas fa-id-card {{ config('adminlte.classes_auth_icon', '') }}"></span>
