@@ -135,7 +135,7 @@ class UserController extends Controller
                 if ($request->url() === route('home')) {
                     return response(view('home')->with('message', "Senha alterada com sucesso"));
                 }
-                return response(redirect()->route('user', $user->id)->with('message', 'Senha alterada com sucesso'));
+                return response(redirect()->route('show-user', $user->id)->with('message', 'Senha alterada com sucesso'));
             }
         }
 
