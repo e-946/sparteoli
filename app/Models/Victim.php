@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Helpers\AgeRangeEnum;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -33,5 +34,11 @@ class Victim extends Model
     public function occurrence(): BelongsTo
     {
         return $this->belongsTo(Occurrence::class);
+    }
+
+    public function getAgeRange(): string
+    {
+        $age = (int)$this->attributes['age'];
+        return AgeRangeEnum::getRange($age);
     }
 }

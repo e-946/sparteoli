@@ -10,6 +10,7 @@ use App\Http\Controllers\OccurrenceController;
 use App\Http\Controllers\PlacefreatureController;
 use App\Http\Controllers\PlaceuseController;
 use App\Http\Controllers\ProblemController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\RescuerController;
 use App\Http\Controllers\ResourceController;
 use App\Http\Controllers\TypeController;
@@ -191,4 +192,6 @@ Route::group(['middleware' => ['auth']], function (){
     Route::get('profile', [UserController::class, 'profile'])->name('profile');
     Route::get('profile/password', [UserController::class, 'changePassword'])->name('password');
     Route::put('profile/password/{id}', [UserController::class, 'storePassword'])->name('password-store')->where('id', '[0-9]+');
+
+    Route::get('report', [ReportController::class, 'reportView'])->name('report-view');
 });

@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use DateTime;
+use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -84,5 +86,28 @@ class Occurrence extends Model
     public function setFillerPatentAttribute($value)
     {
         $this->attributes['filler_patent'] = ucfirst(mb_strtolower($value));
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function getShift()
+    {
+        $time = $this->attributes['call_time'];
+        [$hours, $minutes] = explode(':', $time, 2);
+
+        $hours = (int)$hours;
+        $minutes = (int)$minutes;
+        $shift = 'Noite';
+
+        if (($hours >= 5 && $minutes >= 0) && ($hours <= 11 && $minutes <= 59)) {
+            $shift = 'Manhã';
+        }
+
+        if (($hours >= 12 && $minutes >= 0) && ($hours <= 17 && $minutes <= 59)) {
+            $shift = 'Tarde';
+        }
+
+        return $shift;
     }
 }

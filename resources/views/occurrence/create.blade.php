@@ -11,6 +11,7 @@
         <i class="fas fa-arrow-left"></i>
         Voltar
     </a>
+    @php($today = new DateTime())
     <form method="post" id="form">
         @csrf
         <div class="mb-2">
@@ -18,11 +19,11 @@
                 <legend>Data e chamado</legend>
                 <div class="col-12 col-lg-6 mb-3">
                     <label for="date" class="">Data:</label>
-                    <input id="date" type="date" name="date" class="form-control" autofocus required>
+                    <input id="date" type="date" name="date" class="form-control" autofocus required value="{{ $today->format('Y-m-d') }}">
                 </div>
                 <div class="col-12 col-lg-6 mb-3">
                     <label for="call_time" class="">Horário do chamado:</label>
-                    <input id="call_time" type="time" name="call_time" class="form-control"  required>
+                    <input id="call_time" type="time" name="call_time" class="form-control" required value="{{ $today->format('H:i') }}">
                 </div>
                 <div class="col-12 col-lg-6 mb-3">
                     <label for="arrival_time" class="">Horário da chegada:</label>

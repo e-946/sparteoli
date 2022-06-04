@@ -45,7 +45,7 @@ return [
     |
     */
 
-    'logo' => '<b>Sparteoli',
+    'logo' => '<b>Sparteoli</b>',
     'logo_img' => 'img/logo-insignia.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
@@ -247,6 +247,11 @@ return [
             'icon'        => 'fas fa-fw fa-file',
             #'label'       => 4,
             'label_color' => 'success',
+        ],
+        [
+            'text'        => 'Relatório',
+            'url'         => '/report',
+            'icon'        => 'fa fa-bar-chart',
         ],
         ['header' => 'Configurações de perfil'],
         [
@@ -492,22 +497,22 @@ return [
 
     'plugins' => [
         'Datatables' => [
-            'active' => false,
+            'active' => true,
             'files' => [
                 [
                     'type' => 'js',
                     'asset' => false,
-                    'location' => '//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js',
+                    'location' => '//cdn.datatables.net/1.12.0/js/jquery.dataTables.js',
                 ],
                 [
                     'type' => 'js',
                     'asset' => false,
-                    'location' => '//cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js',
+                    'location' => '//cdn.datatables.net/1.12.0/js/dataTables.bootstrap4.min.js',
                 ],
                 [
                     'type' => 'css',
                     'asset' => false,
-                    'location' => '//cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css',
+                    'location' => '//cdn.datatables.net/1.12.0/css/dataTables.bootstrap4.min.css',
                 ],
             ],
         ],
