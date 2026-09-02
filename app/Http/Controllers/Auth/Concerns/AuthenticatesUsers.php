@@ -150,10 +150,8 @@ trait AuthenticatesUsers
 
     /**
      * Get the login username to be used by the controller.
-     *
-     * @return string
      */
-    public function username()
+    public function username(): string
     {
         return 'email';
     }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helpers\VictimDestroyer;
 use App\Models\Occurrence;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -29,7 +30,7 @@ class OccurrenceController extends Controller
         ]);
     }
 
-    private function fillers()
+    private function fillers(): Collection
     {
         return Occurrence::select(['filler_register', 'filler_name', 'filler_patent'])
             ->distinct()

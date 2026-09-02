@@ -34,7 +34,7 @@ class User extends Authenticatable
         'admin' => 'boolean',
     ];
 
-    protected function setNameAttribute($value)
+    protected function setNameAttribute(mixed $value): void
     {
         $this->attributes['name'] = ucwords(mb_strtolower($value));
     }

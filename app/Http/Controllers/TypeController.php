@@ -6,12 +6,13 @@ use App\Models\Nature;
 use App\Models\Type;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Inertia\Inertia;
 use Inertia\Response;
 
 class TypeController extends Controller
 {
-    private function natureOptions()
+    private function natureOptions(): Collection
     {
         return Nature::all()->map(fn (Nature $nature) => ['value' => $nature->id, 'label' => $nature->name]);
     }

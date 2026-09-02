@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Cache\RateLimiting\Limit;
@@ -34,7 +35,7 @@ class AppServiceProvider extends ServiceProvider
     {
         Builder::defaultStringLength(191);
 
-        Gate::define('admin', function ($user) {
+        Gate::define('admin', function (User $user): bool {
             return $user->admin;
         });
 

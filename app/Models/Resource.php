@@ -12,22 +12,22 @@ class Resource extends Model
 
     protected $guarded = [];
 
-    protected function setWhoAttribute($value)
+    protected function setWhoAttribute(mixed $value): void
     {
         $this->attributes['who'] = strtoupper(mb_strtolower($value));
     }
 
-    protected function setWhereAttribute($value)
+    protected function setWhereAttribute(mixed $value): void
     {
         $this->attributes['where'] = ucfirst(mb_strtolower($value));
     }
 
-    protected function setHowAttribute($value)
+    protected function setHowAttribute(mixed $value): void
     {
         $this->attributes['how'] = ucfirst(mb_strtolower($value));
     }
 
-    protected function setWhatAttribute($value)
+    protected function setWhatAttribute(mixed $value): void
     {
         $this->attributes['what'] = ucfirst(mb_strtolower($value));
     }

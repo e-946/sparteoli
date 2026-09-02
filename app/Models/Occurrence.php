@@ -68,37 +68,37 @@ class Occurrence extends Model
         return $this->hasMany(Resource::class);
     }
 
-    protected function setAddressAttribute($value)
+    protected function setAddressAttribute(mixed $value): void
     {
         $this->attributes['address'] = ucwords(mb_strtolower($value));
     }
 
-    protected function setNeighborhoodAttribute($value)
+    protected function setNeighborhoodAttribute(mixed $value): void
     {
         $this->attributes['neighborhood'] = ucwords(mb_strtolower($value));
     }
 
-    protected function setCityAttribute($value)
+    protected function setCityAttribute(mixed $value): void
     {
         $this->attributes['city'] = ucwords(mb_strtolower($value));
     }
 
-    protected function setStateAttribute($value)
+    protected function setStateAttribute(mixed $value): void
     {
         $this->attributes['state'] = ucwords(mb_strtolower($value));
     }
 
-    protected function setRequesterAttribute($value)
+    protected function setRequesterAttribute(mixed $value): void
     {
         $this->attributes['requester'] = ucwords(mb_strtolower($value));
     }
 
-    protected function setFillerNameAttribute($value)
+    protected function setFillerNameAttribute(mixed $value): void
     {
         $this->attributes['filler_name'] = ucwords(mb_strtolower($value));
     }
 
-    protected function setFillerPatentAttribute($value)
+    protected function setFillerPatentAttribute(mixed $value): void
     {
         $this->attributes['filler_patent'] = ucfirst(mb_strtolower($value));
     }

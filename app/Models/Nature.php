@@ -23,12 +23,12 @@ class Nature extends Model
         return $this->hasManyThrough(Occurrence::class, Type::class);
     }
 
-    protected function setNameAttribute($value)
+    protected function setNameAttribute(mixed $value): void
     {
         $this->attributes['name'] = ucfirst(mb_strtolower($value));
     }
 
-    protected function setDescAttribute($value)
+    protected function setDescAttribute(mixed $value): void
     {
         $this->attributes['desc'] = ucfirst(mb_strtolower($value));
     }

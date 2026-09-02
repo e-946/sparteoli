@@ -106,7 +106,7 @@ class UserController extends Controller
         ]);
     }
 
-    public function storePassword(Request $request, $id): RedirectResponse
+    public function storePassword(Request $request, int $id): RedirectResponse
     {
         $this->validator($request->all())->validate();
 

@@ -8,11 +8,11 @@ class VictimDestroyer
 {
     public function __construct(int $id)
     {
-        $victim = Victim::find($id);
+        $victim = Victim::findOrFail($id);
         $this->destroy($victim);
     }
 
-    private function destroy($victim)
+    private function destroy(Victim $victim): void
     {
         $victim->problems()->detach();
         $victim->delete();

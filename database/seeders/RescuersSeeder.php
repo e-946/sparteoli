@@ -7,12 +7,7 @@ use Illuminate\Database\Seeder;
 
 class RescuersSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
-    public function run()
+    public function run(): void
     {
         DB::table('rescuers')->insert([
             [
