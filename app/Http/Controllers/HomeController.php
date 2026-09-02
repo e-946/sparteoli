@@ -32,20 +32,20 @@ class HomeController extends Controller
         $since = Carbon::today()->subMonths(15)->format('Y-m-d');
 
         $months = DB::table('occurrences')
-            ->selectRaw("DATE_FORMAT(date, '%m/%Y') as name, COUNT(*) as total, MIN(date) as first_date")
+            ->selectRaw("DATE_FORMAT(date, '%m') as month, DATE_FORMAT(date, '%Y') as year, COUNT(*) as total")
             ->where('date', '>=', $since)
-            ->groupBy('name')
-            ->orderBy('first_date')
-            ->get(['name', 'total']);
+            ->groupBy('month', 'year')
+            ->orderBy('year')
+            ->orderBy('month')
+            ->get(['month', 'year', 'total']);
 
         $bairros = DB::table('occurrences')
-            ->selectRaw("CONCAT(neighborhood, ' / ', city, '-', state) as name, COUNT(*) as total")
+            ->selectRaw('neighborhood, city, COUNT(*) as total')
             ->where('date', '>=', $since)
-            ->groupBy('neighborhood', 'city', 'state')
-            ->orderBy('state')
+            ->groupBy('neighborhood', 'city')
             ->orderBy('city')
             ->orderBy('neighborhood')
-            ->get();
+            ->get(['neighborhood', 'city', 'total']);
 
         $colors = [
             '#03318C',

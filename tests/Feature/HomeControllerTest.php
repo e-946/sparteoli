@@ -64,12 +64,12 @@ class HomeControllerTest extends TestCase
         $page = json_decode(json_encode($response->viewData('page')), true);
         $props = $page['props'];
 
-        $months = collect($props['months'])->keyBy('name');
+        $months = collect($props['months'])->keyBy(fn ($m) => $m['month'] . '/' . $m['year']);
         $this->assertSame(2, $months['01/2026']['total']);
         $this->assertSame(1, $months['02/2026']['total']);
 
-        $bairros = collect($props['bairros'])->keyBy('name');
-        $this->assertSame(3, $bairros['Centro / Belo Horizonte-Mg']['total']);
+        $bairros = collect($props['bairros'])->keyBy(fn ($b) => $b['neighborhood'] . '|' . $b['city']);
+        $this->assertSame(3, $bairros['Centro|Belo Horizonte']['total']);
 
         $natureRow = collect($props['natures'])->firstWhere('name', $nature->name);
         $this->assertSame(4, $natureRow['occurrences_count']);

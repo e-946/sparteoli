@@ -5,39 +5,73 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Formulário da ocorrência</title>
 
-    <link rel="stylesheet" href="{{ asset('css/reset.css') }}">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 
     <style>
-        body > div {
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-size: 12px;
+        }
+
+        @page {
+            size: A4;
+            margin: 12mm;
+        }
+
+        main {
             width: 800px;
+            max-width: 100%;
+            margin: 0 auto;
             padding: 20px;
         }
 
         table {
             width: 100%;
             margin: 0 auto;
+            table-layout: fixed;
+        }
+
+        td, th {
+            overflow-wrap: break-word;
+            word-wrap: break-word;
         }
 
         table tr td p {
-            font-size: 1.5em;
+            font-size: 1em;
         }
 
         tr {
             border: black 1px solid;
             width: 100%;
             padding: 5px;
+            page-break-inside: avoid;
+            break-inside: avoid;
         }
 
         td {
             border: black 1px solid;
-            padding: 10px;
+            padding: 6px 8px;
         }
 
         h1, h2, h3, h4, h5, h6 {
             margin: 0.5rem;
             font-weight: bold;
             line-height: 1.2;
+        }
+
+        h1 {
+            font-size: 1.6em;
+        }
+
+        h2 {
+            font-size: 1.3em;
+        }
+
+        h3 {
+            font-size: 1em;
         }
 
         .break {
@@ -48,7 +82,7 @@
 
 </head>
 <body onload="window.print()">
-<main class="container d-flex justify-content-center">
+<main>
     <section>
         <header>
             <table class="text-center align-middle">
@@ -86,23 +120,23 @@
             </header>
             <table class="text-center align-middle">
                 <tr>
-                    <td class="align-middle">
+                    <td class="align-middle" style="width: 18%">
                         <h3>Data do chamado:</h3>
                         <p>{{ date( 'd\/m\/Y', strtotime($occurrence->date)) }}</p>
                     </td>
-                    <td class="align-middle">
+                    <td class="align-middle" style="width: 19%">
                         <h3>Horário do chamado:</h3>
                         <p>{{ $occurrence->call_time }}</p>
                     </td>
-                    <td class="align-middle">
+                    <td class="align-middle" style="width: 19%">
                         <h3>Horário da chegada:</h3>
                         <p>{{ $occurrence->arrival_time }}</p>
                     </td>
-                    <td class="align-middle">
+                    <td class="align-middle" style="width: 25%">
                         <h3>Horário de encerramento:</h3>
                         <p>{{ $occurrence->end_time }}</p>
                     </td>
-                    <td class="align-middle">
+                    <td class="align-middle" style="width: 19%">
                         <h3>Meio utilizado:</h3>
                         <p>{{ $occurrence->meanused->name }}</p>
                     </td>
@@ -199,7 +233,7 @@
                     </td>
                     <td class="align-middle">
                         <h3>Estado:</h3>
-                        <p>{{ $occurrence->state }}</p>
+                        <p>{{ strtoupper($occurrence->state) }}</p>
                     </td>
                     <td class="align-middle">
                         <h3>CEP:</h3>
@@ -225,25 +259,25 @@
             </header>
             <table class="text-center align-middle">
                 <tr>
-                    <th>
+                    <th style="width: 15%">
                         Nome:
                     </th>
-                    <th>
+                    <th style="width: 16%">
                         Socorrista:
                     </th>
-                    <th>
+                    <th style="width: 8%">
                         Idade:
                     </th>
-                    <th>
+                    <th style="width: 13%">
                         Sexo:
                     </th>
-                    <th>
+                    <th style="width: 14%">
                         Consciente:
                     </th>
-                    <th>
+                    <th style="width: 10%">
                         Fatal:
                     </th>
-                    <th>
+                    <th style="width: 24%">
                         Problemas:
                     </th>
                 </tr>
@@ -310,8 +344,8 @@
                         Como:
                     </th>
                 </tr>
+                @foreach($occurrence->resources as $resource)
                 <tr>
-                    @foreach($occurrence->resources as $resource)
                     <td class="align-middle">
                         {{ $resource->who }}
                     </td>
@@ -324,8 +358,8 @@
                     <td class="align-middle">
                         {{ $resource->how }}
                     </td>
-                    @endforeach
                 </tr>
+                @endforeach
             </table>
         </article>
         @endif
