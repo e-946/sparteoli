@@ -6,12 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateNaturesTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
-    public function up()
+    public function up(): void
     {
         Schema::create('natures', function (Blueprint $table) {
             $table->bigIncrements('id');
@@ -21,12 +16,7 @@ class CreateNaturesTable extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('natures');
     }
