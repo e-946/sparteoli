@@ -51,7 +51,7 @@ class UserController extends Controller
      */
     public function update(Request $request, int $id): RedirectResponse
     {
-        $user = User::find($id);
+        $user = User::findOrFail($id);
         $user->update([
             'name' => $request->name,
             'register' => is_null($request->register) ? $user->register : $request->register,
@@ -69,7 +69,7 @@ class UserController extends Controller
      */
     public function destroy(int $id): RedirectResponse
     {
-        $user = User::find($id);
+        $user = User::findOrFail($id);
         $user->delete();
 
         return redirect(route('index-user'))->with(
@@ -111,7 +111,7 @@ class UserController extends Controller
         $this->validator($request->all())->validate();
 
         if (Auth::id() == $id) {
-            User::find($id)->update([
+            User::findOrFail($id)->update([
                 'password' => Hash::make($request->password),
             ]);
 
@@ -122,7 +122,7 @@ class UserController extends Controller
         }
 
         if (Auth::user()->admin) {
-            $user = User::find($id);
+            $user = User::findOrFail($id);
             $user->update([
                 'password' => Hash::make($request->password),
             ]);

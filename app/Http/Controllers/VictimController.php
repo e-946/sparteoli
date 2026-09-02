@@ -33,7 +33,10 @@ class VictimController extends Controller
      */
     public function index(int $occurrence_id): Response
     {
-        $victims = Victim::query()->where('occurrence_id', '=', $occurrence_id)->orderBy('name')->get();
+        $victims = Victim::query()
+            ->where('occurrence_id', '=', $occurrence_id)
+            ->orderBy('name')
+            ->get(['id', 'name']);
 
         return Inertia::render('Victims/Index', [
             'victims' => $victims,
@@ -113,7 +116,7 @@ class VictimController extends Controller
     {
         $validated = $request->validate($this->rules());
 
-        $victim = Victim::find($id);
+        $victim = Victim::findOrFail($id);
         $victim->update([
             'name' => $validated['name'],
             'age' => $validated['age'],

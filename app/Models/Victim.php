@@ -10,6 +10,11 @@ class Victim extends Model
 {
     protected $guarded = [];
 
+    protected $casts = [
+        'fatal' => 'boolean',
+        'conscious' => 'boolean',
+    ];
+
     protected function setNameAttribute($value)
     {
         $this->attributes['name'] = ucfirst(mb_strtolower($value));

@@ -114,7 +114,7 @@ class ProblemController extends Controller
      */
     public function update(Request $request, int $id): RedirectResponse
     {
-        $problem = Problem::find($id);
+        $problem = Problem::findOrFail($id);
         $problem->update($request->validate($this->rules()));
 
         return redirect()->route('index-problem')->with(
@@ -128,7 +128,7 @@ class ProblemController extends Controller
      */
     public function destroy(int $id): RedirectResponse
     {
-        $problem = Problem::find($id);
+        $problem = Problem::findOrFail($id);
 
         if ($problem->victims()->exists()) {
             return back()->withErrors(['error' => 'Há vítimas utilizando esse elemento']);

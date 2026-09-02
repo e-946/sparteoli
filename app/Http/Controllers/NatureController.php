@@ -126,7 +126,7 @@ class NatureController extends Controller
      */
     public function update(Request $request, int $id): RedirectResponse
     {
-        $nature = Nature::find($id);
+        $nature = Nature::findOrFail($id);
         $nature->update($request->validate($this->rules()));
 
         return redirect()->route('index-nature')->with(
@@ -140,7 +140,7 @@ class NatureController extends Controller
      */
     public function destroy(int $id): RedirectResponse
     {
-        $nature = Nature::find($id);
+        $nature = Nature::findOrFail($id);
 
         if ($nature->types()->exists()) {
             return back()->withErrors(['error' => 'Há tipos utilizando esse elemento']);

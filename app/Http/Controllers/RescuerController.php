@@ -97,7 +97,7 @@ class RescuerController extends Controller
      */
     public function update(Request $request, int $id): RedirectResponse
     {
-        $rescuer = Rescuer::find($id);
+        $rescuer = Rescuer::findOrFail($id);
         $rescuer->update($request->validate($this->rules()));
 
         return redirect()->route('index-rescuer', $rescuer->id)->with(
@@ -111,7 +111,7 @@ class RescuerController extends Controller
      */
     public function destroy(int $id): RedirectResponse
     {
-        $rescuer = Rescuer::find($id);
+        $rescuer = Rescuer::findOrFail($id);
 
         if ($rescuer->victims()->exists()) {
             return back()->withErrors(['error' => 'Há vítimas utilizando esse elemento']);

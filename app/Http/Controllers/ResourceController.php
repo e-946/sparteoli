@@ -28,7 +28,7 @@ class ResourceController extends Controller
         $resources = Resource::query()
             ->where('occurrence_id', '=', $occurrence_id)
             ->orderBy('created_at', 'desc')
-            ->get();
+            ->get(['id', 'who']);
 
         return Inertia::render('Resources/Index', [
             'resources' => $resources,
@@ -99,7 +99,7 @@ class ResourceController extends Controller
     {
         $validated = $request->validate($this->rules());
 
-        $resource = Resource::find($id);
+        $resource = Resource::findOrFail($id);
         $resource->update([
             ...$validated,
             'occurrence_id' => $occurrence_id,
@@ -118,7 +118,7 @@ class ResourceController extends Controller
      */
     public function destroy(int $occurrence_id, int $id): RedirectResponse
     {
-        $resource = Resource::find($id);
+        $resource = Resource::findOrFail($id);
         $resource->delete();
 
         return redirect(route('index-resource', $occurrence_id))->with(

@@ -97,7 +97,7 @@ class PlacefreatureController extends Controller
      */
     public function update(Request $request, int $id): RedirectResponse
     {
-        $freature = Placefreature::find($id);
+        $freature = Placefreature::findOrFail($id);
         $freature->update($request->validate($this->rules()));
 
         return redirect()->route('index-placefreature', $freature->id)->with(
@@ -111,7 +111,7 @@ class PlacefreatureController extends Controller
      */
     public function destroy(int $id): RedirectResponse
     {
-        $freature = Placefreature::find($id);
+        $freature = Placefreature::findOrFail($id);
 
         if ($freature->occurrences()->exists()) {
             return back()->withErrors(['error' => 'Há ocorrências utilizando esse elemento']);

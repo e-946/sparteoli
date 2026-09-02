@@ -97,7 +97,7 @@ class PlaceuseController extends Controller
      */
     public function update(Request $request, int $id): RedirectResponse
     {
-        $use = Placeuse::find($id);
+        $use = Placeuse::findOrFail($id);
         $use->update($request->validate($this->rules()));
 
         return redirect()->route('index-placeuse', $use->id)->with(
@@ -111,7 +111,7 @@ class PlaceuseController extends Controller
      */
     public function destroy(int $id): RedirectResponse
     {
-        $use = Placeuse::find($id);
+        $use = Placeuse::findOrFail($id);
 
         if ($use->occurrences()->exists()) {
             return back()->withErrors(['error' => 'Há ocorrências utilizando esse elemento']);

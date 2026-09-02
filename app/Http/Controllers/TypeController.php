@@ -138,7 +138,7 @@ class TypeController extends Controller
      */
     public function update(Request $request, int $id): RedirectResponse
     {
-        $type = Type::find($id);
+        $type = Type::findOrFail($id);
         $type->update($request->validate($this->rules()));
 
         return redirect()->route('index-type')->with(
@@ -152,7 +152,7 @@ class TypeController extends Controller
      */
     public function destroy(int $id): RedirectResponse
     {
-        $type = Type::find($id);
+        $type = Type::findOrFail($id);
 
         if ($type->occurrences()->exists()) {
             return back()->withErrors(['error' => 'Há ocorrências utilizando esse elemento']);

@@ -28,6 +28,10 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    protected $casts = [
+        'admin' => 'boolean',
+    ];
+
     protected function setNameAttribute($value)
     {
         $this->attributes['name'] = ucwords(mb_strtolower($value));

@@ -97,7 +97,7 @@ class MeanusedController extends Controller
      */
     public function update(Request $request, int $id): RedirectResponse
     {
-        $mean = Meanused::find($id);
+        $mean = Meanused::findOrFail($id);
         $mean->update($request->validate($this->rules()));
 
         return redirect()->route('index-meanused', $mean->id)->with(
@@ -111,7 +111,7 @@ class MeanusedController extends Controller
      */
     public function destroy(int $id): RedirectResponse
     {
-        $mean = Meanused::find($id);
+        $mean = Meanused::findOrFail($id);
 
         if ($mean->occurrences()->exists()) {
             return back()->withErrors(['error' => 'Há ocorrências utilizando esse elemento']);

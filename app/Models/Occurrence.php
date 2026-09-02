@@ -11,6 +11,10 @@ class Occurrence extends Model
 {
     protected $guarded = [];
 
+    protected $casts = [
+        'place_preservation' => 'boolean',
+    ];
+
     public function meanused(): BelongsTo
     {
         return $this->belongsTo(Meanused::class);

@@ -116,7 +116,7 @@ class FireprotectionController extends Controller
      */
     public function update(Request $request, int $id): RedirectResponse
     {
-        $protection = Fireprotection::find($id);
+        $protection = Fireprotection::findOrFail($id);
         $protection->update($request->validate($this->rules()));
 
         return redirect()->route('index-fireprotection')->with(
@@ -130,7 +130,7 @@ class FireprotectionController extends Controller
      */
     public function destroy(int $id): RedirectResponse
     {
-        $protection = Fireprotection::find($id);
+        $protection = Fireprotection::findOrFail($id);
 
         if ($protection->occurrences()->exists()) {
             return back()->withErrors(['error' => 'Há ocorrências utilizando esse elemento']);

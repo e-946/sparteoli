@@ -20,7 +20,9 @@ class OccurrenceController extends Controller
      */
     public function index(): Response
     {
-        $occurrences = Occurrence::query()->orderBy('created_at', 'desc')->paginate(10);
+        $occurrences = Occurrence::query()
+            ->orderBy('created_at', 'desc')
+            ->paginate(10, ['id', 'filler_name']);
 
         return Inertia::render('Occurrences/Index', [
             'occurrences' => $occurrences,
@@ -141,7 +143,7 @@ class OccurrenceController extends Controller
      */
     public function update(Request $request, int $id): RedirectResponse
     {
-        $occurrence = Occurrence::find($id);
+        $occurrence = Occurrence::findOrFail($id);
         $validated = $request->validate($this->rules());
 
         $data = collect($validated)->except(['street', 'number', 'protectionsForSave'])->all();
@@ -161,7 +163,7 @@ class OccurrenceController extends Controller
      */
     public function destroy(int $id): RedirectResponse
     {
-        $occurrence = Occurrence::find($id);
+        $occurrence = Occurrence::findOrFail($id);
 
         foreach ($occurrence->victims as $victim) {
             new VictimDestroyer($victim->id);
@@ -187,7 +189,7 @@ class OccurrenceController extends Controller
      */
     public function toPdf(int $id)
     {
-        $occurrence = Occurrence::find($id);
+        $occurrence = Occurrence::findOrFail($id);
 
         $filename = "occurrence-{$id}-".Str::uuid().'.html';
 
