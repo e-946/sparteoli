@@ -10,6 +10,7 @@
     <file>config</file>
     <file>database</file>
     <file>routes</file>
+    <file>tests</file>
 
     <rule ref="PSR12"/>
 
@@ -17,5 +18,12 @@
          Migration"), which are intentionally not namespaced. -->
     <rule ref="PSR1.Classes.ClassDeclaration.MissingNamespace">
         <exclude-pattern>database/migrations/*</exclude-pattern>
+    </rule>
+
+    <!-- Test methods use PHPUnit/Laravel's snake_case "test_*" naming
+         convention (the same convention php artisan make:test scaffolds),
+         not PSR-1's camelCase method names. -->
+    <rule ref="PSR1.Methods.CamelCapsMethodName">
+        <exclude-pattern>tests/*</exclude-pattern>
     </rule>
 </ruleset>

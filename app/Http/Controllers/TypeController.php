@@ -20,7 +20,13 @@ class TypeController extends Controller
     {
         return [
             ['key' => 'name', 'label' => 'Nome', 'type' => 'text', 'required' => true],
-            ['key' => 'nature_id', 'label' => 'Natureza', 'type' => 'select', 'options' => $this->natureOptions(), 'required' => true],
+            [
+                'key' => 'nature_id',
+                'label' => 'Natureza',
+                'type' => 'select',
+                'options' => $this->natureOptions(),
+                'required' => true,
+            ],
             ['key' => 'desc', 'label' => 'Descrição do tipo de ocorrência', 'type' => 'textarea'],
         ];
     }
@@ -46,7 +52,7 @@ class TypeController extends Controller
             'items' => $types->map(fn (Type $type) => [
                 'id' => $type->id,
                 'name' => $type->name,
-                'subtitle' => 'Natureza: '.$type->nature->name,
+                'subtitle' => 'Natureza: ' . $type->nature->name,
                 'nature_id' => $type->nature_id,
                 'desc' => $type->desc,
             ]),

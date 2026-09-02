@@ -212,7 +212,7 @@ class OccurrenceControllerTest extends TestCase
 
         $response->assertOk();
 
-        foreach (glob(storage_path('app/occurrence-'.$occurrence->id.'-*.html')) ?: [] as $leftover) {
+        foreach (glob(storage_path('app/occurrence-' . $occurrence->id . '-*.html')) ?: [] as $leftover) {
             @unlink($leftover);
         }
     }

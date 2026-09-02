@@ -84,7 +84,7 @@ class OccurrenceController extends Controller
         $validated = $request->validate($this->rules());
 
         $data = collect($validated)->except(['street', 'number', 'protectionsForSave'])->all();
-        $data['address'] = $validated['street'].', Nº '.$validated['number'];
+        $data['address'] = $validated['street'] . ', Nº ' . $validated['number'];
         $data['user_id'] = Auth::id();
 
         $occurrence = Occurrence::create($data);
@@ -147,7 +147,7 @@ class OccurrenceController extends Controller
         $validated = $request->validate($this->rules());
 
         $data = collect($validated)->except(['street', 'number', 'protectionsForSave'])->all();
-        $data['address'] = $validated['street'].', Nº '.$validated['number'];
+        $data['address'] = $validated['street'] . ', Nº ' . $validated['number'];
 
         $occurrence->fireprotections()->sync($validated['protectionsForSave'] ?? []);
         $occurrence->update($data);
@@ -191,7 +191,7 @@ class OccurrenceController extends Controller
     {
         $occurrence = Occurrence::findOrFail($id);
 
-        $filename = "occurrence-{$id}-".Str::uuid().'.html';
+        $filename = "occurrence-{$id}-" . Str::uuid() . '.html';
 
         Storage::put($filename, view('occurrence.pdf', compact('occurrence'))->render());
 

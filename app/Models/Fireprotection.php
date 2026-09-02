@@ -23,6 +23,11 @@ class Fireprotection extends Model
 
     public function occurrences(): BelongsToMany
     {
-        return $this->belongsToMany(Occurrence::class, 'occurrence-fireprotection', 'fireprotection_id', 'occurrence_id');
+        return $this->belongsToMany(
+            Occurrence::class,
+            'occurrence-fireprotection',
+            'fireprotection_id',
+            'occurrence_id'
+        );
     }
 }

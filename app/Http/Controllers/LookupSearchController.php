@@ -36,7 +36,7 @@ class LookupSearchController extends Controller
         $query = $model::query()->orderBy('name')->limit(20);
 
         if ($request->filled('q')) {
-            $query->where('name', 'like', '%'.$request->string('q').'%');
+            $query->where('name', 'like', '%' . $request->string('q') . '%');
         }
 
         if ($resource === 'type') {
@@ -72,7 +72,7 @@ class LookupSearchController extends Controller
     private function resolveModel(string $resource): string
     {
         if (! array_key_exists($resource, self::MODELS)) {
-            throw new NotFoundHttpException;
+            throw new NotFoundHttpException();
         }
 
         return self::MODELS[$resource];
@@ -93,7 +93,7 @@ class LookupSearchController extends Controller
                 'desc' => ['nullable', 'string'],
                 'nature_id' => ['required', Rule::exists('natures', 'id')],
             ],
-            default => throw new NotFoundHttpException,
+            default => throw new NotFoundHttpException(),
         };
     }
 }
