@@ -10,12 +10,12 @@ class Victim extends Model
 {
     protected $guarded = [];
 
-    public function setNameAttribute($value)
+    protected function setNameAttribute($value)
     {
         $this->attributes['name'] = ucfirst(mb_strtolower($value));
     }
 
-    public function setSexAttribute($value)
+    protected function setSexAttribute($value)
     {
         $this->attributes['sex'] = ucfirst(mb_strtolower($value));
     }

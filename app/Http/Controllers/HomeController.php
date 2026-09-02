@@ -11,22 +11,6 @@ use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
-
-    private const MONTH_REFERENCE = [
-        'Janeiro',
-        'Fevereiro',
-        'Março',
-        'Abril',
-        'Maio',
-        'Junho',
-        'Julho',
-        'Agosto',
-        'Setembro',
-        'Outubro',
-        'Novembro',
-        'Dezembro'
-    ];
-
     /**
      * Create a new controller instance.
      *
@@ -37,11 +21,8 @@ class HomeController extends Controller
         $this->middleware('auth');
     }
 
-
     /**
      * Show the application dashboard.
-     *
-     * @return Renderable
      */
     public function index(): Renderable
     {
@@ -64,7 +45,7 @@ class HomeController extends Controller
 
         $grouped = $dates->groupBy(
             function ($item, $key) {
-                return $item->date;
+                return (string) $item->date;
             }
         );
 
@@ -74,7 +55,7 @@ class HomeController extends Controller
             }
         );
 
-        $months = new Collection();
+        $months = new Collection;
 
         foreach ($groupCount as $key => $total) {
             $months->push(['name' => $key, 'total' => $total]);
@@ -94,7 +75,7 @@ class HomeController extends Controller
 
         $grouped = $neighborhoods->groupBy(
             function ($item, $key) {
-                return $item->name;
+                return (string) $item->name;
             }
         );
 
@@ -104,13 +85,13 @@ class HomeController extends Controller
             }
         );
 
-        $bairros = new Collection();
+        $bairros = new Collection;
 
         foreach ($groupCount as $key => $total) {
             $bairros->push(['name' => $key, 'total' => $total]);
         }
 
-        $colors  = [
+        $colors = [
             '#03318C',
             '#F2CB05',
             '#D96704',

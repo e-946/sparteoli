@@ -17,6 +17,7 @@ class NatureController extends Controller
     public function index()
     {
         $natures = Nature::query()->orderBy('name')->get();
+
         return response(view('nature.index', compact('natures')), 200);
     }
 
@@ -32,68 +33,54 @@ class NatureController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param Request $request
-     * @return Response
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
-        if (empty($request)) {
-            return response('Formulário vazio');
-        }
-
         (new Nature)->create($request->all());
 
-        return response(redirect()->route('index-nature'));
+        return redirect()->route('index-nature');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
      * @return Response
      */
     public function show(int $id)
     {
         $nature = Nature::find($id);
+
         return response(view('nature.one', compact('nature')));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
      * @return Response
      */
     public function edit(int $id)
     {
         $nature = Nature::find($id);
+
         return response(view('nature.update', compact('nature')));
     }
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param Request $request
-     * @param  int  $id
-     * @return Response
      */
-    public function update(Request $request, int $id)
+    public function update(Request $request, int $id): RedirectResponse
     {
         $nature = Nature::find($id);
         $nature->update($request->all());
 
-        return response(redirect()->route('show-nature', $nature->id)->with(
+        return redirect()->route('show-nature', $nature->id)->with(
             'message',
-            "Natureza alterada com sucesso"
-        ));
+            'Natureza alterada com sucesso'
+        );
     }
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return RedirectResponse|Response
      */
     public function destroy(int $id): Response|RedirectResponse
     {
@@ -105,9 +92,9 @@ class NatureController extends Controller
 
         $nature->delete();
 
-        return response(redirect(route('index-nature'))->with(
+        return redirect(route('index-nature'))->with(
             'message',
-            "Natureza excluída com sucesso"
-        ));
+            'Natureza excluída com sucesso'
+        );
     }
 }

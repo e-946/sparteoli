@@ -10,26 +10,25 @@ class User extends Authenticatable
 {
     use Notifiable;
 
-
     /**
      * The attributes that are mass assignable.
      *
-     * @var array
+     * @var list<string>
      */
     protected $fillable = [
-        'name', 'register', 'password', 'admin'
+        'name', 'register', 'password', 'admin',
     ];
 
     /**
      * The attributes that should be hidden for arrays.
      *
-     * @var array
+     * @var list<string>
      */
     protected $hidden = [
         'password', 'remember_token',
     ];
 
-    public function setNameAttribute($value)
+    protected function setNameAttribute($value)
     {
         $this->attributes['name'] = ucwords(mb_strtolower($value));
     }

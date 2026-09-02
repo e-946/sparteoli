@@ -9,12 +9,12 @@ class Problem extends Model
 {
     protected $guarded = [];
 
-    public function setNameAttribute($value)
+    protected function setNameAttribute($value)
     {
         $this->attributes['name'] = ucfirst(mb_strtolower($value));
     }
 
-    public function setDescAttribute($value)
+    protected function setDescAttribute($value)
     {
         $this->attributes['desc'] = ucfirst(mb_strtolower($value));
     }

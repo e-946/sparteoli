@@ -11,19 +11,16 @@ class RescuerController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
-     * @return Response
      */
     public function index(): Response
     {
         $rescuers = Rescuer::query()->orderBy('name')->get();
+
         return response(view('rescuer.index', compact('rescuers')), 200);
     }
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return Response
      */
     public function create(): Response
     {
@@ -32,29 +29,20 @@ class RescuerController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param Request $request
-     * @return Response
      */
-    public function store(Request $request): Response
+    public function store(Request $request): RedirectResponse
     {
-        if (empty($request)) {
-            return response('Formulário vazio');
-        }
         Rescuer::create($request->all());
 
-        return response(redirect()->route('index-rescuer')->with(
+        return redirect()->route('index-rescuer')->with(
             'message',
-            "Socorrista criado com sucesso"
-        ));
+            'Socorrista criado com sucesso'
+        );
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return Response
-
     public function show($id)
     {
         $rescuer = Rescuer::find($id);
@@ -64,39 +52,30 @@ class RescuerController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
      */
     public function edit(int $id): Response
     {
         $rescuer = Rescuer::find($id);
+
         return response(view('rescuer.update', compact('rescuer')));
     }
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param Request $request
-     * @param  int  $id
-     * @return Response
      */
-    public function update(Request $request, int $id): Response
+    public function update(Request $request, int $id): RedirectResponse
     {
         $rescuer = Rescuer::find($id);
         $rescuer->update($request->all());
 
-        return response(redirect()->route('index-rescuer', $rescuer->id)->with(
+        return redirect()->route('index-rescuer', $rescuer->id)->with(
             'message',
-            "Socorrista alterado com sucesso"
-        ));
+            'Socorrista alterado com sucesso'
+        );
     }
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return RedirectResponse|Response
      */
     public function destroy(int $id): Response|RedirectResponse
     {
@@ -108,9 +87,9 @@ class RescuerController extends Controller
 
         $rescuer->delete();
 
-        return response(redirect(route('index-rescuer'))->with(
+        return redirect(route('index-rescuer'))->with(
             'message',
-            "Socorrista excluído com sucesso"
-        ));
+            'Socorrista excluído com sucesso'
+        );
     }
 }

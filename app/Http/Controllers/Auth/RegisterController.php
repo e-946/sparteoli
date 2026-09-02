@@ -4,11 +4,11 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use Illuminate\Auth\Events\Registered;
-use Illuminate\Foundation\Auth\RegistersUsers;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Hash;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\View\View;
 use Validator;
 
 class RegisterController extends Controller
@@ -19,24 +19,23 @@ class RegisterController extends Controller
     |--------------------------------------------------------------------------
     |
     | This controller handles the registration of new users as well as their
-    | validation and creation. By default this controller uses a trait to
-    | provide this functionality without requiring any additional code.
+    | validation and creation.
     |
     */
 
-    use RegistersUsers;
-
     /**
-     * Where to redirect users after registration.
+     * Show the application registration form.
      *
-     * @var string
+     * @return View
      */
-    // protected string $redirectTo = RouteServiceProvider::HOME;
+    public function showRegistrationForm()
+    {
+        return view('auth.register');
+    }
 
     /**
      * Get a validator for an incoming registration request.
      *
-     * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
     protected function validator(array $data)
@@ -51,7 +50,6 @@ class RegisterController extends Controller
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array  $data
      * @return User
      */
     protected function create(array $data)
@@ -66,16 +64,13 @@ class RegisterController extends Controller
 
     /**
      * Handle a registration request for the application.
-     *
-     * @param Request $request
-     * @return Response
      */
-    public function register(Request $request)
+    public function register(Request $request): RedirectResponse
     {
         $this->validator($request->all())->validate();
 
-        event(new Registered($user = $this->create($request->all())));
+        event(new Registered($this->create($request->all())));
 
-        return response(redirect(route('index-user'))->with('message', 'Usuário criado com sucesso'));
+        return redirect(route('index-user'))->with('message', 'Usuário criado com sucesso');
     }
 }

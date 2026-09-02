@@ -7,12 +7,19 @@ use App\Models\Victim;
 class VictimCreator
 {
     private string $name;
+
     private int $age;
+
     private string $sex;
+
     private int $fatal;
+
     private ?int $conscious;
+
     private int $rescuer_id;
+
     private array $problemForSave;
+
     private int $occurrence_id;
 
     public function __construct(
@@ -34,7 +41,7 @@ class VictimCreator
         $this->problemForSave = $problemForSave;
         $this->occurrence_id = $occurrence_id;
 
-        return $this->createVictim();
+        $this->createVictim();
     }
 
     private function createVictim(): Victim
@@ -50,7 +57,7 @@ class VictimCreator
             'rescuer_id' => $this->rescuer_id,
             'fatal' => $this->fatal,
             'conscious' => $this->conscious,
-            'occurrence_id' => $this->occurrence_id
+            'occurrence_id' => $this->occurrence_id,
         ]);
 
         $victim->problems()->attach($this->problemForSave);

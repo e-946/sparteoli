@@ -11,19 +11,16 @@ class MeanusedController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
-     * @return Response
      */
     public function index(): Response
     {
         $means = Meanused::query()->orderBy('name')->get();
+
         return response(view('meanused.index', compact('means')), 200);
     }
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return Response
      */
     public function create(): Response
     {
@@ -32,67 +29,55 @@ class MeanusedController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param Request $request
-     * @return Response
      */
-    public function store(Request $request): Response
+    public function store(Request $request): RedirectResponse
     {
-        if (empty($request)) {
-            return response('Formulário vazio');
-        }
         Meanused::create($request->all());
 
-        return response(redirect()->route('index-meanused')->with('message',
-            "Meio de chamado criado com sucesso"));
+        return redirect()->route('index-meanused')->with(
+            'message',
+            'Meio de chamado criado com sucesso'
+        );
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
      * @return Response
      *
      * public function show(int $id)
-    * {
-        * $mean = Meanused::find($id);
-        * return response(view('meanused.one', compact('mean')));
-    * }
+     * {
+     * $mean = Meanused::find($id);
+     * return response(view('meanused.one', compact('mean')));
+     * }
      */
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
      */
     public function edit(int $id): Response
     {
         $mean = Meanused::find($id);
+
         return response(view('meanused.update', compact('mean')));
     }
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param Request $request
-     * @param  int  $id
-     * @return Response
      */
-    public function update(Request $request, int $id): Response
+    public function update(Request $request, int $id): RedirectResponse
     {
         $mean = Meanused::find($id);
         $mean->update($request->all());
 
-        return response(redirect()->route('index-meanused', $mean->id)->with('message',
-            "Meio de chamado alterado com sucesso"));
+        return redirect()->route('index-meanused', $mean->id)->with(
+            'message',
+            'Meio de chamado alterado com sucesso'
+        );
     }
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return RedirectResponse|Response
      */
     public function destroy(int $id): Response|RedirectResponse
     {
@@ -104,7 +89,9 @@ class MeanusedController extends Controller
 
         $mean->delete();
 
-        return response(redirect(route('index-meanused'))->with('message',
-            "Meio de chamado excluído com sucesso"));
+        return redirect(route('index-meanused'))->with(
+            'message',
+            'Meio de chamado excluído com sucesso'
+        );
     }
 }

@@ -6,7 +6,6 @@ use App\Models\Victim;
 
 class VictimDestroyer
 {
-
     public function __construct(int $id)
     {
         $victim = Victim::find($id);

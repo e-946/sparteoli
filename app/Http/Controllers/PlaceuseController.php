@@ -11,19 +11,16 @@ class PlaceuseController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
-     * @return Response
      */
     public function index(): Response
     {
         $uses = Placeuse::query()->orderBy('name')->get();
+
         return response(view('placeuse.index', compact('uses')), 200);
     }
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return Response
      */
     public function create(): Response
     {
@@ -32,71 +29,55 @@ class PlaceuseController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param Request $request
-     * @return Response
      */
-    public function store(Request $request): Response
+    public function store(Request $request): RedirectResponse
     {
-        if (empty($request)) {
-            return response('Formulário vazio');
-        }
         Placeuse::create($request->all());
 
-        return response(redirect()->route('index-placeuse')->with(
+        return redirect()->route('index-placeuse')->with(
             'message',
-            "Uso do local criado com sucesso"
-        ));
+            'Uso do local criado com sucesso'
+        );
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
      * @return Response
      *
      * public function show($id)
-    * {
-        * $use = Placeuse::find($id);
-        * return response(view('placeuse.one', compact('use')));
-    * }
+     * {
+     * $use = Placeuse::find($id);
+     * return response(view('placeuse.one', compact('use')));
+     * }
      */
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
      */
     public function edit(int $id): Response
     {
         $use = Placeuse::find($id);
-        return response(view("placeuse.update", compact('use')));
+
+        return response(view('placeuse.update', compact('use')));
     }
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param Request $request
-     * @param  int  $id
-     * @return Response
      */
-    public function update(Request $request, int $id): Response
+    public function update(Request $request, int $id): RedirectResponse
     {
         $use = Placeuse::find($id);
         $use->update($request->all());
 
-        return response(redirect()->route('index-placeuse', $use->id)->with(
+        return redirect()->route('index-placeuse', $use->id)->with(
             'message',
-            "Uso do local alterado com sucesso"
-        ));
+            'Uso do local alterado com sucesso'
+        );
     }
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return RedirectResponse|Response
      */
     public function destroy(int $id): Response|RedirectResponse
     {
@@ -108,9 +89,9 @@ class PlaceuseController extends Controller
 
         $use->delete();
 
-        return response(redirect(route('index-placeuse'))->with(
+        return redirect(route('index-placeuse'))->with(
             'message',
-            "Uso do local excluído com sucesso"
-        ));
+            'Uso do local excluído com sucesso'
+        );
     }
 }

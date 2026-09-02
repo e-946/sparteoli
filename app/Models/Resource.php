@@ -9,22 +9,22 @@ class Resource extends Model
 {
     protected $guarded = [];
 
-    public function setWhoAttribute($value)
+    protected function setWhoAttribute($value)
     {
         $this->attributes['who'] = strtoupper(mb_strtolower($value));
     }
 
-    public function setWhereAttribute($value)
+    protected function setWhereAttribute($value)
     {
         $this->attributes['where'] = ucfirst(mb_strtolower($value));
     }
 
-    public function setHowAttribute($value)
+    protected function setHowAttribute($value)
     {
         $this->attributes['how'] = ucfirst(mb_strtolower($value));
     }
 
-    public function setWhatAttribute($value)
+    protected function setWhatAttribute($value)
     {
         $this->attributes['what'] = ucfirst(mb_strtolower($value));
     }

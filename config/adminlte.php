@@ -1,5 +1,13 @@
 <?php
 
+use JeroenNoten\LaravelAdminLte\Menu\Filters\ActiveFilter;
+use JeroenNoten\LaravelAdminLte\Menu\Filters\ClassesFilter;
+use JeroenNoten\LaravelAdminLte\Menu\Filters\DataFilter;
+use JeroenNoten\LaravelAdminLte\Menu\Filters\GateFilter;
+use JeroenNoten\LaravelAdminLte\Menu\Filters\HrefFilter;
+use JeroenNoten\LaravelAdminLte\Menu\Filters\LangFilter;
+use JeroenNoten\LaravelAdminLte\Menu\Filters\SearchFilter;
+
 return [
 
     /*
@@ -225,44 +233,44 @@ return [
     */
 
     'menu' => [
-        # [
-        #    'text' => 'search',
-        #    'search' => true,
-        #    'topnav' => true,
-        #],
+        // [
+        //    'text' => 'search',
+        //    'search' => true,
+        //    'topnav' => true,
+        // ],
         ['header' => 'main_navigation'],
-        # [
-        #    'text' => 'blog',
-        #    'url'  => 'admin/blog',
-        #    'can'  => 'manage-blog',
-        #],
+        // [
+        //    'text' => 'blog',
+        //    'url'  => 'admin/blog',
+        //    'can'  => 'manage-blog',
+        // ],
         [
-            'text'        => 'Dashboard',
-            'url'         => '/home',
-            'icon'        => 'fas fa-fw fa-home',
+            'text' => 'Dashboard',
+            'url' => '/home',
+            'icon' => 'fas fa-fw fa-home',
         ],
         [
-            'text'        => 'Ocorrências',
-            'url'         => '/occurrence',
-            'icon'        => 'fas fa-fw fa-file',
-            #'label'       => 4,
+            'text' => 'Ocorrências',
+            'url' => '/occurrence',
+            'icon' => 'fas fa-fw fa-file',
+            // 'label'       => 4,
             'label_color' => 'success',
         ],
         ['header' => 'Configurações de perfil'],
         [
             'text' => 'Perfil',
-            'url'  => 'profile',
+            'url' => 'profile',
             'icon' => 'fas fa-fw fa-user',
         ],
         [
             'text' => 'change_password',
-            'url'  => 'profile/password',
+            'url' => 'profile/password',
             'icon' => 'fas fa-fw fa-lock',
         ],
         ['header' => 'Outros'],
         [
-            'text'    => 'Pré-definidos',
-            'icon'    => 'fas fa-fw fa-share',
+            'text' => 'Pré-definidos',
+            'icon' => 'fas fa-fw fa-share',
             'submenu' => [
                 [
                     'text' => 'Naturezas de ocorrência',
@@ -270,8 +278,8 @@ return [
                     'submenu' => [
                         [
                             'text' => 'Listar',
-                            'url'  => 'nature',
-                            'icon' => 'fas fa-fw fa-list'
+                            'url' => 'nature',
+                            'icon' => 'fas fa-fw fa-list',
                         ],
                         [
                             'text' => 'Criar',
@@ -280,13 +288,13 @@ return [
                             'can' => 'admin',
                         ],
                         [
-                            'text'    => 'Tipos de ocorrência',
+                            'text' => 'Tipos de ocorrência',
                             'icon' => 'fas fa-fw fa-arrow-down',
                             'submenu' => [
                                 [
                                     'text' => 'Listar',
-                                    'url'  => 'type',
-                                    'icon' => 'fas fa-fw fa-list'
+                                    'url' => 'type',
+                                    'icon' => 'fas fa-fw fa-list',
                                 ],
                                 [
                                     'text' => 'Criar',
@@ -308,8 +316,8 @@ return [
                             'submenu' => [
                                 [
                                     'text' => 'Listar',
-                                    'url'  => 'fireprotection',
-                                    'icon' => 'fas fa-fw fa-list'
+                                    'url' => 'fireprotection',
+                                    'icon' => 'fas fa-fw fa-list',
                                 ],
                                 [
                                     'text' => 'Criar',
@@ -335,8 +343,8 @@ return [
                                     'submenu' => [
                                         [
                                             'text' => 'Listar',
-                                            'url'  => 'rescuer',
-                                            'icon' => 'fas fa-fw fa-list'
+                                            'url' => 'rescuer',
+                                            'icon' => 'fas fa-fw fa-list',
                                         ],
                                         [
                                             'text' => 'Criar',
@@ -352,8 +360,8 @@ return [
                                     'submenu' => [
                                         [
                                             'text' => 'Listar',
-                                            'url'  => 'problem',
-                                            'icon' => 'fas fa-fw fa-list'
+                                            'url' => 'problem',
+                                            'icon' => 'fas fa-fw fa-list',
                                         ],
                                         [
                                             'text' => 'Criar',
@@ -371,8 +379,8 @@ return [
                             'submenu' => [
                                 [
                                     'text' => 'Listar',
-                                    'url'  => 'placefreature',
-                                    'icon' => 'fas fa-fw fa-list'
+                                    'url' => 'placefreature',
+                                    'icon' => 'fas fa-fw fa-list',
                                 ],
                                 [
                                     'text' => 'Criar',
@@ -388,8 +396,8 @@ return [
                             'submenu' => [
                                 [
                                     'text' => 'Listar',
-                                    'url'  => 'placeuse',
-                                    'icon' => 'fas fa-fw fa-list'
+                                    'url' => 'placeuse',
+                                    'icon' => 'fas fa-fw fa-list',
                                 ],
                                 [
                                     'text' => 'Criar',
@@ -405,8 +413,8 @@ return [
                             'submenu' => [
                                 [
                                     'text' => 'Listar',
-                                    'url'  => 'meanused',
-                                    'icon' => 'fas fa-fw fa-list'
+                                    'url' => 'meanused',
+                                    'icon' => 'fas fa-fw fa-list',
                                 ],
                                 [
                                     'text' => 'Criar',
@@ -422,8 +430,8 @@ return [
                             'submenu' => [
                                 [
                                     'text' => 'Listar',
-                                    'url'  => 'placeuse',
-                                    'icon' => 'fas fa-fw fa-list'
+                                    'url' => 'placeuse',
+                                    'icon' => 'fas fa-fw fa-list',
                                 ],
                                 [
                                     'text' => 'Criar',
@@ -444,7 +452,7 @@ return [
             'submenu' => [
                 [
                     'text' => 'Listar',
-                    'url'  => 'user',
+                    'url' => 'user',
                     'icon' => 'fas fa-fw fa-list',
                 ],
                 [
@@ -469,13 +477,13 @@ return [
     */
 
     'filters' => [
-        JeroenNoten\LaravelAdminLte\Menu\Filters\GateFilter::class,
-        JeroenNoten\LaravelAdminLte\Menu\Filters\HrefFilter::class,
-        JeroenNoten\LaravelAdminLte\Menu\Filters\SearchFilter::class,
-        JeroenNoten\LaravelAdminLte\Menu\Filters\ActiveFilter::class,
-        JeroenNoten\LaravelAdminLte\Menu\Filters\ClassesFilter::class,
-        JeroenNoten\LaravelAdminLte\Menu\Filters\LangFilter::class,
-        JeroenNoten\LaravelAdminLte\Menu\Filters\DataFilter::class,
+        GateFilter::class,
+        HrefFilter::class,
+        SearchFilter::class,
+        ActiveFilter::class,
+        ClassesFilter::class,
+        LangFilter::class,
+        DataFilter::class,
     ],
 
     /*

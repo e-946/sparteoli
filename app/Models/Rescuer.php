@@ -9,7 +9,7 @@ class Rescuer extends Model
 {
     protected $guarded = [];
 
-    public function setNameAttribute($value)
+    protected function setNameAttribute($value)
     {
         $this->attributes['name'] = ucfirst(mb_strtolower($value));
     }

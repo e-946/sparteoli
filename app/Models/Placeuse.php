@@ -14,7 +14,7 @@ class Placeuse extends Model
         return $this->hasMany(Occurrence::class);
     }
 
-    public function setNameAttribute($value)
+    protected function setNameAttribute($value)
     {
         $this->attributes['name'] = ucfirst(mb_strtolower($value));
     }

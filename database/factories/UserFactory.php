@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
 /**
- * @extends Factory
+ * @extends Factory<User>
  */
 class UserFactory extends Factory
 {
@@ -16,6 +16,7 @@ class UserFactory extends Factory
      *
      * @return array<string, mixed>
      */
+    #[\Override]
     public function definition(): array
     {
         return [
@@ -30,7 +31,8 @@ class UserFactory extends Factory
     /**
      * Indicate that the model's email address should be unverified.
      *
-     * @return static
+     *
+     * @SuppressWarnings("PHPMD.UnusedFormalParameter")
      */
     public function unverified(): static
     {

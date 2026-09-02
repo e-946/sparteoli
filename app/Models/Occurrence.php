@@ -46,6 +46,11 @@ class Occurrence extends Model
         return $this->belongsTo(User::class);
     }
 
+    /**
+     * @phpstan-return HasMany<Victim, $this>
+     *
+     * @psalm-return HasMany<Victim, Occurrence>
+     */
     public function victims(): HasMany
     {
         return $this->hasMany(Victim::class);
@@ -56,32 +61,37 @@ class Occurrence extends Model
         return $this->hasMany(Resource::class);
     }
 
-
-    public function setAddressAttribute($value)
+    protected function setAddressAttribute($value)
     {
         $this->attributes['address'] = ucwords(mb_strtolower($value));
     }
-    public function setNeighborhoodAttribute($value)
+
+    protected function setNeighborhoodAttribute($value)
     {
         $this->attributes['neighborhood'] = ucwords(mb_strtolower($value));
     }
-    public function setCityAttribute($value)
+
+    protected function setCityAttribute($value)
     {
         $this->attributes['city'] = ucwords(mb_strtolower($value));
     }
-    public function setStateAttribute($value)
+
+    protected function setStateAttribute($value)
     {
         $this->attributes['state'] = ucwords(mb_strtolower($value));
     }
-    public function setRequesterAttribute($value)
+
+    protected function setRequesterAttribute($value)
     {
         $this->attributes['requester'] = ucwords(mb_strtolower($value));
     }
-    public function setFillerNameAttribute($value)
+
+    protected function setFillerNameAttribute($value)
     {
         $this->attributes['filler_name'] = ucwords(mb_strtolower($value));
     }
-    public function setFillerPatentAttribute($value)
+
+    protected function setFillerPatentAttribute($value)
     {
         $this->attributes['filler_patent'] = ucfirst(mb_strtolower($value));
     }

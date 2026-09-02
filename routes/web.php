@@ -37,11 +37,11 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);
 
-Route::group(['middleware' => ['auth']], function (){
+Route::group(['middleware' => ['auth']], function () {
 
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
-    Route::group(['middleware' => ['can:admin']], function (){
+    Route::group(['middleware' => ['can:admin']], function () {
 
         Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
         Route::post('/register', [RegisterController::class, 'register']);
@@ -168,7 +168,6 @@ Route::group(['middleware' => ['auth']], function (){
         Route::get('/', [OccurrenceController::class, 'index'])->name('index-occurrence');
         Route::get('/{id}', [OccurrenceController::class, 'show'])->name('show-occurrence')->where('id', '[0-9]+');
         Route::get('/{id}/pdf', [OccurrenceController::class, 'toPdf'])->name('toPdf-occurrence')->where('id', '[0-9]+');
-
 
         Route::prefix('{occurrence_id}/victim')->where(['occurrence_id' => '[0-9]+'])->group(function () {
             Route::get('/', [VictimController::class, 'index'])->name('index-victim');

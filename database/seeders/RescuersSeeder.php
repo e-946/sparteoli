@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use DB;
+use Illuminate\Database\Seeder;
 
 class RescuersSeeder extends Seeder
 {
@@ -26,7 +26,7 @@ class RescuersSeeder extends Seeder
             ],
             [
                 'name' => 'Brigadista',
-            ]
+            ],
         ]);
     }
 }

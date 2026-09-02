@@ -27,7 +27,7 @@ class UsersSeeder extends Seeder
                 'register' => '9876543210',
                 'password' => Hash::make('9876543210'),
                 'admin' => false,
-            ]
+            ],
         ]);
     }
 }
