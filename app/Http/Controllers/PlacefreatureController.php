@@ -17,6 +17,13 @@ class PlacefreatureController extends Controller
         ];
     }
 
+    private function rules(): array
+    {
+        return [
+            'name' => ['required', 'string', 'max:255'],
+        ];
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -58,7 +65,7 @@ class PlacefreatureController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        Placefreature::create($request->all());
+        Placefreature::create($request->validate($this->rules()));
 
         return redirect()->route('index-placefreature')->with(
             'message',
@@ -91,7 +98,7 @@ class PlacefreatureController extends Controller
     public function update(Request $request, int $id): RedirectResponse
     {
         $freature = Placefreature::find($id);
-        $freature->update($request->all());
+        $freature->update($request->validate($this->rules()));
 
         return redirect()->route('index-placefreature', $freature->id)->with(
             'message',

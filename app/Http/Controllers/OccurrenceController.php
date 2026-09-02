@@ -8,6 +8,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Inertia\Response;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -33,6 +34,35 @@ class OccurrenceController extends Controller
             ->get();
     }
 
+    private function rules(): array
+    {
+        return [
+            'date' => ['required', 'date'],
+            'call_time' => ['required'],
+            'arrival_time' => ['required'],
+            'end_time' => ['required'],
+            'meanused_id' => ['required', 'exists:meanuseds,id'],
+            'zip_code' => ['required', 'string', 'max:20'],
+            'street' => ['required', 'string', 'max:255'],
+            'number' => ['required', 'string', 'max:20'],
+            'neighborhood' => ['required', 'string', 'max:255'],
+            'city' => ['required', 'string', 'max:255'],
+            'state' => ['required', 'string', 'max:255'],
+            'requester' => ['required', 'string', 'max:255'],
+            'requester_phone' => ['required', 'string', 'max:20'],
+            'resume' => ['required', 'string'],
+            'placefreature_id' => ['required', 'exists:placefreatures,id'],
+            'placeuse_id' => ['required', 'exists:placeuses,id'],
+            'place_preservation' => ['required', 'boolean'],
+            'filler_register' => ['required', 'string', 'max:10'],
+            'filler_name' => ['required', 'string', 'max:255'],
+            'filler_patent' => ['required', 'string', 'max:255'],
+            'type_id' => ['required', 'exists:types,id'],
+            'protectionsForSave' => ['nullable', 'array'],
+            'protectionsForSave.*' => ['integer', 'exists:fireprotections,id'],
+        ];
+    }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -49,13 +79,16 @@ class OccurrenceController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        $data = $request->except('protectionsForSave');
-        $data['address'] = $data['street'].', Nº '.$data['number'];
+        $validated = $request->validate($this->rules());
+
+        $data = collect($validated)->except(['street', 'number', 'protectionsForSave'])->all();
+        $data['address'] = $validated['street'].', Nº '.$validated['number'];
         $data['user_id'] = Auth::id();
-        unset($data['street'], $data['number']);
+
         $occurrence = Occurrence::create($data);
-        if (! empty($request->protectionsForSave)) {
-            $occurrence->fireprotections()->attach($request->protectionsForSave);
+
+        if (! empty($validated['protectionsForSave'])) {
+            $occurrence->fireprotections()->attach($validated['protectionsForSave']);
         }
 
         return redirect()->route('show-occurrence', $occurrence->id);
@@ -109,10 +142,12 @@ class OccurrenceController extends Controller
     public function update(Request $request, int $id): RedirectResponse
     {
         $occurrence = Occurrence::find($id);
-        $data = $request->except('protectionsForSave');
-        $data['address'] = $data['street'].', Nº '.$data['number'];
-        unset($data['street'], $data['number']);
-        $occurrence->fireprotections()->sync($request->protectionsForSave ?? []);
+        $validated = $request->validate($this->rules());
+
+        $data = collect($validated)->except(['street', 'number', 'protectionsForSave'])->all();
+        $data['address'] = $validated['street'].', Nº '.$validated['number'];
+
+        $occurrence->fireprotections()->sync($validated['protectionsForSave'] ?? []);
         $occurrence->update($data);
 
         return redirect()->route('show-occurrence', $occurrence->id)->with(
@@ -154,8 +189,10 @@ class OccurrenceController extends Controller
     {
         $occurrence = Occurrence::find($id);
 
-        Storage::put('occurrence.html', view('occurrence.pdf', compact('occurrence'))->render());
+        $filename = "occurrence-{$id}-".Str::uuid().'.html';
 
-        return response()->file(storage_path('app/occurrence.html'))->deleteFileAfterSend();
+        Storage::put($filename, view('occurrence.pdf', compact('occurrence'))->render());
+
+        return response()->file(storage_path("app/{$filename}"))->deleteFileAfterSend();
     }
 }

@@ -10,6 +10,16 @@ use Inertia\Response;
 
 class ResourceController extends Controller
 {
+    private function rules(): array
+    {
+        return [
+            'who' => ['required', 'string', 'max:255'],
+            'where' => ['required', 'string', 'max:255'],
+            'how' => ['required', 'string', 'max:255'],
+            'what' => ['required', 'string', 'max:255'],
+        ];
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -42,11 +52,10 @@ class ResourceController extends Controller
      */
     public function store(Request $request, int $occurrence_id): RedirectResponse
     {
+        $validated = $request->validate($this->rules());
+
         Resource::create([
-            'who' => $request->who,
-            'where' => $request->where,
-            'how' => $request->how,
-            'what' => $request->what,
+            ...$validated,
             'occurrence_id' => $occurrence_id,
         ]);
 
@@ -88,12 +97,11 @@ class ResourceController extends Controller
      */
     public function update(Request $request, int $occurrence_id, int $id): RedirectResponse
     {
+        $validated = $request->validate($this->rules());
+
         $resource = Resource::find($id);
         $resource->update([
-            'who' => $request->who,
-            'where' => $request->where,
-            'how' => $request->how,
-            'what' => $request->what,
+            ...$validated,
             'occurrence_id' => $occurrence_id,
         ]);
 

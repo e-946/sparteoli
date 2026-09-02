@@ -25,6 +25,15 @@ class TypeController extends Controller
         ];
     }
 
+    private function rules(): array
+    {
+        return [
+            'name' => ['required', 'string', 'max:255'],
+            'nature_id' => ['required', 'exists:natures,id'],
+            'desc' => ['nullable', 'string'],
+        ];
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -73,7 +82,7 @@ class TypeController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        Type::create($request->all());
+        Type::create($request->validate($this->rules()));
 
         return redirect()->route('index-type');
     }
@@ -130,7 +139,7 @@ class TypeController extends Controller
     public function update(Request $request, int $id): RedirectResponse
     {
         $type = Type::find($id);
-        $type->update($request->all());
+        $type->update($request->validate($this->rules()));
 
         return redirect()->route('index-type')->with(
             'message',

@@ -17,6 +17,13 @@ class ProblemController extends Controller
         ];
     }
 
+    private function rules(): array
+    {
+        return [
+            'name' => ['required', 'string', 'max:255'],
+        ];
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -59,7 +66,7 @@ class ProblemController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        Problem::create($request->all());
+        Problem::create($request->validate($this->rules()));
 
         return redirect()->route('index-problem');
     }
@@ -108,7 +115,7 @@ class ProblemController extends Controller
     public function update(Request $request, int $id): RedirectResponse
     {
         $problem = Problem::find($id);
-        $problem->update($request->all());
+        $problem->update($request->validate($this->rules()));
 
         return redirect()->route('index-problem')->with(
             'message',

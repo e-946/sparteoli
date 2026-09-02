@@ -17,6 +17,13 @@ class MeanusedController extends Controller
         ];
     }
 
+    private function rules(): array
+    {
+        return [
+            'name' => ['required', 'string', 'max:255'],
+        ];
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -58,7 +65,7 @@ class MeanusedController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        Meanused::create($request->all());
+        Meanused::create($request->validate($this->rules()));
 
         return redirect()->route('index-meanused')->with(
             'message',
@@ -91,7 +98,7 @@ class MeanusedController extends Controller
     public function update(Request $request, int $id): RedirectResponse
     {
         $mean = Meanused::find($id);
-        $mean->update($request->all());
+        $mean->update($request->validate($this->rules()));
 
         return redirect()->route('index-meanused', $mean->id)->with(
             'message',

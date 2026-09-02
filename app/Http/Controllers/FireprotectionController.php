@@ -18,6 +18,14 @@ class FireprotectionController extends Controller
         ];
     }
 
+    private function rules(): array
+    {
+        return [
+            'name' => ['required', 'string', 'max:255'],
+            'desc' => ['nullable', 'string'],
+        ];
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -60,7 +68,7 @@ class FireprotectionController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        Fireprotection::create($request->all());
+        Fireprotection::create($request->validate($this->rules()));
 
         return redirect()->route('index-fireprotection');
     }
@@ -109,7 +117,7 @@ class FireprotectionController extends Controller
     public function update(Request $request, int $id): RedirectResponse
     {
         $protection = Fireprotection::find($id);
-        $protection->update($request->all());
+        $protection->update($request->validate($this->rules()));
 
         return redirect()->route('index-fireprotection')->with(
             'message',

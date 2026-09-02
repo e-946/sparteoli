@@ -17,6 +17,13 @@ class PlaceuseController extends Controller
         ];
     }
 
+    private function rules(): array
+    {
+        return [
+            'name' => ['required', 'string', 'max:255'],
+        ];
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -58,7 +65,7 @@ class PlaceuseController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        Placeuse::create($request->all());
+        Placeuse::create($request->validate($this->rules()));
 
         return redirect()->route('index-placeuse')->with(
             'message',
@@ -91,7 +98,7 @@ class PlaceuseController extends Controller
     public function update(Request $request, int $id): RedirectResponse
     {
         $use = Placeuse::find($id);
-        $use->update($request->all());
+        $use->update($request->validate($this->rules()));
 
         return redirect()->route('index-placeuse', $use->id)->with(
             'message',

@@ -14,6 +14,20 @@ use Inertia\Response;
 
 class VictimController extends Controller
 {
+    private function rules(): array
+    {
+        return [
+            'name' => ['required', 'string', 'max:255'],
+            'age' => ['required', 'integer', 'min:0', 'max:150'],
+            'sex' => ['required', 'in:M,F'],
+            'rescuer_id' => ['required', 'exists:rescuers,id'],
+            'fatal' => ['required', 'boolean'],
+            'conscious' => ['nullable', 'boolean'],
+            'problemForSave' => ['nullable', 'array'],
+            'problemForSave.*' => ['integer', 'exists:problems,id'],
+        ];
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -45,16 +59,17 @@ class VictimController extends Controller
      */
     public function store(Request $request, int $occurrence_id): RedirectResponse
     {
+        $validated = $request->validate($this->rules());
 
-        if (! empty($request->problemForSave)) {
+        if (! empty($validated['problemForSave'])) {
             new VictimCreator(
-                $request->name,
-                $request->age,
-                $request->sex,
-                $request->fatal,
-                $request->conscious,
-                $request->rescuer_id,
-                $request->problemForSave,
+                $validated['name'],
+                $validated['age'],
+                $validated['sex'],
+                $validated['fatal'],
+                $validated['conscious'] ?? null,
+                $validated['rescuer_id'],
+                $validated['problemForSave'],
                 $occurrence_id
             );
         }
@@ -96,17 +111,19 @@ class VictimController extends Controller
      */
     public function update(Request $request, int $occurrence_id, int $id): RedirectResponse
     {
+        $validated = $request->validate($this->rules());
+
         $victim = Victim::find($id);
         $victim->update([
-            'name' => $request->name,
-            'age' => $request->age,
-            'sex' => $request->sex,
-            'rescuer_id' => $request->rescuer_id,
-            'fatal' => $request->fatal,
-            'conscious' => $request->conscious,
+            'name' => $validated['name'],
+            'age' => $validated['age'],
+            'sex' => $validated['sex'],
+            'rescuer_id' => $validated['rescuer_id'],
+            'fatal' => $validated['fatal'],
+            'conscious' => $validated['conscious'] ?? null,
         ]);
 
-        $victim->problems()->sync($request->problemForSave);
+        $victim->problems()->sync($validated['problemForSave'] ?? []);
 
         return redirect()
             ->route('show-victim', ['occurrence_id' => $occurrence_id, 'id' => $victim->id])

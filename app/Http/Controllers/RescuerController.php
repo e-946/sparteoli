@@ -17,6 +17,13 @@ class RescuerController extends Controller
         ];
     }
 
+    private function rules(): array
+    {
+        return [
+            'name' => ['required', 'string', 'max:255'],
+        ];
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -58,7 +65,7 @@ class RescuerController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        Rescuer::create($request->all());
+        Rescuer::create($request->validate($this->rules()));
 
         return redirect()->route('index-rescuer')->with(
             'message',
@@ -91,7 +98,7 @@ class RescuerController extends Controller
     public function update(Request $request, int $id): RedirectResponse
     {
         $rescuer = Rescuer::find($id);
-        $rescuer->update($request->all());
+        $rescuer->update($request->validate($this->rules()));
 
         return redirect()->route('index-rescuer', $rescuer->id)->with(
             'message',

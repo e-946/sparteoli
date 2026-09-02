@@ -17,6 +17,13 @@ class NatureController extends Controller
         ];
     }
 
+    private function rules(): array
+    {
+        return [
+            'name' => ['required', 'string', 'max:255'],
+        ];
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -59,7 +66,7 @@ class NatureController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        (new Nature)->create($request->all());
+        Nature::create($request->validate($this->rules()));
 
         return redirect()->route('index-nature');
     }
@@ -120,7 +127,7 @@ class NatureController extends Controller
     public function update(Request $request, int $id): RedirectResponse
     {
         $nature = Nature::find($id);
-        $nature->update($request->all());
+        $nature->update($request->validate($this->rules()));
 
         return redirect()->route('index-nature')->with(
             'message',
