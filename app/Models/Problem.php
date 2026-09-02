@@ -2,11 +2,14 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Problem extends Model
 {
+    use HasFactory;
+
     protected $guarded = [];
 
     protected function setNameAttribute($value)

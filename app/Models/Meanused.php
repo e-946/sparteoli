@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @method static create(array $all)
@@ -10,9 +12,11 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Meanused extends Model
 {
+    use HasFactory;
+
     protected $guarded = [];
 
-    public function occurrences()
+    public function occurrences(): HasMany
     {
         return $this->hasMany(Occurrence::class);
     }
