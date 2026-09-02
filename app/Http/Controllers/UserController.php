@@ -5,10 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class UserController extends Controller
 {
@@ -17,9 +18,9 @@ class UserController extends Controller
      */
     public function index(): Response
     {
-        $users = User::query()->orderBy('name')->get();
+        $users = User::query()->orderBy('name')->get(['id', 'name', 'admin']);
 
-        return response(view('user.index', compact('users')), 200);
+        return Inertia::render('Users/Index', compact('users'));
     }
 
     /**
@@ -27,9 +28,12 @@ class UserController extends Controller
      */
     public function show(int $id): Response
     {
-        $user = User::find($id);
+        $user = User::withCount('occurrences')->findOrFail($id);
 
-        return response(view('user.one', compact('user')));
+        return Inertia::render('Users/Show', [
+            'user' => $user,
+            'occurrencesCount' => $user->occurrences_count,
+        ]);
     }
 
     /**
@@ -37,9 +41,9 @@ class UserController extends Controller
      */
     public function edit(int $id): Response
     {
-        $user = User::find($id);
+        $user = User::findOrFail($id);
 
-        return response(view('user.update', compact('user')));
+        return Inertia::render('Users/Edit', compact('user'));
     }
 
     /**
@@ -74,19 +78,25 @@ class UserController extends Controller
         );
     }
 
-    public function profile()
+    public function profile(): Response
     {
-        return response(view('user.one')->with('user', Auth::user()));
+        $user = Auth::user()->loadCount('occurrences');
+
+        return Inertia::render('Users/Show', [
+            'user' => $user,
+            'occurrencesCount' => $user->occurrences_count,
+            'backRoute' => 'home',
+        ]);
     }
 
-    public function changePassword()
+    public function changePassword(): Response
     {
-        return response(view('user.password')->with('user', Auth::user()));
+        return Inertia::render('Users/Password', ['user' => Auth::user()]);
     }
 
-    public function changePasswordId($id)
+    public function changePasswordId(int $id): Response
     {
-        return response(view('user.password')->with('user', User::find($id)));
+        return Inertia::render('Users/Password', ['user' => User::findOrFail($id)]);
     }
 
     protected function validator(array $data): \Illuminate\Contracts\Validation\Validator
@@ -96,7 +106,7 @@ class UserController extends Controller
         ]);
     }
 
-    public function storePassword(Request $request, $id)
+    public function storePassword(Request $request, $id): RedirectResponse
     {
         $this->validator($request->all())->validate();
 
@@ -111,18 +121,13 @@ class UserController extends Controller
             );
         }
 
-        if (isset(Auth::user()->admin)) {
-            if (Auth::user()->admin) {
-                $user = User::find($id);
-                $user->update([
-                    'password' => Hash::make($request->password),
-                ]);
-                if ($request->url() === route('home')) {
-                    return response(view('home')->with('message', 'Senha alterada com sucesso'));
-                }
+        if (Auth::user()->admin) {
+            $user = User::find($id);
+            $user->update([
+                'password' => Hash::make($request->password),
+            ]);
 
-                return redirect()->route('show-user', $user->id)->with('message', 'Senha alterada com sucesso');
-            }
+            return redirect()->route('show-user', $user->id)->with('message', 'Senha alterada com sucesso');
         }
 
         return redirect(route('home'));

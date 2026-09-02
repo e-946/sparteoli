@@ -5,30 +5,53 @@ namespace App\Http\Controllers;
 use App\Models\Nature;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class NatureController extends Controller
 {
+    private function fields(): array
+    {
+        return [
+            ['key' => 'name', 'label' => 'Nome', 'type' => 'text', 'required' => true],
+        ];
+    }
+
     /**
      * Display a listing of the resource.
-     *
-     * @return Response
      */
-    public function index()
+    public function index(): Response
     {
         $natures = Nature::query()->orderBy('name')->get();
 
-        return response(view('nature.index', compact('natures')), 200);
+        return Inertia::render('Lookups/Index', [
+            'title' => 'Naturezas de ocorrência',
+            'items' => $natures,
+            'fields' => $this->fields(),
+            'routes' => [
+                'index' => 'index-nature',
+                'create' => 'create-nature',
+                'store' => 'store-nature',
+                'show' => 'show-nature',
+                'edit' => 'edit-nature',
+                'update' => 'update-nature',
+                'destroy' => 'destroy-nature',
+            ],
+        ]);
     }
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return Response
      */
-    public function create()
+    public function create(): Response
     {
-        return response(view('nature.create'), 200);
+        return Inertia::render('Lookups/Form', [
+            'title' => 'Criar natureza de operação',
+            'mode' => 'create',
+            'backRoute' => 'index-nature',
+            'submitRoute' => 'store-nature',
+            'fields' => $this->fields(),
+        ]);
     }
 
     /**
@@ -43,26 +66,52 @@ class NatureController extends Controller
 
     /**
      * Display the specified resource.
-     *
-     * @return Response
      */
-    public function show(int $id)
+    public function show(int $id): Response
     {
-        $nature = Nature::find($id);
+        $nature = Nature::withCount(['types', 'occurrences'])->findOrFail($id);
 
-        return response(view('nature.one', compact('nature')));
+        return Inertia::render('Lookups/Show', [
+            'title' => "Natureza de operação {$nature->name}",
+            'backRoute' => 'index-nature',
+            'routes' => ['edit' => 'edit-nature', 'destroy' => 'destroy-nature'],
+            'item' => $nature,
+            'desc' => $nature->desc,
+            'stats' => [
+                ['label' => 'Tipos de ocorrência com essa natureza', 'value' => $nature->types_count],
+                ['label' => 'Ocorrências com essa natureza', 'value' => $nature->occurrences_count],
+            ],
+            'related' => [
+                'label' => 'Tipos de ocorrência',
+                'items' => $nature->types()->get(['id', 'name'])->map(fn ($type) => [
+                    'id' => $type->id,
+                    'name' => $type->name,
+                    'route' => 'show-type',
+                ]),
+            ],
+            'createdAt' => $nature->created_at,
+            'updatedAt' => $nature->updated_at,
+        ]);
     }
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @return Response
      */
-    public function edit(int $id)
+    public function edit(int $id): Response
     {
-        $nature = Nature::find($id);
+        $nature = Nature::findOrFail($id);
 
-        return response(view('nature.update', compact('nature')));
+        return Inertia::render('Lookups/Form', [
+            'title' => 'Alterar natureza de operação',
+            'mode' => 'edit',
+            'backRoute' => 'show-nature',
+            'backRouteParams' => $nature->id,
+            'submitRoute' => 'update-nature',
+            'submitRouteParams' => $nature->id,
+            'item' => $nature,
+            'confirmLabel' => $nature->name,
+            'fields' => $this->fields(),
+        ]);
     }
 
     /**
@@ -73,7 +122,7 @@ class NatureController extends Controller
         $nature = Nature::find($id);
         $nature->update($request->all());
 
-        return redirect()->route('show-nature', $nature->id)->with(
+        return redirect()->route('index-nature')->with(
             'message',
             'Natureza alterada com sucesso'
         );
@@ -82,7 +131,7 @@ class NatureController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(int $id): Response|RedirectResponse
+    public function destroy(int $id): RedirectResponse
     {
         $nature = Nature::find($id);
 

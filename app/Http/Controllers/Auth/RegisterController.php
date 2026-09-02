@@ -8,7 +8,8 @@ use Hash;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\View\View;
+use Inertia\Inertia;
+use Inertia\Response;
 use Validator;
 
 class RegisterController extends Controller
@@ -25,12 +26,10 @@ class RegisterController extends Controller
 
     /**
      * Show the application registration form.
-     *
-     * @return View
      */
-    public function showRegistrationForm()
+    public function showRegistrationForm(): Response
     {
-        return view('auth.register');
+        return Inertia::render('Auth/Register');
     }
 
     /**

@@ -1,0 +1,18 @@
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+@import 'tailwindcss';
+
+@theme {
+    --font-sans: 'Nunito', ui-sans-serif, system-ui, sans-serif;
+
+    --color-brand-blue: #03318c;
+    --color-brand-yellow: #f2cb05;
+    --color-brand-orange: #d96704;
+    --color-brand-red: #d91414;
+    --color-brand-black: #0d0d0d;
+}
+
+@layer base {
+    body {
+        @apply bg-gray-50 text-gray-900;
+    }
+}

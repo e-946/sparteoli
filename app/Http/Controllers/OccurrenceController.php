@@ -3,16 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\VictimDestroyer;
-use App\Models\Fireprotection;
-use App\Models\Meanused;
-use App\Models\Nature;
 use App\Models\Occurrence;
-use App\Models\Placefreature;
-use App\Models\Placeuse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Inertia\Inertia;
+use Inertia\Response;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class OccurrenceController extends Controller
@@ -24,7 +21,16 @@ class OccurrenceController extends Controller
     {
         $occurrences = Occurrence::query()->orderBy('created_at', 'desc')->paginate(10);
 
-        return response(view('occurrence.index', compact('occurrences')), 200);
+        return Inertia::render('Occurrences/Index', [
+            'occurrences' => $occurrences,
+        ]);
+    }
+
+    private function fillers()
+    {
+        return Occurrence::select(['filler_register', 'filler_name', 'filler_patent'])
+            ->distinct()
+            ->get();
     }
 
     /**
@@ -32,21 +38,10 @@ class OccurrenceController extends Controller
      */
     public function create(): Response
     {
-        $means = Meanused::all();
-        $uses = Placeuse::all();
-        $freatures = Placefreature::all();
-        $natures = Nature::all();
-        $protections = Fireprotection::all();
-
-        $fillers = Occurrence::select(['filler_register', 'filler_name', 'filler_patent', 'created_at'])->distinct()->orderBy('created_at', 'desc')->get();
-
-        return response(
-            view(
-                'occurrence.create',
-                compact('means', 'uses', 'freatures', 'natures', 'protections', 'fillers')
-            ),
-            200
-        );
+        return Inertia::render('Occurrences/Form', [
+            'mode' => 'create',
+            'fillers' => $this->fillers(),
+        ]);
     }
 
     /**
@@ -56,9 +51,10 @@ class OccurrenceController extends Controller
     {
         $data = $request->except('protectionsForSave');
         $data['address'] = $data['street'].', Nº '.$data['number'];
+        $data['user_id'] = Auth::id();
         unset($data['street'], $data['number']);
         $occurrence = Occurrence::create($data);
-        if (isset($request->protectionsForSave)) {
+        if (! empty($request->protectionsForSave)) {
             $occurrence->fireprotections()->attach($request->protectionsForSave);
         }
 
@@ -70,9 +66,14 @@ class OccurrenceController extends Controller
      */
     public function show(int $id): Response
     {
-        $occurrence = Occurrence::find($id);
+        $occurrence = Occurrence::with([
+            'meanused', 'placefreature', 'placeuse', 'type.nature', 'fireprotections',
+            'victims', 'resources',
+        ])->findOrFail($id);
 
-        return response(view('occurrence.one', compact('occurrence')));
+        return Inertia::render('Occurrences/Show', [
+            'occurrence' => $occurrence,
+        ]);
     }
 
     /**
@@ -80,19 +81,26 @@ class OccurrenceController extends Controller
      */
     public function edit(int $id): Response
     {
-        $means = Meanused::all();
-        $uses = Placeuse::all();
-        $freatures = Placefreature::all();
-        $natures = Nature::all();
-        $protections = Fireprotection::all();
-        $occurrence = Occurrence::find($id);
+        $occurrence = Occurrence::with([
+            'meanused:id,name',
+            'placefreature:id,name',
+            'placeuse:id,name',
+            'type:id,name,nature_id',
+            'type.nature:id,name',
+            'fireprotections:id,name',
+        ])->findOrFail($id);
 
-        $fillers = Occurrence::select(['filler_register', 'filler_name', 'filler_patent', 'created_at'])->distinct()->orderBy('created_at', 'desc')->get();
+        [$street, $number] = array_pad(explode(', Nº ', $occurrence->address, 2), 2, '');
 
-        return response(view(
-            'occurrence.update',
-            compact('occurrence', 'means', 'uses', 'freatures', 'natures', 'protections', 'fillers')
-        ));
+        return Inertia::render('Occurrences/Form', [
+            'mode' => 'edit',
+            'occurrence' => [
+                ...$occurrence->toArray(),
+                'street' => $street,
+                'number' => $number,
+            ],
+            'fillers' => $this->fillers(),
+        ]);
     }
 
     /**
@@ -104,9 +112,7 @@ class OccurrenceController extends Controller
         $data = $request->except('protectionsForSave');
         $data['address'] = $data['street'].', Nº '.$data['number'];
         unset($data['street'], $data['number']);
-        if (isset($request->protectionsForSave)) {
-            $occurrence->fireprotections()->sync($request->protectionsForSave);
-        }
+        $occurrence->fireprotections()->sync($request->protectionsForSave ?? []);
         $occurrence->update($data);
 
         return redirect()->route('show-occurrence', $occurrence->id)->with(

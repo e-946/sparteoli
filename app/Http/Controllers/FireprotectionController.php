@@ -5,10 +5,19 @@ namespace App\Http\Controllers;
 use App\Models\Fireprotection;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class FireprotectionController extends Controller
 {
+    private function fields(): array
+    {
+        return [
+            ['key' => 'name', 'label' => 'Nome', 'type' => 'text', 'required' => true],
+            ['key' => 'desc', 'label' => 'Descrição', 'type' => 'textarea'],
+        ];
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -16,7 +25,20 @@ class FireprotectionController extends Controller
     {
         $protections = Fireprotection::query()->orderBy('name')->get();
 
-        return response(view('fireprotection.index', compact('protections')), 200);
+        return Inertia::render('Lookups/Index', [
+            'title' => 'Sistemas de proteção',
+            'items' => $protections,
+            'fields' => $this->fields(),
+            'routes' => [
+                'index' => 'index-fireprotection',
+                'create' => 'create-fireprotection',
+                'store' => 'store-fireprotection',
+                'show' => 'show-fireprotection',
+                'edit' => 'edit-fireprotection',
+                'update' => 'update-fireprotection',
+                'destroy' => 'destroy-fireprotection',
+            ],
+        ]);
     }
 
     /**
@@ -24,7 +46,13 @@ class FireprotectionController extends Controller
      */
     public function create(): Response
     {
-        return response(view('fireprotection.create'), 200);
+        return Inertia::render('Lookups/Form', [
+            'title' => 'Adicionar proteção contra incêndio',
+            'mode' => 'create',
+            'backRoute' => 'index-fireprotection',
+            'submitRoute' => 'store-fireprotection',
+            'fields' => $this->fields(),
+        ]);
     }
 
     /**
@@ -42,9 +70,17 @@ class FireprotectionController extends Controller
      */
     public function show(int $id): Response
     {
-        $protection = Fireprotection::find($id);
+        $protection = Fireprotection::findOrFail($id);
 
-        return response(view('fireprotection.one', compact('protection')));
+        return Inertia::render('Lookups/Show', [
+            'title' => "Sistema de proteção: {$protection->name}",
+            'backRoute' => 'index-fireprotection',
+            'routes' => ['edit' => 'edit-fireprotection', 'destroy' => 'destroy-fireprotection'],
+            'item' => $protection,
+            'desc' => $protection->desc,
+            'createdAt' => $protection->created_at,
+            'updatedAt' => $protection->updated_at,
+        ]);
     }
 
     /**
@@ -52,9 +88,19 @@ class FireprotectionController extends Controller
      */
     public function edit(int $id): Response
     {
-        $protection = Fireprotection::find($id);
+        $protection = Fireprotection::findOrFail($id);
 
-        return response(view('fireprotection.update', compact('protection')));
+        return Inertia::render('Lookups/Form', [
+            'title' => "Alterar sistema de proteção: {$protection->name}",
+            'mode' => 'edit',
+            'backRoute' => 'show-fireprotection',
+            'backRouteParams' => $protection->id,
+            'submitRoute' => 'update-fireprotection',
+            'submitRouteParams' => $protection->id,
+            'item' => $protection,
+            'confirmLabel' => $protection->name,
+            'fields' => $this->fields(),
+        ]);
     }
 
     /**
@@ -65,7 +111,7 @@ class FireprotectionController extends Controller
         $protection = Fireprotection::find($id);
         $protection->update($request->all());
 
-        return redirect()->route('show-fireprotection', $protection->id)->with(
+        return redirect()->route('index-fireprotection')->with(
             'message',
             'Proteção alterada com sucesso'
         );
@@ -74,7 +120,7 @@ class FireprotectionController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(int $id): Response|RedirectResponse
+    public function destroy(int $id): RedirectResponse
     {
         $protection = Fireprotection::find($id);
 

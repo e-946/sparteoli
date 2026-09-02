@@ -5,10 +5,18 @@ namespace App\Http\Controllers;
 use App\Models\Placeuse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class PlaceuseController extends Controller
 {
+    private function fields(): array
+    {
+        return [
+            ['key' => 'name', 'label' => 'Nome', 'type' => 'text', 'required' => true],
+        ];
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -16,7 +24,19 @@ class PlaceuseController extends Controller
     {
         $uses = Placeuse::query()->orderBy('name')->get();
 
-        return response(view('placeuse.index', compact('uses')), 200);
+        return Inertia::render('Lookups/Index', [
+            'title' => 'Utilização do local',
+            'items' => $uses,
+            'fields' => $this->fields(),
+            'routes' => [
+                'index' => 'index-placeuse',
+                'create' => 'create-placeuse',
+                'store' => 'store-placeuse',
+                'edit' => 'edit-placeuse',
+                'update' => 'update-placeuse',
+                'destroy' => 'destroy-placeuse',
+            ],
+        ]);
     }
 
     /**
@@ -24,7 +44,13 @@ class PlaceuseController extends Controller
      */
     public function create(): Response
     {
-        return response(view('placeuse.create'), 200);
+        return Inertia::render('Lookups/Form', [
+            'title' => 'Adicionar uso ao local',
+            'mode' => 'create',
+            'backRoute' => 'index-placeuse',
+            'submitRoute' => 'store-placeuse',
+            'fields' => $this->fields(),
+        ]);
     }
 
     /**
@@ -41,25 +67,22 @@ class PlaceuseController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @return Response
-     *
-     * public function show($id)
-     * {
-     * $use = Placeuse::find($id);
-     * return response(view('placeuse.one', compact('use')));
-     * }
-     */
-
-    /**
      * Show the form for editing the specified resource.
      */
     public function edit(int $id): Response
     {
-        $use = Placeuse::find($id);
+        $use = Placeuse::findOrFail($id);
 
-        return response(view('placeuse.update', compact('use')));
+        return Inertia::render('Lookups/Form', [
+            'title' => 'Alterar uso do local',
+            'mode' => 'edit',
+            'backRoute' => 'index-placeuse',
+            'submitRoute' => 'update-placeuse',
+            'submitRouteParams' => $use->id,
+            'item' => $use,
+            'confirmLabel' => $use->name,
+            'fields' => $this->fields(),
+        ]);
     }
 
     /**
@@ -79,7 +102,7 @@ class PlaceuseController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(int $id): Response|RedirectResponse
+    public function destroy(int $id): RedirectResponse
     {
         $use = Placeuse::find($id);
 

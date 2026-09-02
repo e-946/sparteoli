@@ -6,10 +6,20 @@
         "build": "vite build"
     },
     "devDependencies": {
+        "@inertiajs/vue3": "^3.7.0",
+        "@tailwindcss/vite": "^4.3.3",
+        "@vitejs/plugin-vue": "^6.0.8",
         "axios": "^1.7",
+        "chart.js": "^4.5.1",
         "laravel-vite-plugin": "^1.0",
-        "lodash": "^4.17.19",
-        "sass": "^1.32.11",
-        "vite": "^5.0"
+        "tailwindcss": "^4.3.3",
+        "vite": "^5.0",
+        "vue": "^3.5.42",
+        "vue-chartjs": "^5.3.4",
+        "ziggy-js": "^2.6.4"
+    },
+    "dependencies": {
+        "@headlessui/vue": "^1.7.23",
+        "lucide-vue-next": "^1.0.0"
     }
 }

@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Resource;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class ResourceController extends Controller
 {
@@ -19,7 +20,10 @@ class ResourceController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
 
-        return response(view('resource.index', compact('resources', 'occurrence_id')), 200);
+        return Inertia::render('Resources/Index', [
+            'resources' => $resources,
+            'occurrence_id' => $occurrence_id,
+        ]);
     }
 
     /**
@@ -27,7 +31,10 @@ class ResourceController extends Controller
      */
     public function create(int $occurrence_id): Response
     {
-        return response(view('resource.create', compact('occurrence_id')), 200);
+        return Inertia::render('Resources/Form', [
+            'mode' => 'create',
+            'occurrence_id' => $occurrence_id,
+        ]);
     }
 
     /**
@@ -54,9 +61,12 @@ class ResourceController extends Controller
      */
     public function show(int $occurrence_id, int $id): Response
     {
-        $resource = Resource::find($id);
+        $resource = Resource::findOrFail($id);
 
-        return response(view('resource.one', compact('resource', 'occurrence_id')));
+        return Inertia::render('Resources/Show', [
+            'resource' => $resource,
+            'occurrence_id' => $occurrence_id,
+        ]);
     }
 
     /**
@@ -64,9 +74,13 @@ class ResourceController extends Controller
      */
     public function edit(int $occurrence_id, int $id): Response
     {
-        $resource = Resource::find($id);
+        $resource = Resource::findOrFail($id);
 
-        return response(view('resource.update', compact('resource', 'occurrence_id')));
+        return Inertia::render('Resources/Form', [
+            'mode' => 'edit',
+            'occurrence_id' => $occurrence_id,
+            'resource' => $resource,
+        ]);
     }
 
     /**

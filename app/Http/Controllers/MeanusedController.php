@@ -5,10 +5,18 @@ namespace App\Http\Controllers;
 use App\Models\Meanused;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class MeanusedController extends Controller
 {
+    private function fields(): array
+    {
+        return [
+            ['key' => 'name', 'label' => 'Nome', 'type' => 'text', 'required' => true],
+        ];
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -16,7 +24,19 @@ class MeanusedController extends Controller
     {
         $means = Meanused::query()->orderBy('name')->get();
 
-        return response(view('meanused.index', compact('means')), 200);
+        return Inertia::render('Lookups/Index', [
+            'title' => 'Meios de chamado',
+            'items' => $means,
+            'fields' => $this->fields(),
+            'routes' => [
+                'index' => 'index-meanused',
+                'create' => 'create-meanused',
+                'store' => 'store-meanused',
+                'edit' => 'edit-meanused',
+                'update' => 'update-meanused',
+                'destroy' => 'destroy-meanused',
+            ],
+        ]);
     }
 
     /**
@@ -24,7 +44,13 @@ class MeanusedController extends Controller
      */
     public function create(): Response
     {
-        return response(view('meanused.create'), 200);
+        return Inertia::render('Lookups/Form', [
+            'title' => 'Adicionar meio de chamado',
+            'mode' => 'create',
+            'backRoute' => 'index-meanused',
+            'submitRoute' => 'store-meanused',
+            'fields' => $this->fields(),
+        ]);
     }
 
     /**
@@ -41,25 +67,22 @@ class MeanusedController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @return Response
-     *
-     * public function show(int $id)
-     * {
-     * $mean = Meanused::find($id);
-     * return response(view('meanused.one', compact('mean')));
-     * }
-     */
-
-    /**
      * Show the form for editing the specified resource.
      */
     public function edit(int $id): Response
     {
-        $mean = Meanused::find($id);
+        $mean = Meanused::findOrFail($id);
 
-        return response(view('meanused.update', compact('mean')));
+        return Inertia::render('Lookups/Form', [
+            'title' => 'Alterar meio de chamado',
+            'mode' => 'edit',
+            'backRoute' => 'index-meanused',
+            'submitRoute' => 'update-meanused',
+            'submitRouteParams' => $mean->id,
+            'item' => $mean,
+            'confirmLabel' => $mean->name,
+            'fields' => $this->fields(),
+        ]);
     }
 
     /**
@@ -79,7 +102,7 @@ class MeanusedController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(int $id): Response|RedirectResponse
+    public function destroy(int $id): RedirectResponse
     {
         $mean = Meanused::find($id);
 

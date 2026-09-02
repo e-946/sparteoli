@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\FireprotectionController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LookupSearchController;
 use App\Http\Controllers\MeanusedController;
 use App\Http\Controllers\NatureController;
 use App\Http\Controllers\OccurrenceController;
@@ -28,9 +29,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::redirect('/', '/home');
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
@@ -41,7 +40,11 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
+    Route::get('lookup-search/{resource}', [LookupSearchController::class, 'search'])->name('lookup-search');
+
     Route::group(['middleware' => ['can:admin']], function () {
+
+        Route::post('lookup-search/{resource}', [LookupSearchController::class, 'store'])->name('lookup-quick-create');
 
         Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
         Route::post('/register', [RegisterController::class, 'register']);

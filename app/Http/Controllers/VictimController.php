@@ -9,7 +9,8 @@ use App\Models\Rescuer;
 use App\Models\Victim;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class VictimController extends Controller
 {
@@ -20,7 +21,10 @@ class VictimController extends Controller
     {
         $victims = Victim::query()->where('occurrence_id', '=', $occurrence_id)->orderBy('name')->get();
 
-        return response(view('victim.index', compact('victims', 'occurrence_id')), 200);
+        return Inertia::render('Victims/Index', [
+            'victims' => $victims,
+            'occurrence_id' => $occurrence_id,
+        ]);
     }
 
     /**
@@ -28,10 +32,12 @@ class VictimController extends Controller
      */
     public function create(int $occurrence_id): Response
     {
-        $rescuers = Rescuer::all();
-        $problems = Problem::all();
-
-        return response(view('victim.create', compact('rescuers', 'problems', 'occurrence_id')), 200);
+        return Inertia::render('Victims/Form', [
+            'mode' => 'create',
+            'occurrence_id' => $occurrence_id,
+            'rescuers' => Rescuer::all(['id', 'name']),
+            'problems' => Problem::all(['id', 'name']),
+        ]);
     }
 
     /**
@@ -61,9 +67,12 @@ class VictimController extends Controller
      */
     public function show(int $occurrence_id, int $id): Response
     {
-        $victim = Victim::find($id);
+        $victim = Victim::with('rescuer:id,name', 'problems:id,name')->findOrFail($id);
 
-        return response(view('victim.one', compact('victim', 'occurrence_id')));
+        return Inertia::render('Victims/Show', [
+            'victim' => $victim,
+            'occurrence_id' => $occurrence_id,
+        ]);
     }
 
     /**
@@ -71,11 +80,15 @@ class VictimController extends Controller
      */
     public function edit(int $occurrence_id, int $id): Response
     {
-        $victim = Victim::find($id);
-        $rescuers = Rescuer::all();
-        $problems = Problem::all();
+        $victim = Victim::with('problems:id')->findOrFail($id);
 
-        return response(view('victim.update', compact('victim', 'rescuers', 'problems', 'occurrence_id')));
+        return Inertia::render('Victims/Form', [
+            'mode' => 'edit',
+            'occurrence_id' => $occurrence_id,
+            'victim' => $victim,
+            'rescuers' => Rescuer::all(['id', 'name']),
+            'problems' => Problem::all(['id', 'name']),
+        ]);
     }
 
     /**

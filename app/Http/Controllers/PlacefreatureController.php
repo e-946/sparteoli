@@ -5,10 +5,18 @@ namespace App\Http\Controllers;
 use App\Models\Placefreature;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class PlacefreatureController extends Controller
 {
+    private function fields(): array
+    {
+        return [
+            ['key' => 'name', 'label' => 'Nome', 'type' => 'text', 'required' => true],
+        ];
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -16,7 +24,19 @@ class PlacefreatureController extends Controller
     {
         $freatures = Placefreature::query()->orderBy('name')->get();
 
-        return response(view('placefreature.index', compact('freatures')), 200);
+        return Inertia::render('Lookups/Index', [
+            'title' => 'Características do local',
+            'items' => $freatures,
+            'fields' => $this->fields(),
+            'routes' => [
+                'index' => 'index-placefreature',
+                'create' => 'create-placefreature',
+                'store' => 'store-placefreature',
+                'edit' => 'edit-placefreature',
+                'update' => 'update-placefreature',
+                'destroy' => 'destroy-placefreature',
+            ],
+        ]);
     }
 
     /**
@@ -24,7 +44,13 @@ class PlacefreatureController extends Controller
      */
     public function create(): Response
     {
-        return response(view('placefreature.create'), 200);
+        return Inertia::render('Lookups/Form', [
+            'title' => 'Adicionar característica de local',
+            'mode' => 'create',
+            'backRoute' => 'index-placefreature',
+            'submitRoute' => 'store-placefreature',
+            'fields' => $this->fields(),
+        ]);
     }
 
     /**
@@ -41,25 +67,22 @@ class PlacefreatureController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @return Response
-     *
-     * public function show($id)
-     * {
-     * $freature = Placefreature::find($id);
-     * return response(view('placefreature.one', compact('freature')));
-     * }
-     */
-
-    /**
      * Show the form for editing the specified resource.
      */
     public function edit(int $id): Response
     {
-        $freature = Placefreature::find($id);
+        $freature = Placefreature::findOrFail($id);
 
-        return response(view('placefreature.update', compact('freature')));
+        return Inertia::render('Lookups/Form', [
+            'title' => 'Alterar característica do local',
+            'mode' => 'edit',
+            'backRoute' => 'index-placefreature',
+            'submitRoute' => 'update-placefreature',
+            'submitRouteParams' => $freature->id,
+            'item' => $freature,
+            'confirmLabel' => $freature->name,
+            'fields' => $this->fields(),
+        ]);
     }
 
     /**
@@ -79,7 +102,7 @@ class PlacefreatureController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(int $id): Response|RedirectResponse
+    public function destroy(int $id): RedirectResponse
     {
         $freature = Placefreature::find($id);
 

@@ -5,9 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Nature;
 use App\Models\Type;
 use Carbon\Carbon;
-use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class HomeController extends Controller
 {
@@ -24,10 +25,10 @@ class HomeController extends Controller
     /**
      * Show the application dashboard.
      */
-    public function index(): Renderable
+    public function index(): Response
     {
-        $natures = Nature::all();
-        $types = Type::all();
+        $natures = Nature::withCount('occurrences')->get();
+        $types = Type::withCount('occurrences')->get();
 
         $today = Carbon::today();
         $today->subMonths(15);
@@ -99,6 +100,18 @@ class HomeController extends Controller
             '#0D0D0D',
         ];
 
-        return view('home', compact('natures', 'months', 'types', 'bairros', 'colors'));
+        return Inertia::render('Dashboard', [
+            'months' => $months,
+            'bairros' => $bairros,
+            'colors' => $colors,
+            'natures' => $natures->map(fn (Nature $nature) => [
+                'name' => $nature->name,
+                'occurrences_count' => $nature->occurrences_count,
+            ]),
+            'types' => $types->map(fn (Type $type) => [
+                'name' => $type->name,
+                'occurrences_count' => $type->occurrences_count,
+            ]),
+        ]);
     }
 }
