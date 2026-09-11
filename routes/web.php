@@ -11,6 +11,7 @@ use App\Http\Controllers\OccurrenceController;
 use App\Http\Controllers\PlacefreatureController;
 use App\Http\Controllers\PlaceuseController;
 use App\Http\Controllers\ProblemController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\RescuerController;
 use App\Http\Controllers\ResourceController;
 use App\Http\Controllers\TypeController;
@@ -198,6 +199,15 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('profile/password/{id}', [UserController::class, 'changePasswordID'])
             ->name('passwordId')
             ->where('id', '[0-9]+');
+
+        Route::prefix('report')->group(function () {
+            Route::get('/', [ReportController::class, 'index'])->name('index-report');
+            Route::get('/create', [ReportController::class, 'create'])->name('create-report');
+            Route::post('/create', [ReportController::class, 'store'])->name('store-report');
+            Route::get('/{id}/download', [ReportController::class, 'download'])
+                ->name('download-report')
+                ->where('id', '[0-9]+');
+        });
     });
     Route::prefix('nature')->group(function () {
         Route::get('/', [NatureController::class, 'index'])->name('index-nature');

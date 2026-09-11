@@ -1,5 +1,5 @@
 import {
-    LayoutDashboard, FileText, Users, UserCircle, KeyRound, ListTree,
+    LayoutDashboard, FileText, Users, UserCircle, KeyRound, ListTree, FileBarChart,
 } from 'lucide-vue-next';
 
 export const mainNav = [
@@ -24,6 +24,7 @@ export const lookupNav = {
 
 export const adminNav = [
     { text: 'Usuários', route: 'index-user', icon: Users },
+    { text: 'Relatórios', route: 'index-report', icon: FileBarChart },
 ];
 
 export const profileNav = [
